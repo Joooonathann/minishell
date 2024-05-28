@@ -6,17 +6,44 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:03:28 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/28 13:09:34 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/28 13:33:56 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char *get_command(char **prompt)
+char	*cut_prompt(char *prompt, int i)
+{
+	char	*result;
+	int		len;
+	int		j;
+
+	len = 0;
+	j = 0;
+	while (prompt[j])
+	{
+		len++;
+		j++;
+	}
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return;
+	j = 0;
+	while (j < len)
+		result[j++] = prompt[i++];
+	result[j] = '\0';
+	if (prompt)
+		free(prompt);
+	prompt = result;
+	return (prompt);
+}
+
+char	*get_command(char **prompt)
 {
 	char *command;
 	int len;
 	int i;
 	int x;
 
+	prompt = *prompt;
 	len = 0;
 	i = 0;
 	while (prompt[i] && prompt[i] != ' ')
@@ -33,7 +60,7 @@ char *get_command(char **prompt)
 		command[i] = prompt[i];
 		i++;
 	}
-	cut_prompt(prompt, i);
+	cut_prompt(&prompt, i);
 	command[i] = '\0';
 	return (command);
 }

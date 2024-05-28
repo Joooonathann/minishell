@@ -6,11 +6,12 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/28 13:08:50 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:35:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
+#include <signal.h>
 #include "minishell.h"
 #include <limits.h>
 #include <readline/history.h>
@@ -75,15 +76,31 @@ char	*get_prompt(void)
 	return (result);
 }
 
+void	handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	if (signal == SIGQUIT)
+		exit(1);
+}
 
 int	main(void)
 {
 	char *prompt;
 
+	signal(SIGINT, handler);
+    signal(SIGQUIT, handler);
+
 	using_history();
 	while (1)
 	{
 		prompt = readline(get_prompt());
+		if (!prompt)
+			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)
 			add_history(prompt);
 		free(prompt);

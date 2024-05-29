@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/05/28 12:40:33 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/05/29 10:49:11 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ READLINE	=	-lreadline
 LIBFT		=	./libft/libft.a
 MAKE_LIBFT	=	@make -C libft
 
-SRC			=	./src/minishell.c
+SRC			=	./src/minishell.c\
+				./src/parsing/parsing.c
 
 OBJ			=	${SRC:.c=.o}
 

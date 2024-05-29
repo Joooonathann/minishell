@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/28 13:35:29 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:48:26 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <signal.h>
 #include "minishell.h"
-#include <limits.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 char	*ft_strcpy(char *dst, const char *src)
 {
@@ -102,7 +94,10 @@ int	main(void)
 		if (!prompt)
 			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)
+		{
+			parsing(prompt);
 			add_history(prompt);
+		}
 		free(prompt);
 	}
 }

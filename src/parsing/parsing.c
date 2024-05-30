@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 15:01:04 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:01:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,72 @@ int	is_env_var(char *token)
 		return (0);
 }
 
-// void parser(char *line)
-// {
-// 	t_tokens	*tokens;
-// 	char		**tab;
-// 	int i;
+void	print_tokens(t_tokens *tokens)
+{
+	while (tokens)
+	{
+		printf("value: %s\nindex: %d\n", tokens->value, tokens->index);
+		tokens = tokens->next;
+	}
+}
 
-// 	tab = ft_split(line, ' ');
-// 	i = 0;
-// 	tokens = ft_newtoken();;
-// 	while (tab[i])
-// 	{
+void	free_tokens(t_tokens **tokens)
+{
+	t_tokens	*previous_token;
 
-// 		i++;
-// 	}
-// 	free(tab);
-// }
+	while (*tokens)
+	{
+		previous_token = *tokens;
+		*tokens = (*tokens)->next;
+		free(previous_token->value);
+		free(previous_token);
+	}
+}
 
-void parsing(char *prompt)
+void	free_tab(char ***tab)
+{
+	int	i;
+
+	i = 0;
+	while ((*tab)[i])
+	{
+		free((*tab)[i]);
+		i++;
+	}
+	free(*tab);
+}
+
+void	parser(char *line)
+{
+	t_tokens	*tokens;
+	char		**tab;
+	int i;
+
+	tokens = NULL;
+	tab = ft_split(line, ' ');
+	i = 0;
+	while (tab[i])
+	{
+		ft_tokenadd_back(&tokens, ft_tokennew(ft_strcpy(tab[i], i));
+		i++;
+	}
+	print_tokens(tokens);
+	//free_tokens(&tokens);
+	//free_tab(&tab);
+	if (tab)
+	{
+		i = 0;
+		while (tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
+		tab = NULL;
+	}
+}
+
+void	parsing(char *prompt)
 {
 	char **tokens;
 	int i;

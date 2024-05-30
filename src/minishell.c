@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/30 14:06:39 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:30:10 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(void)
 			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)
 		{
-			parsing(prompt);
+			parser(prompt);
 			add_history(prompt);
 		}
 		free(prompt);

@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 10:40:52 by jalbiser         ###   ########.fr       */
+/*   Created: 2024/05/30 10:34:11 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/05/30 10:41:03 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "../libft/libft.h"
-# include <limits.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	pwd_command(void)
+{
+	char	cwd[PATH_MAX];
 
-void	parsing(char *prompt);
-int		cd_command(char *path);
-int		pwd_command(void);
-
-#endif
+	if (!getcwd(cwd, sizeof(cwd)))
+	{
+		printf("Erreur lors de la récupération du chemin.");
+		return (0);
+	}
+	printf("%s", cwd);
+	return (1);
+}

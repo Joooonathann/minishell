@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 10:28:46 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:38:41 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void parsing(char *prompt)
 	{
 		if (ft_strcmp(tokens[i], "cd"))
 			cd_command(tokens[i + 1]);
+		if (ft_strcmp(tokens[i], "pwd"))
+			pwd_command();
 		printf("command: %s\n", tokens[i++]);
 		while (tokens[i] && option_is_valid(tokens[i]))
 			printf("option: %s\n", tokens[i++]);

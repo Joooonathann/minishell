@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/30 14:06:39 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:07:08 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	handler(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	if (signal == SIGQUIT)
-		exit(1);
 }
 
 int	main(void)

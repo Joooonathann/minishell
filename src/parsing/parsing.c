@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 14:55:31 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/30 15:01:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,22 @@ int	is_env_var(char *token)
 		return (0);
 }
 
-void parser(char *line)
-{
-	t_tokens	*tokens;
-	char		**tab;
-	int i;
+// void parser(char *line)
+// {
+// 	t_tokens	*tokens;
+// 	char		**tab;
+// 	int i;
 
-	tab = ft_split(line, ' ');
-	i = 0;
-	tokens = ft_newtoken();;
-	while (tab[i])
-	{
+// 	tab = ft_split(line, ' ');
+// 	i = 0;
+// 	tokens = ft_newtoken();;
+// 	while (tab[i])
+// 	{
 
-		i++;
-	}
-	free(tab);
-}
+// 		i++;
+// 	}
+// 	free(tab);
+// }
 
 void parsing(char *prompt)
 {

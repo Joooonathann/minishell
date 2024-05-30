@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 12:31:49 by ekrause           #+#    #+#              #
-#    Updated: 2023/11/06 12:31:56 by ekrause          ###   ########.fr        #
+#    Updated: 2024/05/30 12:16:49 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC	= ft_isalpha.c\
 	  ft_strchr.c\
 	  ft_strrchr.c\
 	  ft_strncmp.c\
+	  ft_strcmp\
 	  ft_memchr.c\
 	  ft_memcmp.c\
 	  ft_strnstr.c\

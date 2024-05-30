@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 12:41:48 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:55:31 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,6 @@ int	command_is_valid(char *command)
 	return (0);
 }
 
-// void	parsing(char *prompt)
-// {
-// 	char	**tokens;
-// 	int		i;
-
-// 	tokens = ft_split(prompt, ' ');
-// 	i = 0;
-// 	if (tokens[i] && command_is_valid(tokens[i]))
-// 	{
-// 		printf("command: %s\n", tokens[i++]);
-// 		if (tokens[i] && ft_strcmp(tokens[0], "echo") && ft_strcmp(tokens[i], "-n"))
-// 			printf("option: %s\n", tokens[i++]);
-// 		while (tokens[i])
-// 			printf("arguments: %s\n", tokens[i++]);
-// 	}
-// 	else
-// 		printf("command not found: %s\n", tokens[0]);
-// }
-
 int	option_is_valid(char *option)
 {
 	char *options[3];
@@ -76,6 +57,23 @@ int	is_env_var(char *token)
 		return (1);
 	else
 		return (0);
+}
+
+void parser(char *line)
+{
+	t_tokens	*tokens;
+	char		**tab;
+	int i;
+
+	tab = ft_split(line, ' ');
+	i = 0;
+	tokens = ft_newtoken();;
+	while (tab[i])
+	{
+
+		i++;
+	}
+	free(tab);
 }
 
 void parsing(char *prompt)

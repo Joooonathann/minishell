@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 16:01:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:43:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,31 +97,29 @@ void	free_tab(char ***tab)
 void	parser(char *line)
 {
 	t_tokens	*tokens;
+	char		*token;
 	char		**tab;
 	int i;
 
 	tokens = NULL;
 	tab = ft_split(line, ' ');
+	if (!tab)
+		return ;
 	i = 0;
 	while (tab[i])
 	{
-		ft_tokenadd_back(&tokens, ft_tokennew(ft_strcpy(tab[i], i));
+		token = ft_strdup(tab[i]);
+		if (!token)
+		{
+			free_tab(&tab);
+			return;
+		}
+		ft_tokenadd_back(&tokens, ft_tokennew(token, i));
 		i++;
 	}
+	free_tab(&tab);
 	print_tokens(tokens);
-	//free_tokens(&tokens);
-	//free_tab(&tab);
-	if (tab)
-	{
-		i = 0;
-		while (tab[i])
-		{
-			free(tab[i]);
-			i++;
-		}
-		free(tab);
-		tab = NULL;
-	}
+	free_tokens(&tokens);
 }
 
 void	parsing(char *prompt)

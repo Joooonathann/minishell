@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 15:30:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:17:26 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	parser(char *line);
 void	parsing(char *prompt);
 //
 
-
+char	*ft_strcpy(char *dst, const char *src);
 int		cd_command(char *path);
 int		pwd_command(void);
 int		echo_command(char *options, char *str);

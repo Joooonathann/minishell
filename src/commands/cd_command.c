@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 10:28:59 by jalbiser         ###   ########.fr       */
+/*   Created: 2024/05/30 09:55:55 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/05/30 09:58:05 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-#include "../libft/libft.h"
-#include <signal.h>
-#include <limits.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-void parsing(char *prompt);
-int	cd_command(char	*path);
-
-#endif
+int	cd_command(char	*path)
+{
+	if (!path)
+		return (0);
+	if (chdir(path) != 0)
+		return (0);
+	return (1);
+}

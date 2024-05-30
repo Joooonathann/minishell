@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/30 15:30:10 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:13:02 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	handler(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	if (signal == SIGQUIT)
-		exit(1);
 }
 
 int	main(void)

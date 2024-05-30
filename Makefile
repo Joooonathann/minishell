@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/05/30 10:41:09 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/05/30 12:40:21 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ MAKE_LIBFT	=	@make -C libft
 SRC			=	./src/minishell.c\
 				./src/parsing/parsing.c\
 				./src/commands/cd_command.c\
-				./src/commands/pwd_command.c
+				./src/commands/pwd_command.c\
+				./src/commands/echo_command.c
 
 OBJ			=	${SRC:.c=.o}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 12:32:07 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/30 12:41:48 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,13 @@ void parsing(char *prompt)
 			cd_command(tokens[i + 1]);
 		if (ft_strcmp(tokens[i], "pwd"))
 			pwd_command();
+		if (ft_strcmp(tokens[i], "echo"))
+		{
+			if (tokens[i + 2] != NULL)
+				echo_command(tokens[i + 1], tokens[i + 2]);
+			else
+				echo_command(NULL, tokens[i + 1]);
+		}
 		printf("command: %s\n", tokens[i++]);
 		while (tokens[i] && option_is_valid(tokens[i]))
 			printf("option: %s\n", tokens[i++]);

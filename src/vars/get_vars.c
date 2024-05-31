@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_command.c                                    :+:      :+:    :+:   */
+/*   get_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/31 20:36:24 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 20:57:51 by jalbiser         ###   ########.fr       */
+/*   Created: 2024/05/31 20:58:47 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/05/31 21:00:33 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	unset_command(t_vars **env, char *key_env)
+char	*get_vars(t_vars **env, char *key_env)
 {
 	t_vars	*tmp;
-
-	if (!env || !*env || !key_env)
-		return (0);
+	
 	tmp = *env;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, key_env))
-		{
-			if (delete_vars(env, tmp))
-				return (1);
-			else
-				return (0);
-		}
+			return (tmp->value);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (NULL);
 }

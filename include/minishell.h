@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 20:38:53 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:00:47 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,6 @@ int					init_vars(t_vars **env, char **envp);
 int					print_vars(t_vars *env);
 int					export_command(t_vars **env, char *str);
 int					delete_vars(t_vars **env, t_vars *delete);
+char				*get_vars(t_vars **env, char *key_env);
+
 #endif

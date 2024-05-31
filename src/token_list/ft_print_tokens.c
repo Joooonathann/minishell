@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenlast.c                                     :+:      :+:    :+:   */
+/*   ft_print_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 15:04:48 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 10:58:14 by ekrause          ###   ########.fr       */
+/*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
+/*   Updated: 2024/05/31 10:58:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tokens	*ft_tokenlast(t_tokens *tokens)
+void	ft_print_tokens(t_tokens *tokens)
 {
-	t_tokens	*temp;
-
-	temp = NULL;
-	if (tokens != NULL)
+	while (tokens)
 	{
-		temp = tokens;
-		while (temp->next)
-			temp = temp->next;
+		printf("value: %s\nindex: %d\n", tokens->value, tokens->index);
+		tokens = tokens->next;
 	}
-	return (temp);
 }

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenlast.c                                     :+:      :+:    :+:   */
+/*   ft_free_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 15:04:48 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 10:58:14 by ekrause          ###   ########.fr       */
+/*   Created: 2024/05/31 10:50:32 by ekrause           #+#    #+#             */
+/*   Updated: 2024/05/31 10:58:06 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tokens	*ft_tokenlast(t_tokens *tokens)
+void	ft_free_tokens(t_tokens **tokens)
 {
-	t_tokens	*temp;
+	t_tokens	*previous_token;
 
-	temp = NULL;
-	if (tokens != NULL)
+	while (*tokens)
 	{
-		temp = tokens;
-		while (temp->next)
-			temp = temp->next;
+		previous_token = *tokens;
+		*tokens = (*tokens)->next;
+		free(previous_token->value);
+		free(previous_token);
 	}
-	return (temp);
 }

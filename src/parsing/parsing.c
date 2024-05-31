@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 16:43:04 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 11:07:46 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,69 +59,6 @@ int	is_env_var(char *token)
 		return (0);
 }
 
-void	print_tokens(t_tokens *tokens)
-{
-	while (tokens)
-	{
-		printf("value: %s\nindex: %d\n", tokens->value, tokens->index);
-		tokens = tokens->next;
-	}
-}
-
-void	free_tokens(t_tokens **tokens)
-{
-	t_tokens	*previous_token;
-
-	while (*tokens)
-	{
-		previous_token = *tokens;
-		*tokens = (*tokens)->next;
-		free(previous_token->value);
-		free(previous_token);
-	}
-}
-
-void	free_tab(char ***tab)
-{
-	int	i;
-
-	i = 0;
-	while ((*tab)[i])
-	{
-		free((*tab)[i]);
-		i++;
-	}
-	free(*tab);
-}
-
-void	parser(char *line)
-{
-	t_tokens	*tokens;
-	char		*token;
-	char		**tab;
-	int i;
-
-	tokens = NULL;
-	tab = ft_split(line, ' ');
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		token = ft_strdup(tab[i]);
-		if (!token)
-		{
-			free_tab(&tab);
-			return;
-		}
-		ft_tokenadd_back(&tokens, ft_tokennew(token, i));
-		i++;
-	}
-	free_tab(&tab);
-	print_tokens(tokens);
-	free_tokens(&tokens);
-}
-
 void	parsing(char *prompt)
 {
 	char **tokens;
@@ -164,4 +101,89 @@ void	parsing(char *prompt)
 		i++;
 	}
 	free (tokens);
+}
+
+//////// en construction ////////
+
+void free_tab(char ***tab)
+{
+	int i;
+
+	i = 0;
+	while ((*tab)[i])
+	{
+		free((*tab)[i]);
+		i++;
+	}
+	free(*tab);
+}
+
+int	count_simple_quote(t_tokens *tokens)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	while (tokens)
+	{
+		i = 0;
+		while (tokens->value[i])
+		{
+			if (tokens->value[i] == 39)
+				count++;
+			i++;
+		}
+		tokens = tokens->next;
+	}
+	return (count);
+}
+
+int count_double_quote(t_tokens *tokens)
+{
+	int count;
+	int i;
+
+	count = 0;
+	while (tokens)
+	{
+		i = 0;
+		while (tokens->value[i])
+		{
+			if (tokens->value[i] == 34)
+				count++;
+			i++;
+		}
+		tokens = tokens->next;
+	}
+	return (count);
+}
+
+void	parser(char *line)
+{
+	t_tokens	*tokens;
+	char		*token;
+	char		**tab;
+	int i;
+
+	tokens = NULL;
+	tab = ft_split(line, ' ');
+	if (!tab)
+		return ;
+	i = 0;
+	while (tab[i])
+	{
+		token = ft_strdup(tab[i]);
+		if (!token)
+		{
+			free_tab(&tab);
+			return;
+		}
+		ft_tokenadd_back(&tokens, ft_tokennew(token, i));
+		i++;
+	}
+	printf("simple quote: %d\n", count_simple_quote(tokens));
+	printf("double quote: %d\n", count_double_quote(tokens));
+	free_tab(&tab);
+	ft_print_tokens(tokens);
+	ft_free_tokens(&tokens);
 }

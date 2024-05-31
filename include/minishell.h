@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 16:17:26 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 10:54:27 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ typedef struct s_tokens
 }					t_tokens;
 
 // Token list
-void		ft_tokenadd_back(t_tokens **head, t_tokens *new);
+void		ft_free_tokens(t_tokens **tokens);
+void		ft_print_tokens(t_tokens *tokens);
+void		ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
 t_tokens	*ft_tokenlast(t_tokens *tokens);
 t_tokens	*ft_tokennew(char *value, int index);
 //
 
 // Parsing
-void	parser(char *line);
-void	parsing(char *prompt);
+void		parser(char *line);
+void		parsing(char *prompt);
 //
 
-char	*ft_strcpy(char *dst, const char *src);
-int		cd_command(char *path);
-int		pwd_command(void);
-int		echo_command(char *options, char *str);
+char		*ft_strcpy(char *dst, const char *src);
+int			cd_command(char *path);
+int			pwd_command(void);
+int			echo_command(char *options, char *str);
 
 #endif

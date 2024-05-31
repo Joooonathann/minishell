@@ -6,15 +6,15 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:40:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/30 15:23:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 10:57:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tokens *ft_tokennew(char *value, int index)
+t_tokens	*ft_tokennew(char *value, int index)
 {
-	t_tokens *elem;
+	t_tokens	*elem;
 
 	elem = malloc(sizeof(t_tokens));
 	if (!elem)

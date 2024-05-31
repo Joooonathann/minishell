@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 13:01:40 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 13:37:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,16 +178,57 @@ int	get_first_quote(t_tokens *tokens)
 	return (0);
 }
 
+void	remove_simple_quote(t_tokens *tokens)
+{
+	t_tokens	*head;
+	t_tokens	*tail;
+	int			i;
+
+	head = tokens;
+	tail = ft_tokenlast(tokens);
+	while (head)
+	{
+		i = 0;
+		while (tokens->value[i])
+		{
+			if (tokens->value[i] == 39)
+			{
+
+			}
+			i++;
+		}
+		head = head->next;
+	}
+	while (tail)
+	{
+		i = 0;
+		while (tokens->value[i])
+		{
+			if (tokens->value[i] == 39)
+			{
+
+			}
+			i++;
+		}
+		tail = tail->prev;
+	}
+}
+
 void	parse_quotes(t_tokens *tokens)
 {
 	int		double_quotes;
 	int		simple_quotes;
-	int		first_quote;
 
 	double_quotes = count_double_quote(tokens);
 	simple_quotes = count_simple_quote(tokens);
-	first_quote = get_first_quote(tokens);
-	printf("%d\n", first_quote);
+	if (get_first_quote(tokens) == 1 && simple_quotes > 1)
+	{
+		remove_simple_quote(tokens);
+	}
+	else if (get_first_quote(tokens) == 2 && double_quotes > 1)
+	{
+		remove_double_quote(tokens);
+	}
 }
 
 void	parser(char *line)

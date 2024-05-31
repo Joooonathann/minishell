@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/05/31 12:44:08 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/05/31 17:02:54 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ SRC			=	./src/minishell.c\
 				./src/commands/pwd_command.c\
 				./src/commands/echo_command.c\
 				./src/commands/env_command.c\
+				./src/vars/add_vars.c\
+				./src/vars/init_vars.c\
+				./src/vars/print_vars.c
 
 OBJ			=	${SRC:.c=.o}
 

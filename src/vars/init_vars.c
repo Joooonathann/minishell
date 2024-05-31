@@ -6,13 +6,13 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 13:45:33 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:58:44 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	size_key(char *envp)
+static int	size_key(char *envp)
 {
 	int	i;
 
@@ -42,8 +42,16 @@ int	init_vars(t_vars **env, char **envp)
 			return (0);
 		value = ft_substr(envp[i], len_key + 1, ft_strlen(envp[i]));
 		if (!value)
+		{
+			free(key);
 			return (0);
-		add_vars(env, key, value);
+		}
+		if (!add_vars(env, key, value))
+		{
+			free(key);
+			free(value);
+			return (0);
+		}
 		free(key);
 		free(value);
 	}

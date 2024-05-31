@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 13:29:56 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:02:01 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ void	handler(int signal)
 	}
 }
 
-int	main(char **envp)
+int	main(int argc, char **argv, char **envp)
 {
+	(void) argc;
+	(void) argv;
 	char *prompt;
 	t_vars *env;
 

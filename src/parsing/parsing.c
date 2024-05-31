@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 11:07:46 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 13:01:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,38 @@ int count_double_quote(t_tokens *tokens)
 	return (count);
 }
 
+int	get_first_quote(t_tokens *tokens)
+{
+	int		i;
+
+	while (tokens)
+	{
+		i = 0;
+		while (tokens->value[i])
+		{
+			if (tokens->value[i] == 34)
+				return (2);
+			if (tokens->value[i] == 39)
+				return (1);
+			i++;
+		}
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
+void	parse_quotes(t_tokens *tokens)
+{
+	int		double_quotes;
+	int		simple_quotes;
+	int		first_quote;
+
+	double_quotes = count_double_quote(tokens);
+	simple_quotes = count_simple_quote(tokens);
+	first_quote = get_first_quote(tokens);
+	printf("%d\n", first_quote);
+}
+
 void	parser(char *line)
 {
 	t_tokens	*tokens;
@@ -181,6 +213,7 @@ void	parser(char *line)
 		ft_tokenadd_back(&tokens, ft_tokennew(token, i));
 		i++;
 	}
+	parse_quotes(tokens);
 	printf("simple quote: %d\n", count_simple_quote(tokens));
 	printf("double quote: %d\n", count_double_quote(tokens));
 	free_tab(&tab);

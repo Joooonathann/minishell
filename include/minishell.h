@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 10:54:27 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 12:43:54 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,22 @@ typedef struct s_tokens
 }					t_tokens;
 
 // Token list
-void		ft_free_tokens(t_tokens **tokens);
-void		ft_print_tokens(t_tokens *tokens);
-void		ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
-t_tokens	*ft_tokenlast(t_tokens *tokens);
-t_tokens	*ft_tokennew(char *value, int index);
+void				ft_free_tokens(t_tokens **tokens);
+void				ft_print_tokens(t_tokens *tokens);
+void				ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
+t_tokens			*ft_tokenlast(t_tokens *tokens);
+t_tokens			*ft_tokennew(char *value, int index);
 //
 
 // Parsing
-void		parser(char *line);
-void		parsing(char *prompt);
+void				parser(char *line);
+void				parsing(char *prompt);
 //
 
-char		*ft_strcpy(char *dst, const char *src);
-int			cd_command(char *path);
-int			pwd_command(void);
-int			echo_command(char *options, char *str);
+char				*ft_strcpy(char *dst, const char *src);
+int					cd_command(char *path);
+int					pwd_command(void);
+int					echo_command(char *options, char *str);
+int					env_command(char **envp);
 
 #endif

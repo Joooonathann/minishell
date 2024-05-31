@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/30 16:13:02 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 12:42:17 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ void	handler(int signal)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	(void) argc;
+	(void) argv;
 	char *prompt;
 
 	signal(SIGINT, handler);
@@ -89,6 +91,8 @@ int	main(void)
 	while (1)
 	{
 		prompt = readline(get_prompt());
+		if (ft_strcmp(prompt, "env"))
+			env_command(envp);
 		if (!prompt)
 			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)

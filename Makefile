@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/05/31 10:55:34 by ekrause          ###   ########.fr        #
+#    Updated: 2024/05/31 12:44:08 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC			=	./src/minishell.c\
 				./src/parsing/parsing.c\
 				./src/commands/cd_command.c\
 				./src/commands/pwd_command.c\
-				./src/commands/echo_command.c
+				./src/commands/echo_command.c\
+				./src/commands/env_command.c\
 
 OBJ			=	${SRC:.c=.o}
 

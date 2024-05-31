@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 12:42:17 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:29:56 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*get_prompt(void)
 	char	*username;
 	char	hostname[HOST_NAME_MAX + 1];
 	char	cwd[PATH_MAX];
+	size_t	prompt_len;
 
 	username = getenv("USER");
 	if (!username)
@@ -56,7 +57,7 @@ char	*get_prompt(void)
 		ft_strcpy(hostname, "42");
 	if (!getcwd(cwd, sizeof(cwd)))
 		ft_strcpy(cwd, "ERROR");
-	size_t prompt_len = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5;
+	prompt_len = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5;
 	result = (char *)malloc(prompt_len + 1);
 	result[0] = '\0';
 	ft_strcat(result, username);
@@ -79,14 +80,14 @@ void	handler(int signal)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(char **envp)
 {
-	(void) argc;
-	(void) argv;
 	char *prompt;
+	t_vars *env;
 
+	init_vars(&env, envp);
 	signal(SIGINT, handler);
-    signal(SIGQUIT, handler);
+	signal(SIGQUIT, handler);
 	using_history();
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 12:43:54 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:27:16 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+typedef struct s_vars
+{
+	char			*key;
+	char			*value;
+	struct s_vars	*next;
+}					t_vars;
 
 typedef struct s_tokens
 {

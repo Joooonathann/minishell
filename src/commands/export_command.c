@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_vars.c                                        :+:      :+:    :+:   */
+/*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 17:53:57 by jalbiser         ###   ########.fr       */
+/*   Created: 2024/05/31 17:57:04 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/05/31 18:06:41 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,27 @@ static int	size_key(char *envp)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (0);
 }
 
-int	init_vars(t_vars **env, char **envp)
+int	export_command(t_vars **env, char *str)
 {
-	char	*key;
-	char	*value;
-	int		len_key;
-	int		i;
+	char *key;
+	char *value;
+	int len_key;
 
-	i = 0;
-	while (envp[i])
+	len_key = size_key(str);
+	if (len_key == 0)
+		return (0);
+	key = ft_substr(str, 0, len_key);
+	if (!key)
+		return (0);
+	value = ft_substr(str, len_key + 1, ft_strlen(str));
+	if (!value)
 	{
-		len_key = size_key(envp[i]);
-		key = ft_substr(envp[i], 0, len_key);
-		if (!key)
-			return (0);
-		value = ft_substr(envp[i], len_key + 1, ft_strlen(envp[i]));
-		if (!value)
-		{
-			free(key);
-			return (0);
-		}
-		if (!add_vars(key, value, env))
-		{
-			free(key);
-			free(value);
-			return (0);
-		}
 		free(key);
-		free(value);
-		i++;
+		return (0);
 	}
+	add_vars(key, value, env);
 	return (1);
 }

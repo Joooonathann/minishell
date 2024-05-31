@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 17:02:01 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:05:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	main(int argc, char **argv, char **envp)
 	char *prompt;
 	t_vars *env;
 
+	env = NULL;
 	init_vars(&env, envp);
 	signal(SIGINT, handler);
 	signal(SIGQUIT, handler);
@@ -94,8 +95,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		prompt = readline(get_prompt());
-		if (ft_strcmp(prompt, "env"))
-			env_command(envp);
+		env_command(env);
+		export_command(&env, "TEST=TEST");
+		env_command(env);
 		if (!prompt)
 			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)

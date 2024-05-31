@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 13:37:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/05/31 17:50:07 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void	parse_quotes(t_tokens *tokens)
 	}
 	else if (get_first_quote(tokens) == 2 && double_quotes > 1)
 	{
-		remove_double_quote(tokens);
+		//remove_double_quote(tokens);
 	}
 }
 

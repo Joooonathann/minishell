@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/05/31 17:01:34 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:03:00 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ char				*ft_strcpy(char *dst, const char *src);
 int					cd_command(char *path);
 int					pwd_command(void);
 int					echo_command(char *options, char *str);
-int					env_command(char **envp);
+int	env_command(t_vars *env);
 
 
 // Env vars
 int	add_vars(char *key, char *value, t_vars **env);
 int	init_vars(t_vars **env, char **envp);
 int	print_vars(t_vars *env);
+int	export_command(t_vars **env, char *str);
 
 #endif

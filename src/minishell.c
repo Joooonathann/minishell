@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 21:01:44 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:44:06 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		prompt = readline(get_prompt());
-		printf("%s", get_vars(&env, "PATH"));
+		//printf("%s", get_vars(&env, "PATH"));
 		if (!prompt)
 			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)

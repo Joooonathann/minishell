@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/03 18:03:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/04 11:52:50 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,56 +99,51 @@ int count_simple_quote(char *str)
 	return (j);
 }
 
+void	check_open_quote(char c, quote *quote_type, bool *in_quote)
+{
+	if (c == simple)
+		(*quote_type) = simple;
+	else if (c == double)
+		(*quote_type) = double;
+	(*in_quote) = true;
+}
+
+void	make_token(char *token, int	*j)
+{
+	token[*j] = '\0';
+	printf("Token: %s\n", token);
+	(*j) = 0;
+}
+
 void	tokenizer(char *str)
 {
 	char	token[255];
 	int 	i;
 	int		j;
-	int		double_quote;
-	int		simple_quote;
-	
 	bool	in_quote;
 	quote	quote_type;
-	i = 0;
+	
+	i = -1;
 	j = 0;
-	double_quote = count_double_quote(str);
-	simple_quote = count_simple_quote(str);
-	printf("%d\n%d\n", double_quote, simple_quote);
 	in_quote = false;
-	while (str[i])
+	while (str[++i])
 	{
-		if ((str[i] == simple && !in_quote && simple_quote > 1)
-		|| (str[i] == double && !in_quote && double_quote > 1))
-		{
-			if (str[i] == simple)
-				quote_type = simple;
-			else if (str[i] == double)
-				quote_type = double;
-			in_quote = true;
-		}
+		if ((str[i] == simple && !in_quote && count_simple_quote(str) > 1)
+		|| (str[i] == double && !in_quote && count_double_quote(str) > 1))
+			check_open_quote(str[i], &quote_type, &in_quote);
 		else if ((str[i] == simple && quote_type == simple && in_quote) ||
 		(str[i] == double && quote_type == double && in_quote))
 		{
+			make_token(token, &j);
 			in_quote = false;
-			token[j] = '\0';
-			j = 0;
-			printf("Token: %s\n", token);
 		}
 		else if (str[i] == ' ' && !in_quote)
-		{
-			token[j] = '\0';
-			j = 0;
-			printf("Token: %s\n", token);
-		}
+			make_token(token, &j);
 		else
 			token[j++] = str[i];
-		i++;
 	}
 	if (j > 0)
-	{
-		token[j] = '\0';
-		printf("Token: %s\n", token);
-	}
+		make_token(token, &j);
 }
 
 void	parser(char *string)

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 17:57:04 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 18:06:41 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:55:40 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	export_command(t_vars **env, char *str)
 	char *key;
 	char *value;
 	int len_key;
+	t_vars	*tmp;
 
 	len_key = size_key(str);
 	if (len_key == 0)
@@ -43,6 +44,16 @@ int	export_command(t_vars **env, char *str)
 	{
 		free(key);
 		return (0);
+	}
+	if (get_vars(env, key) != NULL)
+	{
+		tmp = *env;
+		while (tmp)
+		{
+			if (ft_strcmp(tmp->key, key))
+				delete_vars(env, tmp);
+			tmp = tmp->next;
+		}
 	}
 	add_vars(key, value, env);
 	return (1);

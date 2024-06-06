@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/03 13:33:43 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/06 14:35:51 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#define bool unsigned int
-#define true 1
-#define false 0
+# define bool unsigned int
+# define true 1
+# define false 0
+
+typedef struct s_info_prompt
+{
+	bool			pipes;
+	bool			chevrons;
+	char			**format;
+}					t_info_prompt;
 
 typedef struct s_vars
 {
@@ -58,7 +65,7 @@ void				parsing(char *prompt);
 char				*ft_strcpy(char *dst, const char *src);
 int					cd_command(char *path);
 int					pwd_command(void);
-int					echo_command(char *options, char *str);
+int					echo_command(bool options, char *str);
 int					env_command(t_vars *env);
 int					unset_command(t_vars **env, char *key_env);
 

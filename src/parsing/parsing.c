@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/06 14:43:08 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:06:13 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,40 +60,91 @@ int	get_token_len(char *str)
 	return (len);
 }
 
-char	*tokenise(char **str)
+// char	*tokenise(char **str)
+// {
+// 	char	*token;
+// 	int		i;
+// 	bool	in_quote;
+// 	QUOTE	quote_type;
+
+// 	while (**str == ' ')
+// 		(*str)++;
+// 	token = malloc(sizeof(char) * (get_token_len(*str) + 1));
+// 	if (!token)
+// 		return (NULL);
+// 	i = 0;
+// 	in_quote = false;
+// 	while (**str)
+// 	{
+// 		if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote)
+// 			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
+// 		{
+// 			in_quote = true;
+// 			quote_type = (QUOTE)(**str);
+// 			(*str)++;
+// 		}
+// 		else if (((**str == SIMPLE && quote_type == SIMPLE)
+// 				|| (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
+// 		{
+// 			in_quote = false;
+// 			(*str)++;
+// 		}
+// 		else if (**str == ' ' && !in_quote)
+// 		{
+// 			break;
+// 		}
+// 		else
+// 		{
+// 			token[i++] = **str;
+// 			(*str)++;
+// 		}
+// 	}
+// 	token[i] = '\0';
+// 	while (**str == ' ') // Skip trailing spaces
+// 		(*str)++;
+// 	return (token);
+// }
+
+char *tokenise(char **str)
 {
-	char	*token;
-	int		i;
-	bool	in_quote;
-	QUOTE	quote_type;
+	char *token;
+	int i;
+	bool in_quote;
+	QUOTE quote_type;
+	
+	while (**str == ' ')
+		(*str)++;
 
 	token = malloc(sizeof(char) * (get_token_len(*str) + 1));
+	if (!token)
+		return (NULL);
+		
 	i = 0;
 	in_quote = false;
+	
 	while (**str)
 	{
-		if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote)
-			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
+		if ((**str == ' ' || **str == SIMPLE || **str == DOUBLE) &&
+			(!in_quote && i > 0))
+			break;
+		else if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote) ||
+				(**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
 		{
 			in_quote = true;
 			quote_type = (QUOTE)(**str);
+			(*str)++;
 		}
-		else if (((**str == SIMPLE && quote_type == SIMPLE)
-				|| (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
+		else if (((**str == SIMPLE && quote_type == SIMPLE) ||
+				(**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
 		{
 			(*str)++;
-			token[i] = '\0';
-			return (token);
-		}
-		else if ((**str == ' ' || **str == SIMPLE || **str == DOUBLE) && !in_quote)
-		{
-			(*str)++;
-			token[i] = '\0';
-			return (token);
+			break;
 		}
 		else
+		{
 			token[i++] = **str;
-		(*str)++;
+			(*str)++;
+		}
 	}
 	token[i] = '\0';
 	return (token);
@@ -101,18 +152,11 @@ char	*tokenise(char **str)
 
 void	parser(char *str)
 {
-	// int	i;
-	// while ((i = get_token_len(str)) != 0)
-	// {
-	// 	printf("Token len:%d\n", i);
-	// }
-	// t_tokens	*tokens;
 	char		*token;
-	
-	while ((token = tokenise(&str)) && token[0] != '\0')
+	while (*str)
 	{
-		printf("Token: %s\n", token);
+		(token = tokenise(&str));
+		printf("Token: %s;\n", token);
 		free(token);
-		//ft_tokenadd_back(&tokens, ft_tokennew(token, 1));
 	}
 }

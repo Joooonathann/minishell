@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/06 14:35:51 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:26:36 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_tokens
 	struct s_tokens	*next;
 	struct s_tokens	*prev;
 	char			type;
+	char			quote;
 	char			*value;
 	int				index;
 }					t_tokens;

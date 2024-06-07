@@ -6,17 +6,17 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/06 14:11:09 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/06 14:43:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 #define QUOTE unsigned int
-#define SIMPLE_QUOTE 39
-#define DOUBLE_QUOTE 34
+#define SIMPLE 39
+#define DOUBLE 34
 
-int	count_quotes(char *str, QUOTE quote_type)
+int	count_quote(char *str, QUOTE quote_type)
 {
 	int	i;
 	int	j;
@@ -42,17 +42,17 @@ int	get_token_len(char *str)
 	in_quote = false;
 	while (*str)
 	{
-		if ((*str == SIMPLE_QUOTE && count_quotes(str, SIMPLE_QUOTE) > 1 && !in_quote) ||
-			(*str == DOUBLE_QUOTE && count_quotes(str, DOUBLE_QUOTE) > 1 && !in_quote))
+		if ((*str == SIMPLE && count_quote(str, SIMPLE) > 1 && !in_quote)
+			|| (*str == DOUBLE && count_quote(str, DOUBLE) > 1 && !in_quote))
 		{
 			in_quote = true;
-			quote_type = (QUOTE)*str;
+			quote_type = (QUOTE)(*str);
 		}
-		else if (((*str == SIMPLE_QUOTE && quote_type == SIMPLE_QUOTE) ||
-				  (*str == DOUBLE_QUOTE && quote_type == DOUBLE_QUOTE)) && in_quote)
+		else if (((*str == SIMPLE && quote_type == SIMPLE)
+				|| (*str == DOUBLE && quote_type == DOUBLE)) && in_quote)
 			return (len);
 		else if (*str == ' ' && !in_quote)
-			return(len);
+			return (len);
 		else
 			len++;
 		str++;
@@ -72,20 +72,20 @@ char	*tokenise(char **str)
 	in_quote = false;
 	while (**str)
 	{
-		if ((**str == SIMPLE_QUOTE && count_quotes(*str, SIMPLE_QUOTE) > 1 && !in_quote) ||
-			(**str == DOUBLE_QUOTE && count_quotes(*str, DOUBLE_QUOTE) > 1 && !in_quote))
+		if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote)
+			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
 		{
 			in_quote = true;
-			quote_type = (QUOTE)**str;
+			quote_type = (QUOTE)(**str);
 		}
-		else if (((**str == SIMPLE_QUOTE && quote_type == SIMPLE_QUOTE) ||
-			(**str == DOUBLE_QUOTE && quote_type == DOUBLE_QUOTE)) && in_quote)
+		else if (((**str == SIMPLE && quote_type == SIMPLE)
+				|| (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
 		{
 			(*str)++;
 			token[i] = '\0';
 			return (token);
 		}
-		else if (**str == ' ' && !in_quote)
+		else if ((**str == ' ' || **str == SIMPLE || **str == DOUBLE) && !in_quote)
 		{
 			(*str)++;
 			token[i] = '\0';
@@ -95,12 +95,8 @@ char	*tokenise(char **str)
 			token[i++] = **str;
 		(*str)++;
 	}
-	if (i > 0)
-	{
-		token[i] = '\0';
-		return (token);
-	}
-	return (NULL);
+	token[i] = '\0';
+	return (token);
 }
 
 void	parser(char *str)
@@ -113,7 +109,7 @@ void	parser(char *str)
 	// t_tokens	*tokens;
 	char		*token;
 	
-	while ((token = tokenise(&str)) != NULL)
+	while ((token = tokenise(&str)) && token[0] != '\0')
 	{
 		printf("Token: %s\n", token);
 		free(token);

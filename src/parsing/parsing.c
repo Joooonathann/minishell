@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/07 15:06:13 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/07 23:36:57 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,24 @@ char *tokenise(char **str)
 	return (token);
 }
 
-void	parser(char *str)
+void	parser(char *str, t_vars **env)
 {
 	char		*token;
+	t_info_prompt	info;
+
+	info.chevrons = false;
+	info.pipes = false;
+	info.format = malloc(sizeof(char *) * 100);
+	int	i = 0;
 	while (*str)
 	{
 		(token = tokenise(&str));
-		printf("Token: %s;\n", token);
+		if (i == 0)
+			info.format[i] = ft_strdup(token);
+		else
+			info.format[i] = ft_strdup(token);
+		i++;
 		free(token);
 	}
+	handler_command(env, info);
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_handler.c                                  :+:      :+:    :+:   */
+/*   handler_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:24:24 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/06 14:40:09 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/07 23:36:49 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	command_handler(t_vars **env, t_info_prompt info)
+int	handler_command(t_vars **env, t_info_prompt info)
 {
 	if (ft_strcmp(info.format[0], "cd"))
 		cd_command(info.format[1]);
@@ -31,4 +31,5 @@ int	command_handler(t_vars **env, t_info_prompt info)
 		pwd_command();
 	if (ft_strcmp(info.format[0], "unset"))
 		unset_command(env, info.format[1]);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/07 23:36:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:43:33 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,24 +150,32 @@ char *tokenise(char **str)
 	return (token);
 }
 
-void	parser(char *str, t_vars **env)
-{
-	char		*token;
-	t_info_prompt	info;
+// void	parser(char *str, t_vars **env)
+// {
+// 	char		*token;
+// 	t_info_prompt	info;
 
-	info.chevrons = false;
-	info.pipes = false;
-	info.format = malloc(sizeof(char *) * 100);
-	int	i = 0;
+// 	info.chevrons = false;
+// 	info.pipes = false;
+// 	info.format = malloc(sizeof(char *) * 100);
+// 	int	i = 0;
+// 	while (*str)
+// 	{
+// 		(token = tokenise(&str));
+// 		info.format[i++] = ft_strdup(token);
+// 		free(token);
+// 	}
+// 	handler_command(env, info);
+// }
+
+void parser(char *str)
+{
+	char *token;
+
 	while (*str)
 	{
-		(token = tokenise(&str));
-		if (i == 0)
-			info.format[i] = ft_strdup(token);
-		else
-			info.format[i] = ft_strdup(token);
-		i++;
+		token = tokenise(&str);
+		printf ("Token: %s\n", token);
 		free(token);
 	}
-	handler_command(env, info);
 }

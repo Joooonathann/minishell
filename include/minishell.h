@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/07 23:36:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:40:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ t_tokens			*ft_tokennew(char *value, int index);
 //
 
 // Parsing
-void				parser(char *str, t_vars **env);
+//void				parser(char *str, t_vars **env);
+void				parser(char *str);
 void				parsing(char *prompt);
 
 // Commands

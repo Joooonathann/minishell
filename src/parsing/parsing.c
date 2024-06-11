@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/10 12:43:33 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/11 10:56:32 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ char *tokenise(char **str)
 	
 	while (**str)
 	{
-		if ((**str == ' ' || **str == SIMPLE || **str == DOUBLE) &&
-			(!in_quote && i > 0))
+		if ((**str == ' ' || (**str == SIMPLE && count_quote(*str, SIMPLE) > 1) ||
+			(**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && (!in_quote && i > 0))
 			break;
 		else if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote) ||
 				(**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/13 14:44:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/13 14:49:52 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,17 +105,17 @@ int	get_token_len(char *str)
 // 	return (token);
 // }
 
-t_token	*tokenise(char **str)
+t_tokens	*tokenise(char **str)
 {
-	char *token;
-	int i;
-	bool in_quote;
-	QUOTE quote_type;
+	t_tokens	*token;
+	int			i;
+	bool		in_quote;
+	QUOTE		quote_type;
 	
 	while (**str == ' ')
 		(*str)++;
 
-	token = malloc(sizeof(char) * (get_token_len(*str) + 1));
+	token->value = malloc(sizeof(char) * (get_token_len(*str) + 1));
 	if (!token)
 		return (NULL);
 		

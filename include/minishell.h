@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/10 12:40:01 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/13 14:46:00 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,26 @@ typedef struct s_tokens
 {
 	struct s_tokens	*next;
 	struct s_tokens	*prev;
+	bool			simple_quote;
+	bool			double_quote;
+}					t_tokens;
+
+typedef struct s_command
+{
+	struct s_tokens	*next;
+	struct s_tokens	*prev;
+	struct s_pipe	*pipe;
 	char			type;
 	char			quote;
 	char			*value;
-	int				index;
+	
 }					t_tokens;
+
+typedef struct s_pipe
+{
+	char	*input_redirect;
+	char	*output_redirect;
+}			t_pipe;
 
 // Token list
 void				ft_free_tokens(t_tokens **tokens);

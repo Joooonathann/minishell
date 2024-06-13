@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/11 10:56:32 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/13 14:44:45 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	get_token_len(char *str)
 // 	return (token);
 // }
 
-char *tokenise(char **str)
+t_token	*tokenise(char **str)
 {
 	char *token;
 	int i;

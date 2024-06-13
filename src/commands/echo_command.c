@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:10:44 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/06 14:35:34 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:44:44 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	echo_command(bool options, char *str)
 {
-	printf("%s", str);
+	if(!printf("%s", str))
+		return (0);
 	if (options)
 		return (1);
 	printf("\n");

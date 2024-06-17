@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/13 14:46:00 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:33:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ typedef struct s_tokens
 {
 	struct s_tokens	*next;
 	struct s_tokens	*prev;
-	bool			simple_quote;
-	bool			double_quote;
+	char			*value;
+	unsigned int	quote;
 }					t_tokens;
 
 typedef struct s_command
@@ -57,7 +57,7 @@ typedef struct s_command
 	char			quote;
 	char			*value;
 	
-}					t_tokens;
+}					t_command;
 
 typedef struct s_pipe
 {

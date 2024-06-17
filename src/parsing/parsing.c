@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/13 14:49:52 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/17 11:33:20 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,20 @@ t_tokens	*tokenise(char **str)
 	int			i;
 	bool		in_quote;
 	QUOTE		quote_type;
-	
-	while (**str == ' ')
-		(*str)++;
 
-	token->value = malloc(sizeof(char) * (get_token_len(*str) + 1));
-	if (!token)
-		return (NULL);
-		
+	token = NULL;
 	i = 0;
 	in_quote = false;
-	
+	quote_type = 0;
+
+	while (**str == ' ')
+		(*str)++;
+		
+	token = malloc(sizeof(t_tokens));
+	token->value = malloc(sizeof(char) * (get_token_len(*str) + 1));
+	if (!token || !token->value)
+		return (NULL);
+
 	while (**str)
 	{
 		if ((**str == ' ' || (**str == SIMPLE && count_quote(*str, SIMPLE) > 1) ||
@@ -142,11 +145,12 @@ t_tokens	*tokenise(char **str)
 		}
 		else
 		{
-			token[i++] = **str;
+			token->value[i++] = **str;
 			(*str)++;
 		}
 	}
-	token[i] = '\0';
+	token->quote = quote_type;
+	token->value[i] = '\0';
 	return (token);
 }
 
@@ -170,12 +174,15 @@ t_tokens	*tokenise(char **str)
 
 void parser(char *str)
 {
-	char *token;
+	t_tokens	*token;
 
 	while (*str)
 	{
 		token = tokenise(&str);
-		printf ("Token: %s\n", token);
+		printf ("Token: %s\n", token->value);
+		printf ("quote: %d\n", token->quote);
+		printf("\n");
+		free(token->value);
 		free(token);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:30:58 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 20:35:35 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/18 22:30:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	delete_vars(t_vars **env, t_vars *delete)
 
 	if (!env || !*env || !delete)
 		return (0);
-
 	if (*env == delete)
 	{
 		current = *env;
@@ -43,6 +42,5 @@ int	delete_vars(t_vars **env, t_vars *delete)
 	if (delete->value)
 		free(delete->value);
 	free(delete);
-
 	return (1);
 }

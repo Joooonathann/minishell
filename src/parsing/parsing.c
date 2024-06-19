@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/17 14:15:06 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:23:51 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,15 +181,13 @@ void parser(char *str)
 	token = NULL;
 	while (*str)
 	{
-		//tokens = tokenise(&str);
-		//printf("%s\n", tokens->value);
 		token = tokenise(&str);
-		ft_tokenadd_back(&tokens, token);
+		ft_tokenadd_back(&tokens, ft_tokennew(token->value, token->quote));
+		free (token);
 	}
 	while (tokens)
 	{
-		printf("%s\n", token->value);
-		token = token->next;
+		printf("Value: %s\nQuote: %d\n\n", tokens->value, tokens->quote);
+		tokens = tokens->next;
 	}
-	//ft_print_tokens(tokens);
 }

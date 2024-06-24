@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/18 12:16:42 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:51:38 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_tokens			*ft_tokennew(char *value, unsigned quote);
 
 // Parsing
 // void				parser(char *str, t_vars **env);
-void				parser(char *str);
+void				parser(char *str, t_vars **env);
 void				parsing(char *prompt);
 
 // Commands

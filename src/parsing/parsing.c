@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/18 12:23:51 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/24 12:37:14 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,68 @@ t_tokens	*tokenise(char **str)
 // 	handler_command(env, info);
 // }
 
-void parser(char *str)
+char	*get_env_var(char *str)
+{
+	char	*var;
+	int		i;
+	int		j;
+	int		len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (str[i] && str[i] != '$')
+		i++;
+	if (str[i] != '$')
+		return(NULL);
+	i++;
+	while (str[i] && str[i++] != ' ')
+		len++;
+	var = malloc(sizeof(char) * (len + 1));
+	if (!var)
+		return(NULL);
+	i = i - len;
+	while (str[i] && str[i] != ' ')
+		var[j++] = str[i++];
+	var[j] = '\0';
+	return(var);
+}
+
+int is_var_in_token(char *str)
+{
+	int	i;
+
+	if (str == NULL)
+		return(0);
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+	// void	replace_env_var(t_tokens **tokens, t_vars **env)
+	// {
+	// 	char	*var;
+
+	// 	while(*tokens)
+	// 	{
+	// 		if ((*tokens)->quote != 39)
+	// 		{
+	// 			var = ft_strdup((*tokens)->value);
+	// 			free((*tokens)->value);
+	// 			(*tokens)->value = ft_strdup(get_vars(env, var));
+	// 			free(var);
+	// 			printf("%s\n");
+	// 		}
+	// 		*tokens = (*tokens)->next;
+	// 	}
+	// }
+
+void parser(char *str, t_vars **env)
 {
 	t_tokens	*tokens;
 	t_tokens	*token;
@@ -185,9 +246,19 @@ void parser(char *str)
 		ft_tokenadd_back(&tokens, ft_tokennew(token->value, token->quote));
 		free (token);
 	}
+	ft_print_tokens(tokens);
+
+	char	*var;
 	while (tokens)
 	{
-		printf("Value: %s\nQuote: %d\n\n", tokens->value, tokens->quote);
+		if (tokens->quote != 39 && is_var_in_token(tokens->value))
+		{
+			var = get_env_var(tokens->value);
+			var = get_vars(env, var);
+			printf("%s\n", var);
+		}
 		tokens = tokens->next;
 	}
+	//replace_env_var(tokens, env);
+	//ft_print_tokens(tokens);
 }

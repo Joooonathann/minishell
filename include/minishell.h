@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/20 16:51:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:25:42 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define bool unsigned int
 # define true 1
 # define false 0
+# define RESET "\033[0m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
 
 typedef struct s_info_prompt
 {

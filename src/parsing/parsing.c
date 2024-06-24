@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/24 12:37:14 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:28:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,51 +60,6 @@ int	get_token_len(char *str)
 	return (len);
 }
 
-// char	*tokenise(char **str)
-// {
-// 	char	*token;
-// 	int		i;
-// 	bool	in_quote;
-// 	QUOTE	quote_type;
-
-// 	while (**str == ' ')
-// 		(*str)++;
-// 	token = malloc(sizeof(char) * (get_token_len(*str) + 1));
-// 	if (!token)
-// 		return (NULL);
-// 	i = 0;
-// 	in_quote = false;
-// 	while (**str)
-// 	{
-// 		if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote)
-// 			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
-// 		{
-// 			in_quote = true;
-// 			quote_type = (QUOTE)(**str);
-// 			(*str)++;
-// 		}
-// 		else if (((**str == SIMPLE && quote_type == SIMPLE)
-// 				|| (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
-// 		{
-// 			in_quote = false;
-// 			(*str)++;
-// 		}
-// 		else if (**str == ' ' && !in_quote)
-// 		{
-// 			break;
-// 		}
-// 		else
-// 		{
-// 			token[i++] = **str;
-// 			(*str)++;
-// 		}
-// 	}
-// 	token[i] = '\0';
-// 	while (**str == ' ') // Skip trailing spaces
-// 		(*str)++;
-// 	return (token);
-// }
-
 t_tokens	*tokenise(char **str)
 {
 	t_tokens	*token;
@@ -154,24 +109,6 @@ t_tokens	*tokenise(char **str)
 	return (token);
 }
 
-// void	parser(char *str, t_vars **env)
-// {
-// 	char		*token;
-// 	t_info_prompt	info;
-
-// 	info.chevrons = false;
-// 	info.pipes = false;
-// 	info.format = malloc(sizeof(char *) * 100);
-// 	int	i = 0;
-// 	while (*str)
-// 	{
-// 		(token = tokenise(&str));
-// 		info.format[i++] = ft_strdup(token);
-// 		free(token);
-// 	}
-// 	handler_command(env, info);
-// }
-
 char	*get_env_var(char *str)
 {
 	char	*var;
@@ -199,7 +136,49 @@ char	*get_env_var(char *str)
 	return(var);
 }
 
-int is_var_in_token(char *str)
+char *get_string_without_var(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (str[i] && str[i] != '$')
+	{
+		i++;
+		len++;
+	}
+	if (str[i] != '$')
+		return (NULL);
+	while (str[i] && str[i] != ' ')
+		i++;
+	while (str[i])
+	{
+		i++;
+		len++;
+	}
+
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != '$')
+		result[j++] = str[i++];
+	if (str[i] != '$')
+		return (NULL);
+	while (str[i] && str[i] != ' ')
+		i++;
+	while (str[i])
+		result[j++] = str[i++];
+		
+	result[j] = '\0';
+	return (result); 
+}
+
+int var_in_token(char *str)
 {
 	int	i;
 
@@ -215,25 +194,81 @@ int is_var_in_token(char *str)
 	return (0);
 }
 
-	// void	replace_env_var(t_tokens **tokens, t_vars **env)
-	// {
-	// 	char	*var;
+char	*replace_var(char *str, char *var, char *string)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		y;
 
-	// 	while(*tokens)
-	// 	{
-	// 		if ((*tokens)->quote != 39)
-	// 		{
-	// 			var = ft_strdup((*tokens)->value);
-	// 			free((*tokens)->value);
-	// 			(*tokens)->value = ft_strdup(get_vars(env, var));
-	// 			free(var);
-	// 			printf("%s\n");
-	// 		}
-	// 		*tokens = (*tokens)->next;
-	// 	}
-	// }
+	if (!str || !var || !string)
+		return (NULL);
 
-void parser(char *str, t_vars **env)
+	result = malloc(sizeof(char) * (ft_strlen(var) + ft_strlen(string) + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	y = 0;
+	while (str[i] && str[i] != '$')
+		result[j++] = str[i++];
+	if (str[i] != '$')
+		return (NULL);
+	while (var[y])
+		result[j++] = var[y++];
+	while (str[i] && str[i] != ' ')
+		i++;
+	while (str[i])
+		result[j++] = str[i++];
+	free(str);
+	return (result);
+}
+
+int var_is_valid(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(var[i]) && var[i] != '_')
+		return (0);
+	while (var[++i])
+	{
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			return (0);
+	}
+	return (1);
+}
+
+t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
+{
+	t_tokens	*current_tokens;
+	char		*var;
+	char		*string;
+
+	current_tokens = tokens;
+	while (tokens)
+	{
+		if (tokens->quote != 39 && var_in_token(tokens->value))
+		{
+			var = get_env_var(tokens->value);
+			if (!var_is_valid(var))
+			{
+				printf("syntax error\n");
+				free(var);
+				return (current_tokens);
+			}
+			string = get_string_without_var(tokens->value);
+			var = get_vars(env, var);
+			tokens->value = replace_var(tokens->value, var, string);
+			free(var);
+			free(string);
+		}
+		tokens = tokens->next;
+	}
+	return (current_tokens);
+}
+
+void	parser(char *str, t_vars **env)
 {
 	t_tokens	*tokens;
 	t_tokens	*token;
@@ -246,19 +281,10 @@ void parser(char *str, t_vars **env)
 		ft_tokenadd_back(&tokens, ft_tokennew(token->value, token->quote));
 		free (token);
 	}
+	printf(GREEN"BEFORE: \n");
 	ft_print_tokens(tokens);
-
-	char	*var;
-	while (tokens)
-	{
-		if (tokens->quote != 39 && is_var_in_token(tokens->value))
-		{
-			var = get_env_var(tokens->value);
-			var = get_vars(env, var);
-			printf("%s\n", var);
-		}
-		tokens = tokens->next;
-	}
-	//replace_env_var(tokens, env);
-	//ft_print_tokens(tokens);
+	tokens = parse_env_var(tokens, env);
+	printf(RED"AFTER: \n");
+	ft_print_tokens(tokens);
+	printf(RESET);
 }

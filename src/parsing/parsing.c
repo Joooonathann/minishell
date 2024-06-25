@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/24 19:28:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/25 11:49:59 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,11 +229,11 @@ int var_is_valid(char *var)
 	int	i;
 
 	i = 0;
-	if (!ft_isalpha(var[i]) && var[i] != '_')
+	if (!ft_isalpha(var[i]) && var[i] != '?')
 		return (0);
 	while (var[++i])
 	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
+		if (!ft_isalnum(var[i]))
 			return (0);
 	}
 	return (1);
@@ -251,6 +251,7 @@ t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 		if (tokens->quote != 39 && var_in_token(tokens->value))
 		{
 			var = get_env_var(tokens->value);
+			printf("%s\n", var);
 			if (!var_is_valid(var))
 			{
 				printf("syntax error\n");

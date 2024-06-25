@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/20 16:51:26 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/25 23:41:09 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,17 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	char *prompt;
 	t_vars *env;
+	char	*copy_pwd;
 
 	env = NULL;
 	init_vars(&env, envp);
+	copy_pwd = ft_strdup(get_vars(&env, "PWD"));
 	signal(SIGINT, handler);
 	signal(SIGQUIT, handler);
 	using_history();
+	env_command(env);
+	cd_command("src", &env, &copy_pwd);
+	env_command(env);
 	while (1)
 	{
 		prompt = readline(get_prompt());

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/24 19:25:42 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/25 23:34:11 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ typedef struct s_command
 	char			type;
 	char			quote;
 	char			*value;
-	
+
 }					t_command;
 
 typedef struct s_pipe
 {
-	char	*input_redirect;
-	char	*output_redirect;
-}			t_pipe;
+	char			*input_redirect;
+	char			*output_redirect;
+}					t_pipe;
 
 // Token list
 void				ft_free_tokens(t_tokens **tokens);
@@ -84,9 +84,11 @@ void				parsing(char *prompt);
 // Commands
 int					handler_command(t_vars **env, t_info_prompt info);
 char				*ft_strcpy(char *dst, const char *src);
-int					cd_command(char *path);
+int					cd_command(char *path, t_vars **env, char **copy_path);
 int					pwd_command(void);
 int					echo_command(bool options, char *str);
+int					update_vars(t_vars **env, char *key, char *value);
+int					exist_vars(t_vars *env, char *key);
 int					env_command(t_vars *env);
 int					unset_command(t_vars **env, char *key_env);
 

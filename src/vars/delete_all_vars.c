@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_all_vars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 22:25:39 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/18 22:30:11 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:56:37 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

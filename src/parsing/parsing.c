@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/25 11:49:59 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/25 12:03:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,11 @@ char	*get_env_var(char *str)
 	if (str[i] != '$')
 		return(NULL);
 	i++;
-	while (str[i] && str[i++] != ' ')
+	while (str[i] && str[i] != ' ')
+	{
+		i++;
 		len++;
+	}
 	var = malloc(sizeof(char) * (len + 1));
 	if (!var)
 		return(NULL);
@@ -248,10 +251,9 @@ t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 	current_tokens = tokens;
 	while (tokens)
 	{
-		if (tokens->quote != 39 && var_in_token(tokens->value))
+		while (tokens->quote != 39 && var_in_token(tokens->value))
 		{
 			var = get_env_var(tokens->value);
-			printf("%s\n", var);
 			if (!var_is_valid(var))
 			{
 				printf("syntax error\n");

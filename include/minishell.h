@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/25 23:34:11 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:35:06 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int					update_vars(t_vars **env, char *key, char *value);
 int					exist_vars(t_vars *env, char *key);
 int					env_command(t_vars *env);
 int					unset_command(t_vars **env, char *key_env);
+void				exit_command(int code);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 17:53:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:41:17 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ static int	size_key(char *envp)
 		i++;
 	}
 	return (i);
+}
+
+void	up_level(t_vars **env)
+{
+	int	value_int;
+
+	if(exist_vars(*env, "SHLVL"))
+	{
+	value_int = ft_atoi(get_vars(env, "SHLVL"));
+	value_int++;
+	update_vars(env, "SHLVL", ft_itoa(value_int));
+	}
+	return ;
 }
 
 int	init_vars(t_vars **env, char **envp)
@@ -56,5 +69,6 @@ int	init_vars(t_vars **env, char **envp)
 		free(value);
 		i++;
 	}
+	up_level(env);
 	return (1);
 }

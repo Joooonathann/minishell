@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/06/25 22:55:36 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/06/26 10:35:24 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC			=	./src/minishell.c\
 				./src/token_list/ft_tokennew.c\
 				./src/parsing/parsing.c\
 				./src/commands/cd_command.c\
+				./src/commands/exit_command.c\
 				./src/commands/pwd_command.c\
 				./src/commands/echo_command.c\
 				./src/commands/export_command.c\

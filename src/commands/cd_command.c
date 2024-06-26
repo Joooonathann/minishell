@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:55:55 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/25 23:19:15 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:42:09 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	cd_command(char *path, t_vars **env, char **copy_path)
 	}
 	else
 	{
-		getcwd(cwd, sizeof(cwd));
+		if (!getcwd(cwd, sizeof(cwd)))
+			printf("bash: cd: Not found path access\n");
 		if (exist_vars(*env, "OLDPWD"))
 			update_vars(env, "OLDPWD", *copy_path);
 		free(*copy_path);

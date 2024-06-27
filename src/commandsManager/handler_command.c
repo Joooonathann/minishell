@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/27 11:52:34 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:27:21 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,17 @@ int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 	{
 		if (ft_strcmp(commands[i].name, command->value))
 		{
-			commands[i].func(command, env, cpy_path);
+			if (!commands[i].func(command, env, cpy_path))
+			{
+				free(commands);
+				return (0);
+			}
 			free(commands);
 			return (1);
 		}
 		i++;
 	}
 	extern_manager(command);
+	free(commands);
+	return (1);
 }

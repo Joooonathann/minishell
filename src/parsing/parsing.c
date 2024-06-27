@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/25 12:03:03 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/27 12:02:25 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ char	*replace_var(char *str, char *var, char *string)
 		i++;
 	while (str[i])
 		result[j++] = str[i++];
+	result[j] = '\0';
 	free(str);
 	return (result);
 }
@@ -236,7 +237,7 @@ int var_is_valid(char *var)
 		return (0);
 	while (var[++i])
 	{
-		if (!ft_isalnum(var[i]))
+		if (!ft_isalnum(var[i]) && var[i] != '_')
 			return (0);
 	}
 	return (1);
@@ -254,12 +255,6 @@ t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 		while (tokens->quote != 39 && var_in_token(tokens->value))
 		{
 			var = get_env_var(tokens->value);
-			if (!var_is_valid(var))
-			{
-				printf("syntax error\n");
-				free(var);
-				return (current_tokens);
-			}
 			string = get_string_without_var(tokens->value);
 			var = get_vars(env, var);
 			tokens->value = replace_var(tokens->value, var, string);

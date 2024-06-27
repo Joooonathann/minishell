@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 13:22:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/27 16:29:55 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,99 +15,6 @@
 #define QUOTE unsigned int
 #define SIMPLE 39
 #define DOUBLE 34
-
-int	count_quote(char *str, QUOTE quote_type)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)quote_type)
-			j++;
-		i++;
-	}
-	return (j);
-}
-
-int	get_token_len(char *str)
-{
-	int		len;
-	bool	in_quote;
-	QUOTE	quote_type;
-
-	len = 0;
-	in_quote = false;
-	while (*str)
-	{
-		if ((*str == SIMPLE && count_quote(str, SIMPLE) > 1 && !in_quote)
-			|| (*str == DOUBLE && count_quote(str, DOUBLE) > 1 && !in_quote))
-		{
-			in_quote = true;
-			quote_type = (QUOTE)(*str);
-		}
-		else if (((*str == SIMPLE && quote_type == SIMPLE)
-				|| (*str == DOUBLE && quote_type == DOUBLE)) && in_quote)
-			return (len);
-		else if (*str == ' ' && !in_quote)
-			return (len);
-		else
-			len++;
-		str++;
-	}
-	return (len);
-}
-
-t_tokens	*tokenise(char **str)
-{
-	t_tokens	*token;
-	int			i;
-	bool		in_quote;
-	QUOTE		quote_type;
-
-	token = NULL;
-	i = 0;
-	in_quote = false;
-	quote_type = 0;
-
-	while (**str == ' ')
-		(*str)++;
-		
-	token = malloc(sizeof(t_tokens));
-	token->value = malloc(sizeof(char) * (get_token_len(*str) + 1));
-	if (!token || !token->value)
-		return (NULL);
-
-	while (**str)
-	{
-		if ((**str == ' ' || (**str == SIMPLE && count_quote(*str, SIMPLE) > 1) ||
-			(**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && (!in_quote && i > 0))
-			break;
-		else if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote) ||
-				(**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
-		{
-			in_quote = true;
-			quote_type = (QUOTE)(**str);
-			(*str)++;
-		}
-		else if (((**str == SIMPLE && quote_type == SIMPLE) ||
-				(**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
-		{
-			(*str)++;
-			break;
-		}
-		else
-		{
-			token->value[i++] = **str;
-			(*str)++;
-		}
-	}
-	token->quote = quote_type;
-	token->value[i] = '\0';
-	return (token);
-}
 
 int	is_valid_var_char(char c)
 {
@@ -233,21 +140,6 @@ char	*replace_var(char *str, char *var, char *string)
 	return (result);
 }
 
-int var_is_valid(char *var)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_isalpha(var[i]) && var[i] != '?')
-		return (0);
-	while (var[++i])
-	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			return (0);
-	}
-	return (1);
-}
-
 t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 {
 	t_tokens	*current_tokens;
@@ -260,9 +152,7 @@ t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 		while (tokens->quote != 39 && var_in_token(tokens->value))
 		{
 			var = get_env_var(tokens->value);
-			printf("VAR: %s\n", var);
 			string = get_string_without_var(tokens->value);
-			printf("STRING: %s\n", string);
 			var = get_vars(env, var);
 			tokens->value = replace_var(tokens->value, var, string);
 			free(var);
@@ -276,20 +166,18 @@ t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 void	parser(char *str, t_vars **env)
 {
 	t_tokens	*tokens;
-	t_tokens	*token;
 
 	tokens = NULL;
-	token = NULL;
-	while (*str)
-	{
-		token = tokenise(&str);
-		ft_tokenadd_back(&tokens, ft_tokennew(token->value, token->quote));
-		free (token);
-	}
+
+	create_tokens(&str, &tokens);
+
 	printf(GREEN"BEFORE: \n");
 	ft_print_tokens(tokens);
+
 	tokens = parse_env_var(tokens, env);
+
 	printf(RED"AFTER: \n");
 	ft_print_tokens(tokens);
 	printf(RESET);
+	
 }

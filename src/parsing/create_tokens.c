@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 17:36:02 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/27 17:44:35 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int is_end_of_token(char **str, bool in_quote, int i)
 {
 	return (**str == ' ' || (**str == SIMPLE && count_quote(*str, SIMPLE) > 1) || (**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && (!in_quote && i > 0);
 }
-
 //TEST
 
 t_tokens	*tokenise(char **str)

@@ -4,6 +4,8 @@
 		"libft.h": "c",
 		"stdlib.h": "c",
 		"readline.h": "c",
-		"type_traits": "c"
-	}
+		"type_traits": "c",
+		"typeinfo": "c"
+	},
+	"C_Cpp.errorSquiggles": "disabled"
 }

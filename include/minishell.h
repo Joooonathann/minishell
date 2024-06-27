@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 13:11:33 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/27 17:01:52 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,12 @@ t_tokens				*ft_tokennew(char *value, unsigned quote);
 //
 
 // Parsing
-// void				parser(char *str, t_vars **env);
+void					create_tokens(char **str, t_tokens **tokens);
+t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
 void					parser(char *str, t_vars **env);
-void					parsing(char *prompt);
+// Parsing Utils
+int						is_valid_var_char(char c);
+int						calc_string_len(char *str);
 
 // Commands
 char					*ft_strcpy(char *dst, const char *src);

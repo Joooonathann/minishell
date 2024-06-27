@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 12:02:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/27 13:22:25 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,11 @@ t_tokens	*tokenise(char **str)
 	return (token);
 }
 
+int	is_valid_var_char(char c)
+{
+	return ft_isalnum(c) || c == '_';
+}
+
 char	*get_env_var(char *str)
 {
 	char	*var;
@@ -124,7 +129,7 @@ char	*get_env_var(char *str)
 	if (str[i] != '$')
 		return(NULL);
 	i++;
-	while (str[i] && str[i] != ' ')
+	while (str[i] && is_valid_var_char(str[i]))
 	{
 		i++;
 		len++;
@@ -133,7 +138,7 @@ char	*get_env_var(char *str)
 	if (!var)
 		return(NULL);
 	i = i - len;
-	while (str[i] && str[i] != ' ')
+	while (str[i] && is_valid_var_char(str[i]))
 		var[j++] = str[i++];
 	var[j] = '\0';
 	return(var);
@@ -156,14 +161,13 @@ char *get_string_without_var(char *str)
 	}
 	if (str[i] != '$')
 		return (NULL);
-	while (str[i] && str[i] != ' ')
+	while (str[i] && is_valid_var_char(str[i]))
 		i++;
 	while (str[i])
 	{
 		i++;
 		len++;
 	}
-
 	result = malloc(sizeof(char) * (len + 1));
 	if (!result)
 		return (NULL);
@@ -172,11 +176,11 @@ char *get_string_without_var(char *str)
 		result[j++] = str[i++];
 	if (str[i] != '$')
 		return (NULL);
-	while (str[i] && str[i] != ' ')
+	i++;
+	while (str[i] && is_valid_var_char(str[i]))
 		i++;
 	while (str[i])
 		result[j++] = str[i++];
-		
 	result[j] = '\0';
 	return (result); 
 }
@@ -217,9 +221,10 @@ char	*replace_var(char *str, char *var, char *string)
 		result[j++] = str[i++];
 	if (str[i] != '$')
 		return (NULL);
+	i++;
 	while (var[y])
 		result[j++] = var[y++];
-	while (str[i] && str[i] != ' ')
+	while (str[i] && is_valid_var_char(str[i]))
 		i++;
 	while (str[i])
 		result[j++] = str[i++];
@@ -255,7 +260,9 @@ t_tokens *parse_env_var(t_tokens *tokens, t_vars **env)
 		while (tokens->quote != 39 && var_in_token(tokens->value))
 		{
 			var = get_env_var(tokens->value);
+			printf("VAR: %s\n", var);
 			string = get_string_without_var(tokens->value);
+			printf("STRING: %s\n", string);
 			var = get_vars(env, var);
 			tokens->value = replace_var(tokens->value, var, string);
 			free(var);

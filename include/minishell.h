@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 12:11:27 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:11:33 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void					parser(char *str, t_vars **env);
 void					parsing(char *prompt);
 
 // Commands
-int						handler_command(t_vars **env, t_info_prompt info);
 char					*ft_strcpy(char *dst, const char *src);
 int						cd_command(char *path, t_vars **env, char **copy_path);
 int						pwd_command(void);

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/27 11:17:09 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:19:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,5 @@ int	handler_command(t_command *command)
 		}
 		i++;
 	}
+	extern_manager(command);
 }

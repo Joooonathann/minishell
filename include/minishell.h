@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 10:46:55 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:36:30 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@
 # define RESET "\033[0m"
 # define RED "\033[31m"
 # define GREEN "\033[32m"
-
-typedef struct s_info_prompt
-{
-	bool				pipes;
-	bool				chevrons;
-	char				**format;
-}						t_info_prompt;
 
 typedef struct s_vars
 {

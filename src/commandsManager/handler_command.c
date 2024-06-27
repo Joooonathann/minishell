@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/27 11:19:04 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:52:34 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 typedef struct
 {
 	char	*name;
-	void	(*func)(t_command *);
+	void	(*func)(t_tokens *, t_vars **env, char **cpy_path);
 }			t_lstcmd;
 
 t_lstcmd	*init_commands()
@@ -44,7 +44,7 @@ t_lstcmd	*init_commands()
 	return (commands);
 }
 
-int	handler_command(t_command *command)
+int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 {
 	int			i;
 	t_lstcmd	*commands;
@@ -59,7 +59,7 @@ int	handler_command(t_command *command)
 	{
 		if (ft_strcmp(commands[i].name, command->value))
 		{
-			commands[i].func(command);
+			commands[i].func(command, env, cpy_path);
 			free(commands);
 			return (1);
 		}

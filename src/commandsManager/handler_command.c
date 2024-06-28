@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/27 13:27:21 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:11:25 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 typedef struct
 {
 	char	*name;
-	void	(*func)(t_tokens *, t_vars **env, char **cpy_path);
+	int		(*func)(t_tokens *, t_vars **env, char **cpy_path);
 }			t_lstcmd;
 
 t_lstcmd	*init_commands()
@@ -37,10 +37,10 @@ t_lstcmd	*init_commands()
 	commands[4].func = export_manager;
 	commands[5].name = "pwd";
 	commands[5].func = pwd_manager;
-	commands[6].name = "unset";
-	commands[6].func = unset_manager;
-	commands[7].name = NULL;
-	commands[7].func = NULL;
+	//commands[6].name = "unset";
+	//commands[6].func = unset_manager;
+	commands[6].name = NULL;
+	commands[6].func = NULL;
 	return (commands);
 }
 
@@ -59,17 +59,12 @@ int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 	{
 		if (ft_strcmp(commands[i].name, command->value))
 		{
-			if (!commands[i].func(command, env, cpy_path))
-			{
-				free(commands);
-				return (0);
-			}
+			commands[i].func(command, env, cpy_path);
 			free(commands);
 			return (1);
 		}
 		i++;
 	}
-	extern_manager(command);
 	free(commands);
 	return (1);
 }

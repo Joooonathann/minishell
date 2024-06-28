@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/26 11:30:23 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:03:30 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,16 @@ void	handler(int signal)
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void) argc;
-	(void) argv;
+	(void)argc;
+	(void)argv;
 	char *prompt;
 	t_vars *env;
-
+	t_tokens *tokens;
+	char	*cpy_pwd;
+	
 	env = NULL;
 	init_vars(&env, envp);
+	cpy_pwd = ft_strdup(get_vars(&env, "PWD"));
 	signal(SIGINT, handler);
 	signal(SIGQUIT, handler);
 	using_history();
@@ -99,7 +102,8 @@ int	main(int argc, char **argv, char **envp)
 			exit(EXIT_SUCCESS);
 		if (prompt && *prompt)
 		{
-			parser(prompt, &env);
+			tokens = parser(prompt, &env);
+			handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
 		}
 		free(prompt);

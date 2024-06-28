@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 17:01:52 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/06/28 18:10:59 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,23 @@ void					ft_print_tokens(t_tokens *tokens);
 void					ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
 t_tokens				*ft_tokenlast(t_tokens *tokens);
 t_tokens				*ft_tokennew(char *value, unsigned quote);
+int						ft_count_tokens(t_tokens *tokens);
+int						ft_count_value_tokens(t_tokens *tokens);
+
 //
 
 // Parsing
 void					create_tokens(char **str, t_tokens **tokens);
 t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
-void					parser(char *str, t_vars **env);
+t_tokens				*parser(char *str, t_vars **env);
+
 // Parsing Utils
 int						is_valid_var_char(char c);
 int						calc_string_len(char *str);
 
 // Commands
+int						handler_command(t_tokens *command, t_vars **env,
+							char **cpy_path);
 char					*ft_strcpy(char *dst, const char *src);
 int						cd_command(char *path, t_vars **env, char **copy_path);
 int						pwd_command(void);
@@ -88,6 +94,19 @@ int						env_command(t_vars *env);
 int						unset_command(t_vars **env, char *key_env);
 void					exit_command(int code);
 
+// Manager Commands
+int						cd_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+int						echo_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+int						env_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+int						exit_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+int						export_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+int						pwd_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
 // Env vars
 int						add_vars(char *key, char *value, t_vars **env);
 int						init_vars(t_vars **env, char **envp);

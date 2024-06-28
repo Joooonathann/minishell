@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/27 14:22:54 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:13:57 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int export_manager(t_tokens *command, t_vars **env, char **cpy_path)
     char    **splited_str;
     int     i;
     
+    (void) cpy_path;
     str = NULL;
     if (ft_count_tokens(command) < 2)
     {
@@ -53,7 +54,7 @@ int export_manager(t_tokens *command, t_vars **env, char **cpy_path)
     build_str(&str, command);
     if (!str)
         return (0);
-    splited_str = ft_split(str, " ");
+    splited_str = ft_split(str, ' ');
     if (!splited_str)
     {
         free(str);

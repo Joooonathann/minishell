@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/28 18:13:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:35:34 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,23 @@ static int build_str(char **str, t_tokens *command)
     int i;
     int j;
     
-    *str = malloc(sizeof(char) * ft_count_value_tokens(command) + 1);
+    *str = malloc(sizeof(char) * ft_count_value_tokens(command) + (ft_count_tokens(command) - 1) + 1);
     if (!str)
         return (0);
     j = 0;
     while (command)
     {
         i = 0;
-        while (command->value)
+        while (command->value[i])
         {
-            *str[j] = command->value[i];
+            (*str)[j] = command->value[i];
             i++;
             j++;
         }
+        (*str)[j++] = ' ';
         command = command->next;
     }
-    *str[j] = '\0';
+    (*str)[j] = '\0';
     return (1);
 }
 

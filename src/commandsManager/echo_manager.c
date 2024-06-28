@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/28 18:34:37 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:48:02 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static int build_str(char **str, t_tokens *command)
             i++;
             j++;
         }
-        (*str)[j++] = ' ';
         command = command->next;
+        if (command)
+            (*str)[j++] = ' ';
     }
     (*str)[j] = '\0';
     return (1);

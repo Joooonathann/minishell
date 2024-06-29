@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/29 11:19:43 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/29 11:24:18 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ typedef struct s_pipe
 	char				*input_redirect;
 	char				*output_redirect;
 }						t_pipe;
+
+typedef struct s_lst_cmd
+{
+	char				*name;
+	int					(*func)(t_tokens *, t_vars **env, char **cpy_path);
+}						t_lstcmd;
 
 // Token list
 void					ft_free_tokens(t_tokens **tokens);

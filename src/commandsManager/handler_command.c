@@ -6,17 +6,11 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/29 11:20:15 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/29 11:23:50 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct
-{
-	char	*name;
-	int		(*func)(t_tokens *, t_vars **env, char **cpy_path);
-}			t_lstcmd;
 
 t_lstcmd	*init_commands()
 {

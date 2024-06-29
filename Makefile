@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/06/28 18:12:07 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/06/29 11:19:57 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC			=	./src/minishell.c\
 				./src/token_list/ft_tokennew.c\
 				./src/token_list/ft_count_tokens.c\
 				./src/token_list/ft_count_value_tokens.c\
+				./src/token_list/ft_build_str_tokens.c\
 				./src/parsing/create_tokens.c\
 				./src/parsing/parse_env_var.c\
 				./src/parsing/parser.c\
@@ -44,6 +45,7 @@ SRC			=	./src/minishell.c\
 				./src/commandsManager/exit_manager.c\
 				./src/commandsManager/export_manager.c\
 				./src/commandsManager/pwd_manager.c\
+				./src/commandsManager/unset_manager.c\
 				./src/vars/add_vars.c\
 				./src/vars/init_vars.c\
 				./src/vars/print_vars.c\

@@ -6,37 +6,11 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/28 19:26:50 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/29 11:14:35 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int build_str(char **str, t_tokens *command)
-{
-    int i;
-    int j;
-    
-   *str = malloc(sizeof(char) * (ft_count_value_tokens(command) + (ft_count_tokens(command) - 1) + 1));
-    if (!str)
-        return (0);
-    j = 0;
-    while (command)
-    {
-        i = 0;
-        while (command->value[i])
-        {
-            (*str)[j] = command->value[i];
-            i++;
-            j++;
-        }
-        command = command->next;
-        if (command)
-            (*str)[j++] = ' ';
-    }
-    (*str)[j] = '\0';
-    return (1);
-}
 
 int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
@@ -49,7 +23,7 @@ int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
     {
         if (ft_count_tokens(command) > 2)
         {
-            if (!build_str(&str, command->next->next))
+            if (!ft_build_str_tokens(&str, command->next->next))
                 return (0);
         }
         echo_command(true, str);
@@ -59,7 +33,7 @@ int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
     {
         if (ft_count_tokens(command) > 1)
          {
-            if (!build_str(&str, command->next))
+            if (!ft_build_str_tokens(&str, command->next))
                 return (0);
         }
         echo_command(false, str);

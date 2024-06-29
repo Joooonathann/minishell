@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/28 18:10:59 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/06/29 11:19:43 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_tokens				*ft_tokenlast(t_tokens *tokens);
 t_tokens				*ft_tokennew(char *value, unsigned quote);
 int						ft_count_tokens(t_tokens *tokens);
 int						ft_count_value_tokens(t_tokens *tokens);
+int						ft_build_str_tokens(char **str, t_tokens *command);
 
 //
 
@@ -107,6 +108,9 @@ int						export_manager(t_tokens *command, t_vars **env,
 							char **cpy_path);
 int						pwd_manager(t_tokens *command, t_vars **env,
 							char **cpy_path);
+int						unset_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+
 // Env vars
 int						add_vars(char *key, char *value, t_vars **env);
 int						init_vars(t_vars **env, char **envp);

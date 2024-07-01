@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:34:52 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 17:07:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/01 16:39:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,16 @@
 char	*replace_var(char *str, char *var, char *string)
 {
 	char	*result;
-	int		i;
-	int		j;
-	int		y;
 
-	if (!str || !var || !string)
+	if (!str || (!var && !string))
+	{
+		free(str);
 		return (NULL);
+	}
 	result = malloc(sizeof(char) * (ft_strlen(var) + ft_strlen(string) + 1));
 	if (!result)
 		return (NULL);
-	i = 0;
-	j = 0;
-	y = 0;
-	while (str[i] && str[i] != '$')
-		result[j++] = str[i++];
-	i++;
-	while (var[y])
-		result[j++] = var[y++];
-	while (str[i] && is_valid_var_char(str[i]))
-		i++;
-	while (str[i])
-		result[j++] = str[i++];
-	result[j] = '\0';
+	copy_string_and_var(&result, str, var);
 	free(str);
 	return (result);
 }
@@ -44,10 +32,14 @@ char	*replace_var(char *str, char *var, char *string)
 char	*get_string_without_var(char *str)
 {
 	char	*result;
+	int		len;
 	int		i;
 	int		j;
 
-	result = malloc(sizeof(char) * (calc_string_len(str) + 1));
+	len = calc_string_len(str);
+	if (len == 0)
+		return (NULL);
+	result = malloc(sizeof(char) * (len + 1));
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -111,6 +103,7 @@ t_tokens	*parse_env_var(t_tokens *tokens, t_vars **env)
 {
 	t_tokens	*current_tokens;
 	char		*var;
+	char		*var_env;
 	char		*string;
 
 	current_tokens = tokens;
@@ -120,9 +113,10 @@ t_tokens	*parse_env_var(t_tokens *tokens, t_vars **env)
 		{
 			var = get_env_var(tokens->value);
 			string = get_string_without_var(tokens->value);
-			var = get_vars(env, var);
-			tokens->value = replace_var(tokens->value, var, string);
+			var_env = get_vars(env, var);
 			free(var);
+			tokens->value = replace_var(tokens->value, var_env, string);
+			free(var_env);
 			free(string);
 		}
 		tokens = tokens->next;

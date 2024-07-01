@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 17:44:35 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/01 16:13:46 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	get_token_len(char *str)
 
 	len = 0;
 	in_quote = false;
+	while (*str == ' ')
+		str++;
 	while (*str)
 	{
 		if ((*str == SIMPLE && count_quote(str, SIMPLE) > 1 && !in_quote)
@@ -65,7 +67,14 @@ t_tokens	*init_token(char *str)
 	t_tokens	*token;
 
 	token = malloc(sizeof(t_tokens));
+	if (!token)
+		return (NULL);
 	token->value = malloc(sizeof(char) * (get_token_len(str) + 1));
+	if (!token->value)
+	{
+		free(token);
+		return (NULL);
+	}
 	return (token);
 }
 
@@ -95,7 +104,7 @@ t_tokens	*tokenise(char **str)
 	QUOTE		quote_type;
 
 	token = init_token(*str);
-	if (!token || !token->value)
+	if (!token)
 		return (NULL);
 	i = 0;
 	in_quote = false;
@@ -135,6 +144,8 @@ void	create_tokens(char **str, t_tokens **tokens)
 	while (**str)
 	{
 		token = tokenise(str);
+		if (!token)
+			return ;
 		ft_tokenadd_back(tokens, ft_tokennew(token->value, token->quote));
 		free(token);
 	}

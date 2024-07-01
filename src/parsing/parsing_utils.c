@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:58:52 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/27 17:09:30 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/01 16:31:00 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,25 @@ int	calc_string_len(char *str)
 	while (str[i++])
 		len++;
 	return (len);
+}
+
+void	copy_string_and_var(char **result, char *str, char *var)
+{
+	int	i;
+	int	j;
+	int	y;
+
+	i = 0;
+	j = 0;
+	y = 0;
+	while (str[i] && str[i] != '$')
+		(*result)[j++] = str[i++];
+	i++;
+	while (var && var[y])
+		(*result)[j++] = var[y++];
+	while (str[i] && is_valid_var_char(str[i]))
+		i++;
+	while (str[i])
+		(*result)[j++] = str[i++];
+	(*result)[j] = '\0';
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+         #
+#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/06/29 11:19:57 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/07/01 16:30:21 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

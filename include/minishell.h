@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/29 11:24:18 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:30:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ t_tokens				*parser(char *str, t_vars **env);
 // Parsing Utils
 int						is_valid_var_char(char c);
 int						calc_string_len(char *str);
+void					copy_string_and_var(char **result, char *str, char *var);
 
-// Commands
-int						handler_command(t_tokens *command, t_vars **env,
-							char **cpy_path);
+	// Commands
+	int handler_command(t_tokens *command, t_vars **env,
+						char **cpy_path);
 char					*ft_strcpy(char *dst, const char *src);
 int						cd_command(char *path, t_vars **env, char **copy_path);
 int						pwd_command(void);

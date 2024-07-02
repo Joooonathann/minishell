@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/01 16:54:34 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/02 11:42:41 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	main(int argc, char **argv, char **envp)
 			tokens = parser(prompt, &env);
 			handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
+			ft_free_tokens(tokens);
 		}
 		free(prompt);
 	}

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/01 16:13:46 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:31:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_tokens	*init_token(char *str)
 	return (token);
 }
 
-//TEST
 void append_char_to_token(t_tokens *token, char **str, int *i)
 {
 	if (**str == SIMPLE || **str == DOUBLE)
@@ -90,18 +89,28 @@ void append_char_to_token(t_tokens *token, char **str, int *i)
 	(*str)++;
 }
 
-int is_end_of_token(char **str, bool in_quote, int i)
+int is_end_of_token(char **str, bool in_quote, QUOTE quote_type, int i)
 {
-	return (**str == ' ' || (**str == SIMPLE && count_quote(*str, SIMPLE) > 1) || (**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && (!in_quote && i > 0);
+	if ((**str == ' ' || **str == '|' || **str == '<' || **str == '>'
+		|| (**str == SIMPLE && count_quote(*str, SIMPLE) > 1)
+		|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && (!in_quote && i > 0))
+	{
+		return (1);	
+	}
+	else if (((**str == SIMPLE && quote_type == SIMPLE) || (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
+	{
+		(*str)++;
+		return (1);
+	}
+	return (0);
 }
-//TEST
 
-t_tokens	*tokenise(char **str)
+t_tokens *tokenise(char **str)
 {
-	t_tokens	*token;
-	int			i;
-	bool		in_quote;
-	QUOTE		quote_type;
+	t_tokens *token;
+	int i;
+	bool in_quote;
+	QUOTE quote_type;
 
 	token = init_token(*str);
 	if (!token)
@@ -111,19 +120,20 @@ t_tokens	*tokenise(char **str)
 	quote_type = 0;
 	while (**str == ' ')
 		(*str)++;
-	while (**str && !is_end_of_token(str, in_quote, i))
+	while (**str && !is_end_of_token(str, in_quote, quote_type, i))
 	{
-		if ((**str == SIMPLE && count_quote(*str, SIMPLE) > 1 && !in_quote) || (**str == DOUBLE && count_quote(*str, DOUBLE) > 1 && !in_quote))
+		if (((**str == SIMPLE && count_quote(*str, SIMPLE) > 1)
+			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && !in_quote)
 		{
 			in_quote = true;
 			quote_type = (QUOTE)(**str);
 			(*str)++;
 		}
-		else if (((**str == SIMPLE && quote_type == SIMPLE)
-				|| (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
+		if (**str == '|' || **str == '<' || **str == '>')
 		{
+			token->value[i++] = **str;
 			(*str)++;
-			break ;
+			break;
 		}
 		else
 		{

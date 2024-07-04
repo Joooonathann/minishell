@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:34:52 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/01 16:39:29 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:33:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ char	*get_env_var(char *str)
 	while (str[i] && str[i] != '$')
 		i++;
 	i++;
-	while (str[i] && is_valid_var_char(str[i]))
-	{
-		i++;
+	if (!is_valid_var_char(str[i]))
+		return (NULL);
+	while (str[i] && is_valid_var_char(str[i++]))
 		len++;
-	}
 	var = malloc(sizeof(char) * (len + 1));
 	if (!var)
 		return (NULL);
@@ -112,6 +111,9 @@ t_tokens	*parse_env_var(t_tokens *tokens, t_vars **env)
 		while (tokens->quote != 39 && var_in_token(tokens->value))
 		{
 			var = get_env_var(tokens->value);
+			if (!var)
+				break ;
+			printf("VAR: %s\n", var);
 			string = get_string_without_var(tokens->value);
 			var_env = get_vars(env, var);
 			free(var);

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/03 11:35:22 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/04 14:20:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,29 +115,34 @@ int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	char *prompt;
-	t_vars *env;
+	(void)envp;
+	// char *prompt;
+	// t_vars *env;
 	t_tokens *tokens;
-	char *cpy_pwd;
+	// char *cpy_pwd;
 
-	env = NULL;
-	init_vars(&env, envp);
-	cpy_pwd = ft_strdup(get_vars(&env, "PWD"));
-	signal(SIGINT, handler);
-	signal(SIGQUIT, handler);
-	using_history();
-	while (1)
-	{
-		prompt = readline(get_prompt());
-		if (!prompt)
-			exit(EXIT_SUCCESS);
-		if (prompt && *prompt)
-		{
-			tokens = parser(prompt, &env);
-			//handler_command(tokens, &env, &cpy_pwd);
-			add_history(prompt);
-			ft_free_tokens(&tokens);
-		}
-		free(prompt);
-	}
+	// env = NULL;
+	// init_vars(&env, envp);
+	// cpy_pwd = ft_strdup(get_vars(&env, "PWD"));
+	// signal(SIGINT, handler);
+	// signal(SIGQUIT, handler);
+	// using_history();
+	// while (1)
+	// {
+	// 	prompt = readline(get_prompt());
+	// 	if (!prompt)
+	// 		exit(EXIT_SUCCESS);
+	// 	if (prompt && *prompt)
+	// 	{
+	// 		tokens = parser(prompt, &env);
+	// 		//handler_command(tokens, &env, &cpy_pwd);
+	// 		add_history(prompt);
+	// 		ft_free_tokens(&tokens);
+	// 	}
+	// 	free(prompt);
+	// }
+	char *str = "echo \"coucou toi\" coucou>>toi<<oui|non>";
+	printf("str: %s\n", str);
+	tokens = parser(str, NULL);
+	ft_free_tokens(&tokens);
 }

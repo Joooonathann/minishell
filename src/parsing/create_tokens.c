@@ -6,30 +6,47 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/03 17:31:08 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:05:34 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#define QUOTE unsigned int
-#define SIMPLE 39
-#define DOUBLE 34
-
-int	count_quote(char *str, QUOTE quote_type)
+void	tokenise_redirections(t_tokens **token, char **str, int *i)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
+	if ((**str == '<' && *(*str + 1) == '<')
+		|| (**str == '>' && *(*str + 1) == '>'))
 	{
-		if (str[i] == (char)quote_type)
-			j++;
-		i++;
+		(*token)->value[(*i)++] = **str;
+		(*str)++;
 	}
-	return (j);
+	(*token)->value[(*i)++] = **str;
+	(*str)++;
+}
+
+void	count_redirections(char **str, int *len)
+{
+	if ((**str == '<' && *(*str + 1) == '<')
+		|| (**str == '>' && *(*str + 1) == '>'))
+	{
+		(*len)++;
+		(*str)++;
+	}
+	(*len)++;
+	(*str)++;
+}
+
+void	advance_in_get_token_len(char **str, int *len)
+{
+	(*len)++;
+	(*str)++;
+}
+
+void	append_quote_type(bool *in_quote, QUOTE *quote_type, char **str)
+{
+	(*in_quote) = true;
+	(*quote_type) = (QUOTE)(**str);
+	(*str)++;
 }
 
 int	get_token_len(char *str)
@@ -40,24 +57,22 @@ int	get_token_len(char *str)
 
 	len = 0;
 	in_quote = false;
+	quote_type = 0;
 	while (*str == ' ')
 		str++;
-	while (*str)
+	while (*str && !is_end_of_token(&str, in_quote, quote_type, len))
 	{
-		if ((*str == SIMPLE && count_quote(str, SIMPLE) > 1 && !in_quote)
-			|| (*str == DOUBLE && count_quote(str, DOUBLE) > 1 && !in_quote))
+		if (((*str == SIMPLE && count_quote(str, SIMPLE) > 1)
+				|| (*str == DOUBLE && count_quote(str, DOUBLE) > 1))
+			&& !in_quote)
+			append_quote_type(&in_quote, &quote_type, &str);
+		if (*str == '|' || *str == '<' || *str == '>')
 		{
-			in_quote = true;
-			quote_type = (QUOTE)(*str);
+			count_redirections(&str, &len);
+			break ;
 		}
-		else if (((*str == SIMPLE && quote_type == SIMPLE)
-				|| (*str == DOUBLE && quote_type == DOUBLE)) && in_quote)
-			return (len);
-		else if (*str == ' ' && !in_quote)
-			return (len);
 		else
-			len++;
-		str++;
+			advance_in_get_token_len(&str, &len);
 	}
 	return (len);
 }
@@ -78,39 +93,12 @@ t_tokens	*init_token(char *str)
 	return (token);
 }
 
-void append_char_to_token(t_tokens *token, char **str, int *i)
+t_tokens	*tokenise(char **str)
 {
-	if (**str == SIMPLE || **str == DOUBLE)
-	{
-		(*str)++;
-		return;
-	}
-	token->value[(*i)++] = **str;
-	(*str)++;
-}
-
-int is_end_of_token(char **str, bool in_quote, QUOTE quote_type, int i)
-{
-	if ((**str == ' ' || **str == '|' || **str == '<' || **str == '>'
-		|| (**str == SIMPLE && count_quote(*str, SIMPLE) > 1)
-		|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && (!in_quote && i > 0))
-	{
-		return (1);	
-	}
-	else if (((**str == SIMPLE && quote_type == SIMPLE) || (**str == DOUBLE && quote_type == DOUBLE)) && in_quote)
-	{
-		(*str)++;
-		return (1);
-	}
-	return (0);
-}
-
-t_tokens *tokenise(char **str)
-{
-	t_tokens *token;
-	int i;
-	bool in_quote;
-	QUOTE quote_type;
+	t_tokens	*token;
+	int			i;
+	bool		in_quote;
+	QUOTE		quote_type;
 
 	token = init_token(*str);
 	if (!token)
@@ -123,23 +111,16 @@ t_tokens *tokenise(char **str)
 	while (**str && !is_end_of_token(str, in_quote, quote_type, i))
 	{
 		if (((**str == SIMPLE && count_quote(*str, SIMPLE) > 1)
-			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1)) && !in_quote)
-		{
-			in_quote = true;
-			quote_type = (QUOTE)(**str);
-			(*str)++;
-		}
+				|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1))
+			&& !in_quote)
+			append_quote_type(&in_quote, &quote_type, str);
 		if (**str == '|' || **str == '<' || **str == '>')
 		{
-			token->value[i++] = **str;
-			(*str)++;
-			break;
+			tokenise_redirections(&token, str, &i);
+			break ;
 		}
 		else
-		{
-			token->value[i++] = **str;
-			(*str)++;
-		}
+			append_char_to_token(&token, str, &i);
 	}
 	token->quote = quote_type;
 	token->value[i] = '\0';

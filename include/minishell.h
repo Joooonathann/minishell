@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/01 16:30:11 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/04 14:25:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # define bool unsigned int
 # define true 1
 # define false 0
+# define QUOTE unsigned int
+# define SIMPLE 39
+# define DOUBLE 34
+
 # define RESET "\033[0m"
 # define RED "\033[31m"
 # define GREEN "\033[32m"
@@ -79,10 +83,15 @@ int						ft_build_str_tokens(char **str, t_tokens *command);
 
 //
 
-// Parsing
+//	PARSING
 void					create_tokens(char **str, t_tokens **tokens);
 t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
 t_tokens				*parser(char *str, t_vars **env);
+
+//	create_tokens_utils
+int count_quote(char *str, QUOTE quote_type);
+void append_char_to_token(t_tokens **token, char **str, int *i);
+int is_end_of_token(char **str, bool in_quote, QUOTE quote_type, int i);
 
 // Parsing Utils
 int						is_valid_var_char(char c);

@@ -6,7 +6,7 @@
 #    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/07/01 16:30:21 by ekrause          ###   ########.fr        #
+#    Updated: 2024/07/04 14:27:24 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC			=	./src/minishell.c\
 				./src/token_list/ft_count_tokens.c\
 				./src/token_list/ft_count_value_tokens.c\
 				./src/token_list/ft_build_str_tokens.c\
+				./src/parsing/create_tokens_utils.c\
 				./src/parsing/create_tokens.c\
 				./src/parsing/parse_env_var.c\
 				./src/parsing/parser.c\

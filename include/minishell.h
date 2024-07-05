@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/04 16:03:20 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:53:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_tokens
 	struct s_tokens		*prev;
 	char				*value;
 	unsigned int		quote;
+	char				type;
 }						t_tokens;
 
 typedef struct s_command
@@ -73,6 +74,7 @@ typedef struct s_lst_cmd
 
 // Token list
 void					ft_free_tokens(t_tokens **tokens);
+void					ft_reverse_print_tokens(t_tokens *tokens);
 void					ft_print_tokens(t_tokens *tokens);
 void					ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
 t_tokens				*ft_tokenlast(t_tokens *tokens);

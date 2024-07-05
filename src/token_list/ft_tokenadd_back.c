@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:59:10 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/18 11:57:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:50:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_tokenadd_back(t_tokens **tokens, t_tokens *new)
 		{
 			last = ft_tokenlast(*tokens);
 			last->next = new;
+			new->prev = last;
 		}
 	}
 }

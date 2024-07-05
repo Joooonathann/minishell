@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 16:34:52 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/04 16:33:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:11:24 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ t_tokens	*parse_env_var(t_tokens *tokens, t_vars **env)
 			var = get_env_var(tokens->value);
 			if (!var)
 				break ;
-			printf("VAR: %s\n", var);
 			string = get_string_without_var(tokens->value);
 			var_env = get_vars(env, var);
 			free(var);

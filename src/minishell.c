@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/04 16:34:21 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/05 16:06:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,28 +118,30 @@ int main(int argc, char **argv, char **envp)
 	(void)envp;
 	
 	t_tokens *tokens;
-	char *strings[] = { "command argument",
-						"echo 'hello world'",
-						"echo \" hello world \"",
-						"ls -l > output.txt",
-						"echo 'hello \"world\"' | grep \"hello world\"",
-						" command argument ",
-						"",
-						"echo $@",
-						"'command'",
-						"> output.txt",
-						"command >",
-						"command1 arg1 arg2 argv3 argv3 argv3 argv3 argv3 command2 arg1 arg2 argv3 argv3 argv3 argv3 argv3 argv3 argv3 argv3 argv3 ",
-						"echo>>oui | non <<jesais pas et toi \"comment tu vas\">>non||il y a 'deux pipes ici'",
-						"echo $+",
-						NULL};
-	int i = 0;
-	while (strings[i])
-	{
-		tokens = parser(strings[i], NULL);
-		ft_free_tokens(&tokens);
-		i++;
-	}
-	//tokens = parser("echo $+", NULL);
-	//ft_free_tokens(&tokens);
+	// char *strings[] = { "command argument",
+	// 					"echo 'hello world'",
+	// 					"echo \" hello world \"",
+	// 					"ls -l > output.txt",
+	// 					"echo 'hello \"world\"' | grep \"hello world\"",
+	// 					" command argument ",
+	// 					"",
+	// 					"echo $@",
+	// 					"'command'",
+	// 					"> output.txt",
+	// 					"command >",
+	// 					"command1 arg1 arg2 argv3 argv3 argv3 argv3 argv3 command2 arg1 arg2 argv3 argv3 argv3 argv3 argv3 argv3 argv3 argv3 argv3 ",
+	// 					"echo>>oui | non <<jesais pas et toi \"comment tu vas\">>non||il y a 'deux pipes ici'",
+	// 					"echo $+",
+	// 					NULL};
+	// int i = 0;
+	// while (strings[i])
+	// {
+	// 	tokens = parser(strings[i], NULL);
+	// 	ft_free_tokens(&tokens);
+	// 	i++;
+	// }
+	tokens = parser("echo -e \"coucou toi\" | $USER coucou>toi<<non", NULL);
+	ft_free_tokens(&tokens);
+	tokens = parser("./test -e \"coucou toi\" | $USER coucou>toi<<non", NULL);
+	ft_free_tokens(&tokens);
 }

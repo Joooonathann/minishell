@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/05 15:53:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/08 16:15:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef struct s_vars
 	struct s_vars		*next;
 }						t_vars;
 
+//	Tokens
+typedef struct s_redirection
+{
+	char	*input;
+	char	*output;
+}			t_redirection;
+
+
 typedef struct s_tokens
 {
 	struct s_tokens		*next;
@@ -47,7 +55,9 @@ typedef struct s_tokens
 	char				*value;
 	unsigned int		quote;
 	char				type;
+	t_redirection		*redirection;
 }						t_tokens;
+//
 
 typedef struct s_command
 {

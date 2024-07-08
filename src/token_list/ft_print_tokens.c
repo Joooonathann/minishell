@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/05 15:56:56 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/08 16:38:07 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ void	ft_reverse_print_tokens(t_tokens *tokens)
 
 void	ft_print_tokens(t_tokens *tokens)
 {
-	printf("Normal print: \n");
 	while (tokens)
 	{
-		printf("TOKEN: \"%s\"\nTYPE: \"%c\"\n\n", tokens->value, tokens->type);
+		printf("TOKEN: \"%s\"\n\n", tokens->value);
+		if (tokens->type == 'r')
+			if (tokens->redirection)
+				printf("REDIRECTION: output: \"%s\" input: \"%s\"\n",
+				tokens->redirection->output, tokens->redirection->input);
 		tokens = tokens->next;
 	}
 	printf("\n");

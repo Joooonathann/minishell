@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/08 16:35:15 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/09 14:57:56 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,54 +28,64 @@
 // 	return (1);
 // }
 
-void	parse_redirection(t_tokens	**tokens)
+int	is_redirection(t_tokens *tokens)
 {
-	t_tokens *current_tokens;
+	return (tokens->type == TYPE_REDIRECTION_OUTPUT
+			|| tokens->type == TYPE_REDIRECTION_INPUT
+			|| tokens->type == TYPE_REDIRECTION_OUTPUT
+			|| tokens->type == TYPE_REDIRECTION_INPUT);
+}
+
+void	parse_redirection(t_tokens **tokens)
+{
+	t_tokens	*current_tokens;
 
 	current_tokens = *tokens;
 	while (current_tokens)
 	{
-		if (current_tokens->type == 'r')
+		if (is_redirection(current_tokens) && current_tokens->next)
 		{
 			current_tokens->redirection = malloc(sizeof(t_redirection));
 			if (!current_tokens->redirection)
 				return ;
-			current_tokens->redirection->input = NULL;
 			current_tokens->redirection->output = NULL;
-			if (!current_tokens->next)
-				return ;
-			if (current_tokens->value[0] == '>')
+			current_tokens->redirection->input = NULL;
+			if (current_tokens->type == TYPE_REDIRECTION_OUTPUT)
 				current_tokens->redirection->output = current_tokens->next->value;
 		}
 		current_tokens = current_tokens->next;
 	}
 }
 
-char	choose_type(t_tokens *token)
+t_token_type	choose_type(t_tokens *token)
 {
 	if (!token->value)
-		return ('n');
+		return (NONE);
 	if (!token->prev)
 	{
 		if (token->value[0] == '.' || token->value[0] == '/')
-			return ('e');
-		return ('c');
+			return (TYPE_EXECUTABLE);
+		return (TYPE_COMMAND);
 	}
 	if (token->value[0] == '-')
-		return ('o');
+		return (TYPE_OPTION);
 	if (token->value[0] == '|')
-		return ('p');
-	if ((token->value[0] == '>' || token->value[0] == '<') && !token->value[1])
-		return ('r');
-	if ((token->value[0] == '>' && token->value[1] == '>') || (token->value[0] == '<' && token->value[1] == '<'))
-		return ('d');
-	return ('a');
+		return (TYPE_PIPE);
+	if (token->value[0] == '>' && !token->value[1])
+		return (TYPE_REDIRECTION_OUTPUT);
+	if (token->value[0] == '<' && !token->value[1])
+		return (TYPE_REDIRECTION_INPUT);
+	if (token->value[0] == '>' && token->value[1] == '>')
+		return (TYPE_REDIRECTION_OUTPUT_APPEND);
+	if (token->value[0] == '<' && token->value[1] == '<')
+		return (TYPE_REDIRECTION_INPUT_APPEND);
+	return (TYPE_ARGUMENT);
 }
 
 void	add_token_type(t_tokens **tokens)
 {
-	t_tokens	*current_tokens;
-	char		type;
+	t_tokens		*current_tokens;
+	t_token_type	type;
 	
 	current_tokens = *tokens;
 	while (current_tokens)
@@ -83,7 +93,7 @@ void	add_token_type(t_tokens **tokens)
 		if (current_tokens->quote == 0)
 			type = choose_type(current_tokens);
 		else
-			type = 'a';
+			type = TYPE_ARGUMENT;
 		current_tokens->type = type;
 		current_tokens = current_tokens->next;
 	}
@@ -98,9 +108,6 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokens = parse_env_var(tokens, env);
 	add_token_type(&tokens);
 	parse_redirection(&tokens);
-	// if (!parse_type(tokens))
-	// 	printf("Error\n");
-	// else
 	ft_print_tokens(tokens);
 	return (tokens);
 }

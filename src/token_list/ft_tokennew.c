@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:40:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/06/20 16:38:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/09 14:48:56 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_tokens	*ft_tokennew(char *value, unsigned int quote)
 		return (NULL);
 	elem->next = NULL;
 	elem->prev = NULL;
+	elem->redirection = NULL;
 	elem->value = value;
 	elem->quote = quote;
 	return (elem);

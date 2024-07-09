@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/08 16:38:07 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/09 14:53:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,31 @@ void	ft_reverse_print_tokens(t_tokens *tokens)
 
 void	ft_print_tokens(t_tokens *tokens)
 {
+	char *tab[] = {
+		"NONE",
+		"EXECUTABLE",
+		"COMMAND",
+		"ARGUMENT",
+		"OPTION",
+		"PIPE",
+		"REDIRECTION_OUTPUT",
+		"REDIRECTION_INPUT",
+		"REDIRECTION_OUTPUT_APPEND",
+		"REDIRECTION_INPUT_APPEND"
+	};
 	while (tokens)
 	{
-		printf("TOKEN: \"%s\"\n\n", tokens->value);
-		if (tokens->type == 'r')
-			if (tokens->redirection)
-				printf("REDIRECTION: output: \"%s\" input: \"%s\"\n",
-				tokens->redirection->output, tokens->redirection->input);
+		printf("TOKEN: \"%s\"\nTYPE: %s\n", tokens->value, tab[tokens->type]);
+		if (tokens->redirection)
+		{
+			printf("REDIRECTION: ");
+			if (tokens->redirection->output)
+				printf("output: %s", tokens->redirection->output);
+			if (tokens->redirection->input)
+				printf("input: %s", tokens->redirection->input);
+			printf("\n");
+		}
+		printf("\n");
 		tokens = tokens->next;
 	}
-	printf("\n");
 }

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/08 16:15:04 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/09 14:30:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@
 # define RED "\033[31m"
 # define GREEN "\033[32m"
 
+typedef enum s_token_type
+{
+	NONE,
+	TYPE_EXECUTABLE,
+	TYPE_COMMAND,
+	TYPE_ARGUMENT,
+	TYPE_OPTION,
+	TYPE_PIPE,
+	TYPE_REDIRECTION_OUTPUT,
+	TYPE_REDIRECTION_INPUT,
+	TYPE_REDIRECTION_OUTPUT_APPEND,
+	TYPE_REDIRECTION_INPUT_APPEND
+} 	t_token_type;
+
 typedef struct s_vars
 {
 	char				*key;
@@ -54,7 +68,7 @@ typedef struct s_tokens
 	struct s_tokens		*prev;
 	char				*value;
 	unsigned int		quote;
-	char				type;
+	t_token_type		type;
 	t_redirection		*redirection;
 }						t_tokens;
 //

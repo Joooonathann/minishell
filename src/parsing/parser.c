@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/09 14:57:56 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/09 15:10:46 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	parse_redirection(t_tokens **tokens)
 			current_tokens->redirection->input = NULL;
 			if (current_tokens->type == TYPE_REDIRECTION_OUTPUT)
 				current_tokens->redirection->output = current_tokens->next->value;
+			if (current_tokens->type == TYPE_REDIRECTION_INPUT)
+				current_tokens->redirection->input = current_tokens->next->value;
 		}
 		current_tokens = current_tokens->next;
 	}

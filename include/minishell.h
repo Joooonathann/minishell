@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/09 14:30:11 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/22 15:53:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@
 # define RED "\033[31m"
 # define GREEN "\033[32m"
 
+typedef struct s_vars
+{
+	char				*key;
+	char				*value;
+	struct s_vars		*next;
+}						t_vars;
+
+//	Tokens
 typedef enum s_token_type
 {
 	NONE,
@@ -44,23 +52,32 @@ typedef enum s_token_type
 	TYPE_REDIRECTION_OUTPUT,
 	TYPE_REDIRECTION_INPUT,
 	TYPE_REDIRECTION_OUTPUT_APPEND,
-	TYPE_REDIRECTION_INPUT_APPEND
-} 	t_token_type;
+	TYPE_REDIRECTION_HERE_DOC
+}	t_token_type;
 
-typedef struct s_vars
-{
-	char				*key;
-	char				*value;
-	struct s_vars		*next;
-}						t_vars;
-
-//	Tokens
 typedef struct s_redirection
 {
 	char	*input;
 	char	*output;
+	char 	*delimiter;
+	int		append;
+	int		here_doc;
 }			t_redirection;
 
+typedef struct s_redirection
+{
+	char	*input;
+	char	*output;
+	char	*delimiter;
+	int		append;
+	int		here_doc;
+}			t_redirection;
+
+typedef struct s_pipe
+{
+	char	*command;
+	char	**argument_command;
+}			t_pipe;
 
 typedef struct s_tokens
 {
@@ -70,6 +87,7 @@ typedef struct s_tokens
 	unsigned int		quote;
 	t_token_type		type;
 	t_redirection		*redirection;
+	t_pipe				*pipe;
 }						t_tokens;
 //
 
@@ -83,12 +101,6 @@ typedef struct s_command
 	char				*value;
 
 }						t_command;
-
-typedef struct s_pipe
-{
-	char				*input_redirect;
-	char				*output_redirect;
-}						t_pipe;
 
 typedef struct s_lst_cmd
 {
@@ -109,13 +121,15 @@ int						ft_build_str_tokens(char **str, t_tokens *command);
 
 //
 
-//	parsing
+//	PARSING
+void					add_token_type(t_tokens **tokens);
 void					create_tokens(char **str, t_tokens **tokens);
-t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
-t_tokens				*parser(char *str, t_vars **env);
 int						is_valid_var_char(char c);
 int						calc_string_len(char *str);
 void					copy_string_and_var(char **result, char *str, char *var);
+t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
+void					parse_redirection(t_tokens **tokens);
+t_tokens				*parser(char *str, t_vars **env);
 
 //	parsing/create_tokens_utils/create_tokens_utils
 void					init_tokenise_var(int *i, bool *in_quote, QUOTE *quote_type);

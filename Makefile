@@ -6,7 +6,7 @@
 #    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/07/05 13:49:35 by ekrause          ###   ########.fr        #
+#    Updated: 2024/07/22 15:23:12 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,11 @@ SRC			=	./src/minishell.c\
 				./src/parsing/create_tokens_utils/create_tokens_utils.c\
 				./src/parsing/create_tokens_utils/get_token_len_utils.c\
 				./src/parsing/create_tokens_utils/tokenise_utils.c\
+				./src/parsing/add_token_type.c\
 				./src/parsing/create_tokens.c\
 				./src/parsing/parse_env_var_utils.c\
 				./src/parsing/parse_env_var.c\
+				./src/parsing/parse_redirection.c\
 				./src/parsing/parser.c\
 				./src/commands/cd_command.c\
 				./src/commands/exit_command.c\

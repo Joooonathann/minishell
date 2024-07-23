@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/22 15:53:04 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 12:48:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,6 @@ typedef struct s_redirection
 	char	*input;
 	char	*output;
 	char 	*delimiter;
-	int		append;
-	int		here_doc;
-}			t_redirection;
-
-typedef struct s_redirection
-{
-	char	*input;
-	char	*output;
-	char	*delimiter;
 	int		append;
 	int		here_doc;
 }			t_redirection;

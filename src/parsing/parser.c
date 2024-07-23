@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/22 15:33:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 12:48:35 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@
 // 	return (1);
 // }
 
-void	parse_pipe(t_tokens **tokens)
-{
-	t_tokens	*current_token;
-	current_token = tokens;
-	while (current_token)
-	{
-		if (current_token->type == TYPE_PIPE && current_token->next)
-		{
+// void	parse_pipe(t_tokens **tokens)
+// {
+// 	t_tokens	*current_token;
+// 	current_token = tokens;
+// 	while (current_token)
+// 	{
+// 		if (current_token->type == TYPE_PIPE && current_token->next)
+// 		{
 			
-		}
-		current_token = current_token->next;
-	}
-}
+// 		}
+// 		current_token = current_token->next;
+// 	}
+// }
 
 t_tokens	*parser(char *str, t_vars **env)
 {
@@ -51,7 +51,7 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokens = parse_env_var(tokens, env);
 	add_token_type(&tokens);
 	parse_redirection(&tokens);
-	parse_pipe(&tokens);
+	//parse_pipe(&tokens);
 	ft_print_tokens(tokens);
 	return (tokens);
 }

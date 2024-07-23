@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/22 15:04:20 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 15:00:27 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ void	ft_print_tokens(t_tokens *tokens)
 			else if (tokens->redirection->here_doc && tokens->redirection->delimiter)
 				printf("delimiter: %s, here_doc = \"yes\"", tokens->redirection->delimiter);
 			printf("\n");
+		}
+		else if (tokens->pipe)
+		{
+			printf("PIPE: ");
+			printf("command: %s", tokens->pipe->command);
+			//printf("command: %s", tokens->pipe->command);
 		}
 		printf("\n");
 		tokens = tokens->next;

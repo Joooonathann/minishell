@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/05 13:45:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:56:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_tokens	*tokenise(char **str)
 			tokenise_redirections(&token, str, &i);
 			break ;
 		}
+		else if (**str == DOUBLE || **str == SIMPLE)
+			(*str)++;
 		else
 			append_char_to_token(&token, str, &i);
 	}

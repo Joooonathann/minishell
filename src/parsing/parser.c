@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/23 15:01:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 16:56:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@
 // 	}
 // }
 
+// void	triming_quotes(char **str)
+// {
+// 	char	*current_str;
+// 	current_str = *str;
+// 	while ()
+// 	{
+		
+// 		current_str++;
+// 	}
+// }
+
 void	parse_pipe(t_tokens **tokens)
 {
 	t_tokens	*current_token;
@@ -83,6 +94,7 @@ t_tokens	*parser(char *str, t_vars **env)
 
 	tokens = NULL;
 	create_tokens(&str, &tokens);
+	trime_tokens(&tokens);
 	tokens = parse_env_var(tokens, env);
 	add_token_type(&tokens);
 	parse_redirection(&tokens);

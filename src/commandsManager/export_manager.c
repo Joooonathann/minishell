@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/29 11:13:35 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:55:21 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

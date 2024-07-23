@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/07/22 15:23:12 by ekrause          ###   ########.fr        #
+#    Updated: 2024/07/23 14:46:04 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC			=	./src/minishell.c\
 				./src/commands/unset_command.c\
 				./src/commands/env_command.c\
 				./src/commandsManager/handler_command.c\
+				./src/commandsManager/extern_command.c\
 				./src/commandsManager/cd_manager.c\
 				./src/commandsManager/echo_manager.c\
 				./src/commandsManager/env_manager.c\

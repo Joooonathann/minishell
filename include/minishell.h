@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/23 12:48:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 12:56:00 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ typedef enum s_token_type
 	TYPE_REDIRECTION_INPUT,
 	TYPE_REDIRECTION_OUTPUT_APPEND,
 	TYPE_REDIRECTION_HERE_DOC
-}	t_token_type;
+}						t_token_type;
 
 typedef struct s_redirection
 {
-	char	*input;
-	char	*output;
-	char 	*delimiter;
-	int		append;
-	int		here_doc;
-}			t_redirection;
+	char				*input;
+	char				*output;
+	char				*delimiter;
+	int					append;
+	int					here_doc;
+}						t_redirection;
 
 typedef struct s_pipe
 {
-	char	*command;
-	char	**argument_command;
-}			t_pipe;
+	char				*command;
+	char				**argument_command;
+}						t_pipe;
 
 typedef struct s_tokens
 {
@@ -117,29 +117,37 @@ void					add_token_type(t_tokens **tokens);
 void					create_tokens(char **str, t_tokens **tokens);
 int						is_valid_var_char(char c);
 int						calc_string_len(char *str);
-void					copy_string_and_var(char **result, char *str, char *var);
+void					copy_string_and_var(char **result, char *str,
+							char *var);
 t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
 void					parse_redirection(t_tokens **tokens);
 t_tokens				*parser(char *str, t_vars **env);
 
 //	parsing/create_tokens_utils/create_tokens_utils
-void					init_tokenise_var(int *i, bool *in_quote, QUOTE *quote_type);
+void					init_tokenise_var(int *i, bool *in_quote,
+							QUOTE *quote_type);
 int						count_quote(char *str, QUOTE quote_type);
-int						is_end_of_token(char **str, bool in_quote, QUOTE quote_type, int i);
+int						is_end_of_token(char **str, bool in_quote,
+							QUOTE quote_type, int i);
 int						is_append_quote_needed(char **str, bool in_quote);
-void					append_quote_type(bool *in_quote, QUOTE *quote_type, char **str);
+void					append_quote_type(bool *in_quote, QUOTE *quote_type,
+							char **str);
 
 //	parsing/create_tokens_utils/get_token_len_utils
 void					count_redirections(char **str, int *len);
 void					advance_in_get_token_len(char **str, int *len);
 
 //	parsing/create_tokens_utils/tokenise_utils
-void					tokenise_redirections(t_tokens **token, char **str, int *i);
-void					append_values_to_token(t_tokens **token, QUOTE quote_type, int i);
-void					append_char_to_token(t_tokens **token, char **str, int *i);
+void					tokenise_redirections(t_tokens **token, char **str,
+							int *i);
+void					append_values_to_token(t_tokens **token,
+							QUOTE quote_type, int i);
+void					append_char_to_token(t_tokens **token, char **str,
+							int *i);
 
 // Commands
-int						handler_command(t_tokens *command, t_vars **env, char **cpy_path);
+int						handler_command(t_tokens *command, t_vars **env,
+							char **cpy_path);
 char					*ft_strcpy(char *dst, const char *src);
 int						cd_command(char *path, t_vars **env, char **copy_path);
 int						pwd_command(void);
@@ -164,6 +172,8 @@ int						export_manager(t_tokens *command, t_vars **env,
 int						pwd_manager(t_tokens *command, t_vars **env,
 							char **cpy_path);
 int						unset_manager(t_tokens *command, t_vars **env,
+							char **cpy_path);
+int						extern_command(t_tokens *command, t_vars **env,
 							char **cpy_path);
 
 // Env vars

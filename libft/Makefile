@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 12:31:49 by ekrause           #+#    #+#              #
-#    Updated: 2024/05/30 12:24:35 by ekrause          ###   ########.fr        #
+#    Updated: 2024/07/23 14:55:57 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC	= gcc
 CFLAGS = -Wall -Werror -Wextra
 SRC	= ft_isalpha.c\
 	  ft_isdigit.c\
+	  ft_strcat.c\
 	  ft_isalnum.c\
 	  ft_isascii.c\
 	  ft_isprint.c\

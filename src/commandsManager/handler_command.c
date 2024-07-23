@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/29 11:23:50 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:42:47 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 		}
 		i++;
 	}
+	extern_command(command, env, cpy_path);
 	free(commands);
 	return (1);
 }

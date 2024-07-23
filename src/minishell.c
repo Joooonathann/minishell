@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/08 12:46:09 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/23 14:56:42 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,6 @@ char	*ft_strcpy(char *dst, const char *src)
 		i++;
 	}
 	dst[i] = '\0';
-	return (dst);
-}
-
-char	*ft_strcat(char *dst, const char *src)
-{
-	size_t	dst_len;
-	size_t	i;
-
-	dst_len = ft_strlen(dst);
-	i = 0;
-	while (src[i])
-	{
-		dst[dst_len + i] = src[i];
-		i++;
-	}
-	dst[dst_len + i] = '\0';
 	return (dst);
 }
 
@@ -104,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf ("%s\n", prompt);
 			tokens = parser(prompt, &env);
-			//handler_command(tokens, &env, &cpy_pwd);
+			handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
 			ft_free_tokens(&tokens);
 		}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
+#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/07/23 14:46:04 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/07/25 13:05:37 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ LIBFT		=	./libft/libft.a
 MAKE_LIBFT	=	@make -C libft
 
 SRC			=	./src/minishell.c\
+				./src/token_list/ft_free_token.c\
 				./src/token_list/ft_free_tokens.c\
 				./src/token_list/ft_print_tokens.c\
 				./src/token_list/ft_tokenadd_back.c\

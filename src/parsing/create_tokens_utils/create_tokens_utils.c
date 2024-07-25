@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:22:06 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/25 15:55:00 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/25 16:21:32 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	count_quote(char *str, QUOTE quote_type)
 
 int	is_end_of_token(char **str, bool in_quote, QUOTE quote_type, int i)
 {
-	if ((**str == ' ' || **str == '|' || **str == '<' || **str == '>'
-			|| (**str == SIMPLE && count_quote(*str, SIMPLE) > 1)
-			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1))
-		&& (!in_quote && i > 0))
+	if ((**str == ' ' || **str == '|' || **str == '<' || **str == '>') && (!in_quote && i > 0))
 		return (1);
 	else if (((**str == SIMPLE && quote_type == SIMPLE)
 			|| (**str == DOUBLE && quote_type == DOUBLE))

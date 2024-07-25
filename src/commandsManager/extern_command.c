@@ -6,12 +6,16 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 12:55:00 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/25 14:32:58 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:39:27 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <sys/wait.h>
+#include <string.h>
 
 char **env_tab(t_vars *env)
 {
@@ -109,7 +113,7 @@ int extern_command(t_tokens *command, t_vars **env, char **cpy_path)
     pid_t pid;
     int status;
     (void)cpy_path;
-
+    
     pid = fork();
     if (pid == -1)
     {
@@ -131,8 +135,10 @@ int extern_command(t_tokens *command, t_vars **env, char **cpy_path)
             fprintf(stderr, "Command not found: %s\n", command->value);
             exit(EXIT_FAILURE);
         }
+
+        // Convert linked list t_tokens to char *argv[]
         int argc = 0;
-        t_tokens *tmp = command;command_pathcommand_path
+        t_tokens *tmp = command;
         while (tmp)
         {
             argc++;

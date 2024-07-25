@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/25 13:45:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/25 16:25:58 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,26 +58,6 @@
 // 	}
 // }
 
-void	trime_empty_tokens(t_tokens **tokens)
-{
-	t_tokens	*current_token;
-	current_token = *tokens;
-	while (current_token)
-	{
-		if (current_token->value)
-		{
-			//trime token
-			if (current_token->prev && current_token->next)
-			{
-				current_token->prev->next = current_token->next;
-				current_token->next->prev = current_token->prev;
-				ft_free_token(&current_token);
-			}
-		}
-		current_token = current_token->next;
-	}
-}
-
 void	parse_pipe(t_tokens **tokens)
 {
 	t_tokens	*current_token;
@@ -103,12 +83,10 @@ t_tokens	*parser(char *str, t_vars **env)
 
 	tokens = NULL;
 	create_tokens(&str, &tokens);
-	//trime_empty_tokens(&tokens);
-	//ft_print_tokens(tokens);
 	tokens = parse_env_var(tokens, env);
 	add_token_type(&tokens);
-	parse_redirection(&tokens);
-	parse_pipe(&tokens);
+	// parse_redirection(&tokens);
+	// parse_pipe(&tokens);
 	ft_print_tokens(tokens);
 	return (tokens);
 }

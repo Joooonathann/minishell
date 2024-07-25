@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/25 13:05:07 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/25 16:21:48 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ typedef struct s_lst_cmd
 }						t_lstcmd;
 
 // Token list
-void					ft_free_token(t_tokens **token);
 void					ft_free_tokens(t_tokens **tokens);
 void					ft_reverse_print_tokens(t_tokens *tokens);
 void					ft_print_tokens(t_tokens *tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/29 11:14:35 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:50:27 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,27 @@ int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
     (void) env;
     (void) cpy_path;
     str = NULL;
-    if (ft_strcmp(command->next->value, "-n"))
+    if (ft_count_tokens(command) > 1)
     {
-        if (ft_count_tokens(command) > 2)
+        if (ft_strcmp(command->next->value, "-n"))
         {
             if (!ft_build_str_tokens(&str, command->next->next))
                 return (0);
+            echo_command(true, str);
         }
-        echo_command(true, str);
-        free(str);
+        else
+        {
+            if (ft_count_tokens(command) > 1)
+            {
+                if (!ft_build_str_tokens(&str, command->next))
+                    return (0);
+                echo_command(false, str);
+            }
+        }
     }
     else
-    {
-        if (ft_count_tokens(command) > 1)
-         {
-            if (!ft_build_str_tokens(&str, command->next))
-                return (0);
-        }
         echo_command(false, str);
+    if (str)
         free(str);
-    }
     return (1);
 }

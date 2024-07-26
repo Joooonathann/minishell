@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/23 14:56:42 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:33:48 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf ("%s\n", prompt);
 			tokens = parser(prompt, &env);
-			handler_command(tokens, &env, &cpy_pwd);
+			//handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
 			ft_free_tokens(&tokens);
 		}
@@ -103,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 // 	(void)envp;
 	
 // 	t_tokens *tokens;
+// 	tokens = parser("echo coucou \"\"", NULL);
 // 	// char *strings[] = { "command argument",
 // 	// 					"echo 'hello world'",
 // 	// 					"echo \" hello world \"",

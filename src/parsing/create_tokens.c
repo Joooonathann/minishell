@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/25 16:48:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/26 20:40:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ t_tokens	*init_token(char *str)
 	return (token);
 }
 
-t_tokens	*tokenise(char **str)
+t_tokens *tokenise(char **str)
 {
-	t_tokens	*token;
-	int			i;
-	bool		in_quote;
-	QUOTE		quote_type;
+	t_tokens *token;
+	int i;
+	bool in_quote;
+	QUOTE quote_type;
 
 	token = init_token(*str);
 	if (!token)
@@ -65,19 +65,17 @@ t_tokens	*tokenise(char **str)
 	init_tokenise_var(&i, &in_quote, &quote_type);
 	while (**str == ' ')
 		(*str)++;
+	while (*(*str + 1) && ((**str == DOUBLE && *(*str + 1) == DOUBLE) ||
+		(**str == SIMPLE && *(*str + 1) == SIMPLE)))
+		(*str) += 2;
 	while (**str && !is_end_of_token(str, in_quote, quote_type, i))
 	{
 		if (is_append_quote_needed(str, in_quote))
 			append_quote_type(&in_quote, &quote_type, str);
-		if (**str == (char)quote_type)
-		{
-			(*str)++;
-			break;
-		}
 		if (**str == '|' || **str == '<' || **str == '>')
 		{
 			tokenise_redirections(&token, str, &i);
-			break ;
+			break;
 		}
 		else
 			append_char_to_token(&token, str, &i);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/07/25 13:05:37 by ekrause          ###   ########.fr        #
+#    Updated: 2024/07/28 16:59:20 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC			=	./src/minishell.c\
 				./src/commandsManager/export_manager.c\
 				./src/commandsManager/pwd_manager.c\
 				./src/commandsManager/unset_manager.c\
+				./src/commandsManager/utils/env_tab.c\
 				./src/vars/add_vars.c\
 				./src/vars/init_vars.c\
 				./src/vars/print_vars.c\

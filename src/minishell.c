@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/26 19:33:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/28 17:46:37 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strcpy(char *dst, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
 
 char	*get_prompt(void)
 {
@@ -88,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf ("%s\n", prompt);
 			tokens = parser(prompt, &env);
-			//handler_command(tokens, &env, &cpy_pwd);
+			handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
 			ft_free_tokens(&tokens);
 		}

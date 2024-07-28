@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 12:31:49 by ekrause           #+#    #+#              #
-#    Updated: 2024/07/23 14:55:57 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/07/28 17:47:26 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -Wall -Werror -Wextra
 SRC	= ft_isalpha.c\
 	  ft_isdigit.c\
 	  ft_strcat.c\
+	  ft_strcpy.c\
 	  ft_isalnum.c\
 	  ft_isascii.c\
 	  ft_isprint.c\

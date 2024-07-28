@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/25 16:21:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/28 16:59:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int						unset_command(t_vars **env, char *key_env);
 void					exit_command(int code);
 
 // Manager Commands
+char					**env_tab(t_vars *env);
 int						cd_manager(t_tokens *command, t_vars **env,
 							char **cpy_path);
 int						echo_manager(t_tokens *command, t_vars **env,

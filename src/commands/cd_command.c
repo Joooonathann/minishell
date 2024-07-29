@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 09:55:55 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/29 10:43:06 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:17:33 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	cd_command(char *path, t_vars **env, char **copy_path)
 	}
 	if (chdir(path) != 0)
 	{
-		free(path);
 		printf("bash: cd: %s: No such file or directory\n", path);
+		free(path);
 		return (0);
 	}
 	else

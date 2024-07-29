@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/29 10:44:42 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:14:42 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,24 @@ int	main(int argc, char **argv, char **envp)
 	char *prompt;
 	t_vars *env;
 	t_tokens *tokens;
+	(void)envp;
 	char	*cpy_pwd;
 	
 	env = NULL;
 	init_vars(&env, envp);
-	cpy_pwd = ft_strdup(get_vars(&env, "PWD"));
+	cpy_pwd = get_vars(&env, "PWD");
 	signal(SIGINT, handler);
 	signal(SIGQUIT, handler);
 	using_history();
 	while (1)
 	{
-		prompt = readline(get_prompt());
+		char *test = get_prompt();
+		prompt = readline(test);
 		if (!prompt)
 		{
 			delete_all_vars(&env);
 			free(prompt);
+			free(test);
 			free(cpy_pwd);
 			exit(EXIT_SUCCESS);
 		}
@@ -84,6 +87,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_free_tokens(&tokens);
 		}
 		free(prompt);
+		free(test);
 	}
 }
 
@@ -94,7 +98,8 @@ int	main(int argc, char **argv, char **envp)
 // 	(void)envp;
 	
 // 	t_tokens *tokens;
-// 	tokens = parser("echo coucou \"\"", NULL);
+// 	tokens = parser("echo \"\"\'\' coucou", NULL);
+// 	ft_free_tokens(&tokens);
 // 	// char *strings[] = { "command argument",
 // 	// 					"echo 'hello world'",
 // 	// 					"echo \" hello world \"",

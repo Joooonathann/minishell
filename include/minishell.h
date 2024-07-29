@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/28 16:59:04 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:35:27 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ int						unset_manager(t_tokens *command, t_vars **env,
 							char **cpy_path);
 int						extern_command(t_tokens *command, t_vars **env,
 							char **cpy_path);
+char					*find_command_path(const char *command, t_vars **env);
 
 // Env vars
 int						add_vars(char *key, char *value, t_vars **env);
@@ -184,5 +185,6 @@ int						print_vars(t_vars *env);
 int						export_command(t_vars **env, char *str);
 int						delete_vars(t_vars **env, t_vars *delete);
 char					*get_vars(t_vars **env, char *key_env);
+void					delete_all_vars(t_vars **vars);
 
 #endif

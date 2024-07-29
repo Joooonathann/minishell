@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/07/28 16:59:20 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/07/29 10:34:55 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,12 +54,14 @@ SRC			=	./src/minishell.c\
 				./src/commandsManager/pwd_manager.c\
 				./src/commandsManager/unset_manager.c\
 				./src/commandsManager/utils/env_tab.c\
+				./src/commandsManager/utils/find_command_path.c\
 				./src/vars/add_vars.c\
 				./src/vars/init_vars.c\
 				./src/vars/print_vars.c\
 				./src/vars/update_vars.c\
 				./src/vars/exist_vars.c\
 				./src/vars/delete_vars.c\
+				./src/vars/delete_all_vars.c\
 				./src/vars/get_vars.c
 
 OBJ			=	${SRC:.c=.o}

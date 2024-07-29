@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/28 17:46:37 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:44:42 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,12 @@ int	main(int argc, char **argv, char **envp)
 	{
 		prompt = readline(get_prompt());
 		if (!prompt)
+		{
+			delete_all_vars(&env);
+			free(prompt);
+			free(cpy_pwd);
 			exit(EXIT_SUCCESS);
+		}
 		if (prompt && *prompt)
 		{
 			printf ("%s\n", prompt);

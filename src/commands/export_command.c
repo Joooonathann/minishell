@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 17:57:04 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/06 13:55:40 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:44:22 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	export_command(t_vars **env, char *str)
 	char *key;
 	char *value;
 	int len_key;
+	char	*key_get;
 	t_vars	*tmp;
 
 	len_key = size_key(str);
@@ -45,7 +46,8 @@ int	export_command(t_vars **env, char *str)
 		free(key);
 		return (0);
 	}
-	if (get_vars(env, key) != NULL)
+	key_get = get_vars(env, key);
+	if (key_get != NULL)
 	{
 		tmp = *env;
 		while (tmp)
@@ -55,6 +57,7 @@ int	export_command(t_vars **env, char *str)
 			tmp = tmp->next;
 		}
 	}
+	free(key_get);
 	add_vars(key, value, env);
 	return (1);
 }

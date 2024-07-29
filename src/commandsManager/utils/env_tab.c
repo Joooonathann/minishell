@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 16:48:05 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/28 17:54:47 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:17:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	**env_tab(t_vars *env)
 		strcat(result[i], env->value);
 		i++;
 		env = env->next;
-        printf("%s\n", result[i]);
 	}
 	result[i] = NULL;
 	return (result);

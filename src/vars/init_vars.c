@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/26 10:41:17 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/29 10:45:45 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@ static int	size_key(char *envp)
 
 void	up_level(t_vars **env)
 {
-	int	value_int;
-
+	int		value_int;
+	char	*value_char;
+	
 	if(exist_vars(*env, "SHLVL"))
 	{
-	value_int = ft_atoi(get_vars(env, "SHLVL"));
-	value_int++;
-	update_vars(env, "SHLVL", ft_itoa(value_int));
+		value_char = get_vars(env, "SHLVL");
+		value_int = ft_atoi(value_char);
+		free(value_char);
+		value_int++;
+		value_char = ft_itoa(value_int);
+		update_vars(env, "SHLVL", value_char);
+		free(value_char);
 	}
 	return ;
 }

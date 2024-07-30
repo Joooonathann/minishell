@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/29 18:09:00 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/30 16:20:38 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	ft_print_tokens(t_tokens *tokens)
 	};
 	while (tokens)
 	{
-		if (tokens->value && tokens->type)
-			printf("TOKEN: %s\nTYPE: %s\nQUOTE: %u\n", tokens->value, tab[tokens->type], tokens->quote);
+		printf("TOKEN: %s\nTYPE: %s\nQUOTE: %u\n", tokens->value, tab[tokens->type], tokens->quote);
 		// if (tokens->redirection)
 		// {
 		// 	printf("REDIRECTION: ");

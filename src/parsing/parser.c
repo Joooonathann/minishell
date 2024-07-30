@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/29 18:22:19 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:25:27 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,42 @@ void	parse_pipe(t_tokens **tokens)
 	}
 }
 
+void	trime_null_tokens(t_tokens **tokens)
+{
+	t_tokens	*current_token;
+	t_tokens	*temp;
+
+	current_token = *tokens;
+	while (current_token)
+	{
+		if (!current_token->value && !current_token->prev)
+		{
+			temp = current_token;
+			current_token = current_token->next;
+			current_token->prev = NULL;
+			*tokens = (*tokens)->next;
+			free(temp);
+		}
+		else if (!current_token->value && !current_token->next)
+		{
+			temp = current_token;
+			current_token = current_token->prev;
+			current_token->next = NULL;
+			free(temp);
+		}
+		else if (!current_token->value && current_token->next && current_token->prev)
+		{
+			temp = current_token;
+			current_token->prev->next = current_token->next;
+			current_token->next->prev = current_token->prev;
+			current_token = current_token->next;
+			free(temp);
+		}
+		else
+			current_token = current_token->next;
+	}
+}
+
 t_tokens	*parser(char *str, t_vars **env)
 {
 	t_tokens	*tokens;
@@ -38,8 +74,9 @@ t_tokens	*parser(char *str, t_vars **env)
 	(void)env;
 	tokens = NULL;
 	create_tokens(&str, &tokens);
-	//tokens = parse_env_var(tokens, env);
+	tokens = parse_env_var(tokens, env);
 	add_token_type(&tokens);
+	trime_null_tokens(&tokens);
 	// parse_redirection(&tokens);
 	// parse_pipe(&tokens);
 	ft_print_tokens(tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_build_str_tokens.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 11:14:10 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/29 11:15:19 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:59:00 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_build_str_tokens(char **str, t_tokens *command)
 
 	*str = malloc(sizeof(char) * (ft_count_value_tokens(command)
 				+ (ft_count_tokens(command) - 1) + 1));
-	if (!str)
+	if (!*str)
 		return (0);
 	j = 0;
 	while (command)

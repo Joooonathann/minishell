@@ -3,27 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_count_value_tokens.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:19:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/28 18:32:26 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:05:36 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_count_value_tokens(t_tokens *tokens)
+int	ft_count_value_tokens(t_tokens *tokens)
 {
-    int i;
+	int total_length;
 
-    if (!tokens)
-        return (0);
-    i = 0;
-    while (tokens)
-    {
-        while (tokens->value[i])
-            i++;
-        tokens = tokens->next;
-    }
-    return (i);
+    total_length = 0;
+	while (tokens)
+	{
+		total_length += ft_strlen(tokens->value);
+		tokens = tokens->next;
+	}
+	return (total_length);
 }

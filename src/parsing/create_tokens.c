@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:08:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/29 18:02:18 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/01 13:30:09 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,14 @@ t_tokens *tokenise(char **str)
 		(*str)++;
 	while (**str && !is_end_of_token(str, in_quote, quote_type, i))
 	{
-		while (*(*str + 1) && ((**str == DOUBLE && *(*str + 1) == DOUBLE) ||
+		if (*(*str + 1) && ((**str == DOUBLE && *(*str + 1) == DOUBLE) ||
  						   (**str == SIMPLE && *(*str + 1) == SIMPLE)))
  		{
  			(*str) += 2;
-			if (**str == ' ')
-			{
-				append_values_to_token(&token, quote_type, i);
-				return (token);
-			}
 		}
-		if (is_append_quote_needed(str, in_quote))
+		else if (is_append_quote_needed(str, in_quote))
 			append_quote_type(&in_quote, &quote_type, str);
-		if (**str == '|' || **str == '<' || **str == '>')
+		else if (**str == '|' || **str == '<' || **str == '>')
 		{
 			tokenise_redirections(&token, str, &i);
 			break;

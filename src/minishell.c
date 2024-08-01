@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/30 16:22:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:24:18 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,76 +50,94 @@ void	handler(int signal)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	char *prompt;
-	t_vars *env;
-	t_tokens *tokens;
-	(void)envp;
-	char	*cpy_pwd;
-	
-	env = NULL;
-	init_vars(&env, envp);
-	cpy_pwd = get_vars(&env, "PWD");
-	signal(SIGINT, handler);
-	signal(SIGQUIT, handler);
-	using_history();
-	while (1)
-	{
-		char *test = get_prompt();
-		prompt = readline(test);
-		if (!prompt)
-		{
-			delete_all_vars(&env);
-			free(prompt);
-			free(test);
-			free(cpy_pwd);
-			exit(EXIT_SUCCESS);
-		}
-		if (prompt && *prompt)
-		{
-			printf ("%s\n", prompt);
-			tokens = parser(prompt, &env);
-			handler_command(tokens, &env, &cpy_pwd);
-			add_history(prompt);
-			ft_free_tokens(&tokens);
-		}
-		free(prompt);
-		free(test);
-	}
-}
-
-// int main(int argc, char **argv, char **envp)
+// int	main(int argc, char **argv, char **envp)
 // {
 // 	(void)argc;
 // 	(void)argv;
-// 	(void)envp;
-	
+// 	char *prompt;
+// 	t_vars *env;
 // 	t_tokens *tokens;
-// 	tokens = parser("echo \"\"\'\' coucou", NULL);
-// 	ft_free_tokens(&tokens);
-// 	// char *strings[] = { "command argument",
-// 	// 					"echo 'hello world'",
-// 	// 					"echo \" hello world \"",
-// 	// 					"ls -l > output.txt",
-// 	// 					"echo 'hello \"world\"' | grep \"hello world\"",
-// 	// 					" command argument ",
-// 	// 					"",
-// 	// 					"echo $@",
-// 	// 					"'command'",
-// 	// 					"> output.txt",
-// 	// 					"command >",
-// 	// 					"command1 arg1 arg2 argv3 argv3 argv3 argv3 argv3 command2 arg1 arg2 argv3 argv3 argv3 argv3 argv3 argv3 argv3 argv3 argv3 ",
-// 	// 					"echo>>oui | non <<jesais pas et toi \"comment tu vas\">>non||il y a 'deux pipes ici'",
-// 	// 					"echo $+",
-// 	// 					NULL};
-// 	// int i = 0;
-// 	// while (strings[i])
-// 	// {
-// 	// 	tokens = parser(strings[i], NULL);
-// 	// 	ft_free_tokens(&tokens);
-// 	// 	i++;
-// 	// }
+// 	(void)envp;
+// 	char	*cpy_pwd;
+	
+// 	env = NULL;
+// 	init_vars(&env, envp);
+// 	cpy_pwd = get_vars(&env, "PWD");
+// 	signal(SIGINT, handler);
+// 	signal(SIGQUIT, handler);
+// 	using_history();
+// 	while (1)
+// 	{
+// 		char *test = get_prompt();
+// 		prompt = readline(test);
+// 		if (!prompt)
+// 		{
+// 			delete_all_vars(&env);
+// 			free(prompt);
+// 			free(test);
+// 			free(cpy_pwd);
+// 			exit(EXIT_SUCCESS);
+// 		}
+// 		if (prompt && *prompt)
+// 		{
+// 			printf ("%s\n", prompt);
+// 			tokens = parser(prompt, &env);
+// 			handler_command(tokens, &env, &cpy_pwd);
+// 			add_history(prompt);
+// 			ft_free_tokens(&tokens);
+// 		}
+// 		free(prompt);
+// 		free(test);
+// 	}
 // }
+
+int main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	(void)envp;
+	int i = 0;
+	char *tests[] = {
+		"echo coucou",
+		"echo \"coucou\"",
+		"echo 'coucou'",
+		"echo coucou > file.txt",
+		"echo \"coucou\" > file.txt",
+		"echo 'coucou' > file.txt",
+		"echo coucou >> file.txt",
+		"echo coucou | grep coucou",
+		"echo coucou | grep coucou > file.txt",
+		"echo coucou | grep \"coucou\" > file.txt",
+		"echo 'coucou' | grep 'coucou'",
+		"echo 'coucou' > file.txt | grep 'coucou'",
+		"echo \"\" > file.txt",
+		"echo \"coucou\" \"coucou\"",
+		"echo 'coucou' \"coucou\"",
+		"echo \"coucou 'hello'\" \"world\"",
+		"echo \"coucou 'hello world'\"",
+		"echo \"coucou\\\"",
+		"echo \"coucou\\\\\"",
+		"echo 'coucou\\' \"world\"",
+		"echo 'coucou\"world'",
+		"echo 'coucou\\\\' world",
+		"echo 'coucou>file' > file.txt",
+		"echo \"coucou > file\" > file.txt",
+		"echo \"coucou'world\" > file.txt",
+		"echo 'coucou\"world' > file.txt",
+		"echo \"coucou > file > more\" > file.txt",
+		"echo 'coucou | grep' > file.txt",
+		"echo \"coucou 'with spaces'\" | grep \"pattern\" > file.txt",
+		"echo \"coucou\"|grep 'pattern'|awk '{print $1}'",
+		"echo 'coucou'\"'world\" > file.txt",
+		"echo \"coucou 'mixed quotes\" > file.txt",
+		"echo \"coucou' world\" > file.txt",
+		NULL
+	};
+
+	while (tests[i])
+	{
+		printf("%d %s\n",i ,tests[i]);
+		parser(tests[i++] ,NULL);
+		printf("\n");
+	}
+}

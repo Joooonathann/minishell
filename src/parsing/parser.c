@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/01 17:12:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 15:12:18 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ char	*ms_strtok(char **str, char *delim)
 	return (token);
 }
 
-void	tokenizer(char **str)
+void	tokenizer(char **str, t_tokens **tokens)
 {
 	char	*token;
 
@@ -154,8 +154,68 @@ void	tokenizer(char **str)
 	while (**str)
 	{
 		token = ms_strtok(str, " |><");
-		printf("TOKEN: %s\n", token);
-		free(token);
+		ft_tokenadd_back(tokens, ft_tokennew(token));
+	}
+}
+
+char	*init_new_value(t_tokens *tokens)
+{
+	char		*new_value;
+	int			len;
+	int			i;
+
+	len = 0;
+	i = 0;
+	while (tokens->value[i])
+	{
+		if (tokens->value[i] == SIMPLE || tokens->value[i] == DOUBLE)
+		{
+			if (tokens->value[i + 1] && tokens->value[i] == tokens->value[i + 1])
+				i++;
+			else
+				len++;
+		}
+		else
+			len++;
+		i++;
+	}
+	new_value = malloc(sizeof(char) * (len + 1));
+	if (!new_value)
+		return (NULL);
+	return (new_value);
+}
+
+void	trime_useless_quotes(t_tokens **tokens)
+{
+	t_tokens	*current_token;
+	char		*new_value;
+	int			i;
+	int			j;
+
+	current_token = *tokens;
+	while (current_token)
+	{
+		new_value = init_new_value(current_token);
+		if (!new_value)
+			return ;
+		j = 0;
+		i = 0;
+		while (current_token->value[i])
+		{
+			if (current_token->value[i] == SIMPLE || current_token->value[i] == DOUBLE)
+			{
+				if (current_token->value[i + 1] && current_token->value[i] == current_token->value[i + 1])
+					i++;
+				else
+					new_value[j++] = current_token->value[i];
+			}
+			else
+				new_value[j++] = current_token->value[i];
+			i++;
+		}
+		free(current_token->value);
+		current_token->value = new_value;
+		current_token = current_token->next;
 	}
 }
 
@@ -166,7 +226,9 @@ t_tokens	*parser(char *str, t_vars **env)
 	(void)env;
 	tokens = NULL;
 	//create_tokens(&str, &tokens);
-	tokenizer(&str);
+	tokenizer(&str, &tokens);
+	trime_useless_quotes(&tokens);
+	ft_print_tokens(tokens);
 	//tokens = parse_env_var(tokens, env);
 	//add_token_type(&tokens);
 	//trime_null_tokens(&tokens);

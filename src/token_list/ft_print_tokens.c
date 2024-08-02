@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/30 16:20:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 14:20:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@ void	ft_reverse_print_tokens(t_tokens *tokens)
 
 void	ft_print_tokens(t_tokens *tokens)
 {
-	if (!tokens)
-		return ;
-	char *tab[] = {
-		"NONE",
-		"EXECUTABLE",
-		"COMMAND",
-		"ARGUMENT",
-		"OPTION",
-		"PIPE",
-		"REDIRECTION_OUTPUT",
-		"REDIRECTION_INPUT",
-		"REDIRECTION_OUTPUT_APPEND",
-		"REDIRECTION_HERE_DOC"
-	};
+	// if (!tokens)
+	// 	return ;
+	// char *tab[] = {
+	// 	"NONE",
+	// 	"EXECUTABLE",
+	// 	"COMMAND",
+	// 	"ARGUMENT",
+	// 	"OPTION",
+	// 	"PIPE",
+	// 	"REDIRECTION_OUTPUT",
+	// 	"REDIRECTION_INPUT",
+	// 	"REDIRECTION_OUTPUT_APPEND",
+	// 	"REDIRECTION_HERE_DOC"
+	// };
 	while (tokens)
 	{
-		printf("TOKEN: %s\nTYPE: %s\nQUOTE: %u\n", tokens->value, tab[tokens->type], tokens->quote);
+		printf("TOKEN: %s\n", tokens->value);
 		// if (tokens->redirection)
 		// {
 		// 	printf("REDIRECTION: ");
@@ -64,7 +64,6 @@ void	ft_print_tokens(t_tokens *tokens)
 		// 	printf("command: %s", tokens->pipe->command);
 		// 	//printf("command: %s", tokens->pipe->command);
 		// }
-		printf("\n");
 		tokens = tokens->next;
 	}
 }

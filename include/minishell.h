@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/01 16:18:39 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 14:17:23 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void					ft_reverse_print_tokens(t_tokens *tokens);
 void					ft_print_tokens(t_tokens *tokens);
 void					ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
 t_tokens				*ft_tokenlast(t_tokens *tokens);
-t_tokens				*ft_tokennew(char *value, unsigned quote);
+t_tokens				*ft_tokennew(char *value);
 int						ft_count_tokens(t_tokens *tokens);
 int						ft_count_value_tokens(t_tokens *tokens);
 int						ft_build_str_tokens(char **str, t_tokens *command);

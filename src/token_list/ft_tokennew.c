@@ -6,13 +6,13 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:40:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/07/25 14:07:23 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 14:17:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tokens	*ft_tokennew(char *value, unsigned int quote)
+t_tokens	*ft_tokennew(char *value)
 {
 	t_tokens	*elem;
 
@@ -23,7 +23,7 @@ t_tokens	*ft_tokennew(char *value, unsigned int quote)
 	elem->prev = NULL;
 	elem->redirection = NULL;
 	elem->pipe = NULL;
+	elem->quote = 0;
 	elem->value = value;
-	elem->quote = quote;
 	return (elem);
 }

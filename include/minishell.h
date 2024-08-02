@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/02 14:17:23 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 16:59:42 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int						ft_build_str_tokens(char **str, t_tokens *command);
 //
 
 //	PARSING
+void					tokenizer(char **str, t_tokens **tokens);
+void					trime_useless_quotes(t_tokens **tokens);
 void					add_token_type(t_tokens **tokens);
 void					create_tokens(char **str, t_tokens **tokens);
 int						is_valid_var_char(char c);

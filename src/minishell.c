@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/02 14:08:57 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 16:47:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,41 +98,33 @@ int	main(int argc, char **argv, char **envp)
 // 	(void)envp;
 // 	int i = 0;
 // 	char *tests[] = {
-// 		"echo coucou",
-// 		"echo \"coucou\"",
-// 		"echo 'coucou'",
-// 		"echo coucou > file.txt",
-// 		"echo \"coucou\" > file.txt",
-// 		"echo 'coucou' > file.txt",
-// 		"echo coucou >> file.txt",
-// 		"echo coucou | grep coucou",
-// 		"echo coucou | grep coucou > file.txt",
-// 		"echo coucou | grep \"coucou\" > file.txt",
-// 		"echo 'coucou' | grep 'coucou'",
-// 		"echo 'coucou' > file.txt | grep 'coucou'",
-// 		"echo \"\" > file.txt",
-// 		"echo \"coucou\" \"coucou\"",
-// 		"echo 'coucou' \"coucou\"",
-// 		"echo \"coucou 'hello'\" \"world\"",
-// 		"echo \"coucou 'hello world'\"",
-// 		"echo \"coucou\\\"",
-// 		"echo \"coucou\\\\\"",
-// 		"echo 'coucou\\' \"world\"",
-// 		"echo 'coucou\"world'",
-// 		"echo 'coucou\\\\' world",
-// 		"echo 'coucou>file' > file.txt",
-// 		"echo \"coucou > file\" > file.txt",
-// 		"echo \"coucou'world\" > file.txt",
-// 		"echo 'coucou\"world' > file.txt",
-// 		"echo \"coucou > file > more\" > file.txt",
-// 		"echo 'coucou | grep' > file.txt",
-// 		"echo \"coucou 'with spaces'\" | grep \"pattern\" > file.txt",
-// 		"echo \"coucou\"|grep 'pattern'|awk '{print $1}'",
-// 		"echo 'coucou'\"'world\" > file.txt",
-// 		"echo \"coucou 'mixed quotes\" > file.txt",
-// 		"echo \"coucou' world\" > file.txt",
-// 		NULL
-// 	};
+// 		"echo \"hello\" world",
+// 		"echo \"hello'world\"",
+// 		"echo 'hello' world",
+// 		"echo \"hello\" \"world\"",
+// 		"echo 'hello' \"world\"",
+// 		"echo \"hello world\"",
+// 		"echo \"hello \"\" world\"",
+// 		"echo 'hello \" world'",
+// 		"echo \"\"",
+// 		"echo \"\"\"",
+// 		"echo '\"\"'",
+// 		"echo \"'\"",
+// 		"echo \"'\" world",
+// 		"echo \"hello 'world'\"",
+// 		"echo 'hello \"world\"'",
+// 		"echo \"hello \"\"world\"\"\"",
+// 		"echo \"\"\"hello\"\"\" world\"",
+// 		"echo \"\"\"hello\"\"\" world",
+// 		"echo 'hello''world'",
+// 		"echo 'hello\" world\"",
+// 		"echo '\"hello\"'",
+// 		"echo \"hello\"\" world\"",
+// 		"echo \"hello\"\"world\"",
+// 		"echo 'hello' \"world\"",
+// 		"echo \"hello' world\"",
+// 		"echo \"hello\"\"world\"",
+// 		NULL};
 
 // 	while (tests[i])
 // 	{

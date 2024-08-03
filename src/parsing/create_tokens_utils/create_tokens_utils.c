@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:22:06 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/01 15:13:34 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/02 23:40:38 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	count_quote(char *str, QUOTE quote_type)
 
 int	is_end_of_token(char **str, bool in_quote, QUOTE quote_type, int i)
 {
+	(void)i;
 	i = 0;
 	if ((**str == ' ' || **str == '|' || **str == '<' || **str == '>') && (!in_quote))
 		return (1);

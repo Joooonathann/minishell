@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/23 13:42:47 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:44:45 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 
 	if (!command)
 		return (0);
+	if (check_is_special(command))
+	{
+		if (handler_special(command, env, cpy_path))
+			return (1);
+		return (0);
+	}
 	i = 0;
 	commands = init_commands();
 	if (!commands)

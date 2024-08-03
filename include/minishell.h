@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/02 16:59:42 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/03 16:51:31 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ int						unset_manager(t_tokens *command, t_vars **env,
 int						extern_command(t_tokens *command, t_vars **env,
 							char **cpy_path);
 char					*find_command_path(const char *command, t_vars **env);
+int						check_is_special(t_tokens *command);
+int						handler_special(t_tokens *command, t_vars **env, char **cpy_path);
 
 // Env vars
 int						add_vars(char *key, char *value, t_vars **env);

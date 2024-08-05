@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/05 16:54:30 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/05 16:57:51 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,14 @@ void	env_var_expansion(t_tokens **tokens, t_vars **env)
 			{
 				in_quote = true;
 				quote_type = (QUOTE)current_token->value[i];
+				expanded_value = add_char_to_str(expanded_value, current_token->value[i]);
 				i++;
 			}
 			else if ((current_token->value[i] == SIMPLE || current_token->value[i] == DOUBLE) && in_quote && (char)quote_type == current_token->value[i])
 			{
 				in_quote = false;
 				quote_type = 0;
+				expanded_value = add_char_to_str(expanded_value, current_token->value[i]);
 				i++;
 			}
 			else if ((!in_quote || quote_type == DOUBLE) && current_token->value[i] == '$')

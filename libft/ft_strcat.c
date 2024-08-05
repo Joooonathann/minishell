@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:55:10 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/23 14:55:30 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:41:27 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ char	*ft_strcat(char *dst, const char *src)
 	size_t	dst_len;
 	size_t	i;
 
+	if (!dst && !src)
+		return (NULL);
+	if (!dst)
+		return ((char *)src);
+	if (!src)
+		return (dst);
 	dst_len = ft_strlen(dst);
 	i = 0;
 	while (src[i])

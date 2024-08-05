@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:58:23 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/02 17:03:09 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/05 12:11:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*init_new_value(t_tokens *tokens)
 				quote_type = 0;
 				len++;
 			}
-			if (tokens->value[i + 1]
+			else if (tokens->value[i + 1]
 				&& tokens->value[i] == tokens->value[i + 1])
 				i++;
 			else
@@ -71,10 +71,10 @@ void	trime_useless_quotes(t_tokens **tokens)
 	while (current_token)
 	{
 		new_value = init_new_value(current_token);
-		in_quote = false;
-		quote_type = 0;
 		if (!new_value)
 			return ;
+		in_quote = false;
+		quote_type = 0;
 		j = 0;
 		i = 0;
 		while (current_token->value[i])

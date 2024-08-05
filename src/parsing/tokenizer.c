@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:50:34 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/02 17:00:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/05 12:11:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ char	*init_ms_token(char *str, char *delim)
 	quote_type = 0;
 	while (*str == ' ')
 		str++;
+	if (ft_strchr((const char *)delim, *str))
+	{
+		if ((*str == '>' || *str == '<') && *str == *str + 1)
+		{
+			token = malloc(sizeof(char) * (3));
+			if (!token)
+				return (NULL);
+			return (token);
+		}
+		token = malloc(sizeof(char) * (2));
+		if (!token)
+			return (NULL);
+		return (token);
+	}
 	while (*str && (!ft_strchr((const char *)delim, *str) || in_quote))
 	{
 		if (((*str == SIMPLE && count_quote(str, SIMPLE) > 1)
@@ -52,7 +66,7 @@ char	*ms_strtok(char **str, char *delim)
 {
 	char	*token;
 	int		i;
-	bool		in_quote;
+	bool	in_quote;
 	QUOTE	quote_type;
 
 	i = 0;
@@ -62,6 +76,17 @@ char	*ms_strtok(char **str, char *delim)
 		(*str)++;
 	if (ft_strchr((const char *)delim, **str))
 	{
+		if ((**str == '>' || **str == '<') && **str == *(*str + 1))
+		{
+			token = malloc(sizeof(char) * (3));
+			if (!token)
+				return (NULL);
+			token[0] = **str;
+			token[1] = *(*str + 1);
+			token[2] = '\0';
+			(*str) += 2;
+			return (token);
+		}
 		token = malloc(sizeof(char) * (2));
 		if (!token)
 			return (NULL);

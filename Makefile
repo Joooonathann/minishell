@@ -6,7 +6,7 @@
 #    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/08/06 12:32:05 by ekrause          ###   ########.fr        #
+#    Updated: 2024/08/06 17:22:22 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ LIBFT		=	./libft/libft.a
 MAKE_LIBFT	=	@make -C libft
 
 SRC			=	./src/minishell.c\
+				./src/token_list/ft_del_token.c\
 				./src/token_list/ft_free_token.c\
 				./src/token_list/ft_free_tokens.c\
 				./src/token_list/ft_print_tokens.c\
@@ -31,6 +32,7 @@ SRC			=	./src/minishell.c\
 				./src/parsing/parser.c\
 				./src/parsing/tokenizer.c\
 				./src/parsing/env_var_expansion.c\
+				./src/parsing/parse_meta_characters.c\
 				./src/parsing/trime_useless_quotes.c\
 				./src/commands/cd_command.c\
 				./src/commands/exit_command.c\

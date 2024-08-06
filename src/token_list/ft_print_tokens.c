@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/05 11:58:22 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/06 18:38:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,31 @@ void	ft_reverse_print_tokens(t_tokens *tokens)
 
 void	ft_print_tokens(t_tokens *tokens)
 {
-	// if (!tokens)
-	// 	return ;
-	// char *tab[] = {
-	// 	"NONE",
-	// 	"EXECUTABLE",
-	// 	"COMMAND",
-	// 	"ARGUMENT",
-	// 	"OPTION",
-	// 	"PIPE",
-	// 	"REDIRECTION_OUTPUT",
-	// 	"REDIRECTION_INPUT",
-	// 	"REDIRECTION_OUTPUT_APPEND",
-	// 	"REDIRECTION_HERE_DOC"
-	// };
+	if (!tokens)
+		return ;
+	char *tab[] = {
+		"NONE",
+		"EXECUTABLE",
+		"COMMAND",
+		"ARGUMENT",
+		"OPTION",
+		"PIPE",
+		"REDIRECTION_OUTPUT",
+		"REDIRECTION_INPUT",
+		"REDIRECTION_OUTPUT_APPEND",
+		"REDIRECTION_HERE_DOC"
+	};
 	while (tokens)
 	{
 		if (tokens->value)
-			printf("TOKEN: %s\n", tokens->value);
+			printf("TOKEN: %s", tokens->value);
+		if (tokens->type)
+			printf(" TYPE: %s", tab[tokens->type]);
+		if (tokens->redirection)
+			printf(" REDIRECTION: %c", tokens->redirection);
+		if (tokens->pipe)
+			printf(" PIPE: %c", tokens->pipe);
+		printf("\n");
 		// if (tokens->redirection)
 		// {
 		// 	printf("REDIRECTION: ");

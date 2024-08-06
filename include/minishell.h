@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 12:31:41 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/06 18:12:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,7 @@ typedef enum s_token_type
 
 typedef struct s_redirection
 {
-	char				*input;
-	char				*output;
-	char				*delimiter;
-	int					append;
-	int					here_doc;
+	char	type;
 }						t_redirection;
 
 typedef struct s_pipe
@@ -77,8 +73,8 @@ typedef struct s_tokens
 	char				*value;
 	unsigned int		quote;
 	t_token_type		type;
-	t_redirection		*redirection;
-	t_pipe				*pipe;
+	char				redirection;
+	char				pipe;
 }						t_tokens;
 //
 
@@ -100,6 +96,7 @@ typedef struct s_lst_cmd
 }						t_lstcmd;
 
 // Token list
+void					ft_del_token(t_tokens **token, t_tokens **tokens);
 void					ft_free_tokens(t_tokens **tokens);
 void					ft_reverse_print_tokens(t_tokens *tokens);
 void					ft_print_tokens(t_tokens *tokens);
@@ -116,6 +113,7 @@ int						ft_build_str_tokens(char **str, t_tokens *command);
 t_tokens				*parser(char *str, t_vars **env);
 void					tokenizer(char **str, t_tokens **tokens);
 void					env_var_expansion(t_tokens **tokens, t_vars **env);
+void					parse_meta_characters(t_tokens **tokens);
 void					trime_useless_quotes(t_tokens **tokens);
 
 // Commands

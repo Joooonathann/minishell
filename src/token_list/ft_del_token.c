@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tokens.c                                   :+:      :+:    :+:   */
+/*   ft_del_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/31 10:50:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 17:05:21 by ekrause          ###   ########.fr       */
+/*   Created: 2024/08/06 14:08:07 by ekrause           #+#    #+#             */
+/*   Updated: 2024/08/06 18:13:38 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_tokens(t_tokens **tokens)
+void	ft_free_token(t_tokens *token)
 {
-	t_tokens	*previous_token;
-
-	while (*tokens)
+	if (token)
 	{
-		previous_token = *tokens;
-		*tokens = (*tokens)->next;
-		free(previous_token->value);
-		free(previous_token);
+		if (token->value)
+			free (token->value);
+		free (token);
 	}
+}
+
+void	ft_del_token(t_tokens **token, t_tokens **tokens)
+{
+	t_tokens	*temp;
+
+	temp = *token;
+	if (!(*token)->prev)
+	{
+		*tokens = (*tokens)->next;
+		*token = (*token)->next;
+		(*token)->prev = NULL;
+	}
+	else
+	{
+		(*token)->prev->next = (*token)->next;
+		(*token)->next->prev = (*token)->prev;
+		*token = (*token)->next;
+	}
+	ft_free_token(temp);
 }

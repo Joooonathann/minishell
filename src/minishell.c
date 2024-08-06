@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/06 13:27:41 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/06 20:22:25 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf ("%s\n", prompt);
 			tokens = parser(prompt, &env);
-			//handler_command(tokens, &env, &cpy_pwd);
+			handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
 			ft_free_tokens(&tokens);
 		}

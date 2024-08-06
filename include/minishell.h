@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/03 16:51:31 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:31:41 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,39 +113,10 @@ int						ft_build_str_tokens(char **str, t_tokens *command);
 //
 
 //	PARSING
-void					tokenizer(char **str, t_tokens **tokens);
-void					trime_useless_quotes(t_tokens **tokens);
-void					add_token_type(t_tokens **tokens);
-void					create_tokens(char **str, t_tokens **tokens);
-int						is_valid_var_char(char c);
-int						calc_string_len(char *str);
-void					copy_string_and_var(char **result, char *str,
-							char *var);
-t_tokens				*parse_env_var(t_tokens *tokens, t_vars **env);
-void					parse_redirection(t_tokens **tokens);
 t_tokens				*parser(char *str, t_vars **env);
-
-//	parsing/create_tokens_utils/create_tokens_utils
-void					init_tokenise_var(int *i, bool *in_quote,
-							QUOTE *quote_type);
-int						count_quote(char *str, QUOTE quote_type);
-int						is_end_of_token(char **str, bool in_quote,
-							QUOTE quote_type, int i);
-int						is_append_quote_needed(char **str, bool in_quote);
-void					append_quote_type(bool *in_quote, QUOTE *quote_type,
-							char **str);
-
-//	parsing/create_tokens_utils/get_token_len_utils
-void					count_redirections(char **str, int *len);
-void					advance_in_get_token_len(char **str, int *len);
-
-//	parsing/create_tokens_utils/tokenise_utils
-void					tokenise_redirections(t_tokens **token, char **str,
-							int *i);
-void					append_values_to_token(t_tokens **token,
-							QUOTE quote_type, int i);
-void					append_char_to_token(t_tokens **token, char **str,
-							int *i);
+void					tokenizer(char **str, t_tokens **tokens);
+void					env_var_expansion(t_tokens **tokens, t_vars **env);
+void					trime_useless_quotes(t_tokens **tokens);
 
 // Commands
 int						handler_command(t_tokens *command, t_vars **env,

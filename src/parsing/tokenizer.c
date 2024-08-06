@@ -6,11 +6,27 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:50:34 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/05 12:11:57 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/06 12:34:48 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	count_quote(char *str, QUOTE quote_type)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)quote_type)
+			j++;
+		i++;
+	}
+	return (j);
+}
 
 char	*init_ms_token(char *str, char *delim)
 {

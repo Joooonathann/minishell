@@ -6,39 +6,50 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/06 20:30:46 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/06 21:04:58 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 
-t_tokens *token_is_output(t_tokens *command)
+t_tokens	*token_limit(t_tokens *command)
 {
-    while (command)
-    {
-        if (command->redirection == '>')
-            return (command);
-        command = command->next;
-    }
-    return (NULL);
+	while (command)
+	{
+		if (command->redirection)
+			return (command);
+		command = command->next;
+	}
+	return (NULL);
 }
 
-int handler_special(t_tokens *command, t_vars **env, char **cpy_path)
+int	handler_special(t_tokens *command, t_vars **env, char **cpy_path)
 {
-    (void)env;
-    (void)cpy_path;
-    char    *str;
-    int     fd;
-    t_tokens    *tmp;
+	t_tokens	*limit;
+	int			fd;
 
-    tmp = token_is_output(command);
-    if (tmp)
-    {
-        fd = open(tmp->value, O_WRONLY | O_CREAT, 0644);
-        ft_build_str_tokens(&str, command);
-        write(fd, str, ft_strlen(str));
-        close(fd);
-    }
-    return (1);
+	(void)env;
+	(void)cpy_path;
+	limit = token_limit(command);
+	if (ft_strcmp(command->value, "echo") && command->type == TYPE_COMMAND)
+	{
+		if (limit->redirection == '>')
+		{
+            fd = open(limit->value, O_WRONLY | O_CREAT, 0644);
+			while (command != limit)
+            {
+                if (command->type == TYPE_ARGUMENT)
+                {
+                    write(fd, command->value, ft_strlen(command->value));
+                    if (command->next)
+                        write(fd, " ", 1);
+                }
+                command = command->next;
+            }
+            write(fd, "\n", 1);
+            close(fd);
+		}
+	}
+	return (1);
 }

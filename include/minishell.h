@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 18:12:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:02:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,8 @@ typedef enum s_token_type
 	TYPE_COMMAND,
 	TYPE_ARGUMENT,
 	TYPE_OPTION,
+	TYPE_REDIRECTION,
 	TYPE_PIPE,
-	TYPE_REDIRECTION_OUTPUT,
-	TYPE_REDIRECTION_INPUT,
-	TYPE_REDIRECTION_OUTPUT_APPEND,
-	TYPE_REDIRECTION_HERE_DOC
 }						t_token_type;
 
 typedef struct s_redirection
@@ -114,6 +111,7 @@ t_tokens				*parser(char *str, t_vars **env);
 void					tokenizer(char **str, t_tokens **tokens);
 void					env_var_expansion(t_tokens **tokens, t_vars **env);
 void					parse_meta_characters(t_tokens **tokens);
+void					add_token_type(t_tokens **tokens);
 void					trime_useless_quotes(t_tokens **tokens);
 
 // Commands

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:50:34 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 17:18:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/07 15:21:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ char	*ms_strtok(char **str, char *delim)
 	quote_type = 0;
 	while (**str == ' ')
 		(*str)++;
+	if (!**str)
+		return (NULL);
 	if (ft_strchr((const char *)delim, **str))
 	{
 		if ((**str == '>' || **str == '<') && **str == *(*str + 1))
@@ -138,10 +140,11 @@ void	tokenizer(char **str, t_tokens **tokens)
 {
 	char	*token;
 
-	token = NULL;
 	while (**str)
 	{
+		token = NULL;
 		token = ms_strtok(str, " |><");
-		ft_tokenadd_back(tokens, ft_tokennew(token));
+		if (token)
+			ft_tokenadd_back(tokens, ft_tokennew(token));
 	}
 }

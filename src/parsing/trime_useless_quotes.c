@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:58:23 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/05 12:11:29 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/07 15:00:49 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,16 @@ char	*init_new_value(t_tokens *tokens)
 	{
 		if (tokens->value[i] == SIMPLE || tokens->value[i] == DOUBLE)
 		{
-			if (tokens->value[i + 1]
-				&& tokens->value[i] != tokens->value[i + 1] && !in_quote)
+			if (!in_quote)
 			{
 				in_quote = true;
 				quote_type = tokens->value[i];
-				len++;
 			}
 			else if (in_quote && tokens->value[i] == (char)quote_type)
 			{
 				in_quote = false;
 				quote_type = 0;
-				len++;
 			}
-			else if (tokens->value[i + 1]
-				&& tokens->value[i] == tokens->value[i + 1])
-				i++;
 			else
 				len++;
 		}
@@ -79,27 +73,18 @@ void	trime_useless_quotes(t_tokens **tokens)
 		i = 0;
 		while (current_token->value[i])
 		{
-			if (current_token->value[i] == SIMPLE
-				|| current_token->value[i] == DOUBLE)
+			if (current_token->value[i] == SIMPLE || current_token->value[i] == DOUBLE)
 			{
-				if (current_token->value[i + 1]
-					&& current_token->value[i] != current_token->value[i + 1]
-					&& !in_quote)
+				if (!in_quote)
 				{
 					in_quote = true;
 					quote_type = current_token->value[i];
-					new_value[j++] = current_token->value[i];
 				}
-				else if (in_quote
-					&& current_token->value[i] == (char)quote_type)
+				else if (in_quote && current_token->value[i] == (char)quote_type)
 				{
 					in_quote = false;
 					quote_type = 0;
-					new_value[j++] = current_token->value[i];
 				}
-				else if (!in_quote && current_token->value[i + 1]
-					&& current_token->value[i] == current_token->value[i + 1])
-					i++;
 				else
 					new_value[j++] = current_token->value[i];
 			}

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 18:38:29 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:09:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,12 @@ void	ft_print_tokens(t_tokens *tokens)
 		return ;
 	char *tab[] = {
 		"NONE",
-		"EXECUTABLE",
-		"COMMAND",
-		"ARGUMENT",
-		"OPTION",
-		"PIPE",
-		"REDIRECTION_OUTPUT",
-		"REDIRECTION_INPUT",
-		"REDIRECTION_OUTPUT_APPEND",
-		"REDIRECTION_HERE_DOC"
+		"TYPE_EXECUTABLE",
+		"TYPE_COMMAND",
+		"TYPE_ARGUMENT",
+		"TYPE_OPTION",
+		"TYPE_REDIRECTION",
+		"TYPE_PIPE",
 	};
 	while (tokens)
 	{
@@ -48,10 +45,10 @@ void	ft_print_tokens(t_tokens *tokens)
 			printf("TOKEN: %s", tokens->value);
 		if (tokens->type)
 			printf(" TYPE: %s", tab[tokens->type]);
-		if (tokens->redirection)
-			printf(" REDIRECTION: %c", tokens->redirection);
-		if (tokens->pipe)
-			printf(" PIPE: %c", tokens->pipe);
+		// if (tokens->redirection)
+		// 	printf(" REDIRECTION: %c", tokens->redirection);
+		// if (tokens->pipe)
+		// 	printf(" PIPE: %c", tokens->pipe);
 		printf("\n");
 		// if (tokens->redirection)
 		// {

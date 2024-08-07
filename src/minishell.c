@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/06 20:22:25 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:46:14 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (prompt && *prompt)
 		{
-			printf ("%s\n", prompt);
 			tokens = parser(prompt, &env);
 			handler_command(tokens, &env, &cpy_pwd);
 			add_history(prompt);
@@ -96,90 +95,8 @@ int	main(int argc, char **argv, char **envp)
 // 	t_vars *env;
 // 	(void)argc;
 // 	(void)argv;
-// 	int i = 0;
-// 	char *tests[] = {
-// 		// Test 1: Simple expansion de variable d'environnement
-// 		"echo $USER",
-
-// 		// Test 2: Expansion dans une chaîne avec guillemets doubles
-// 		"echo \"$HOME/bin\"",
-
-// 		// Test 3: Expansion dans une chaîne avec guillemets simples (ne devrait pas s'étendre)
-// 		"echo '$HOME/bin'",
-
-// 		// Test 4: Expansion dans une chaîne mixte de guillemets simples et doubles
-// 		"echo \"$HOME/$USER\"",
-
-// 		// Test 5: Variable d'environnement dans guillemets simples, guillemets doubles extérieurs
-// 		"echo \"'$HOME'\"",
-
-// 		// Test 6: Variable d'environnement dans guillemets simples, guillemets doubles internes
-// 		"echo '$HOME\"$USER\"'",
-
-// 		// Test 7: Expansions imbriquées avec plusieurs variables
-// 		"echo \"$USER is at $HOME\"",
-
-// 		// Test 8: Variables d'environnement avec des caractères non alphanumériques
-// 		"echo \"Path: $HOME/Documents/file.txt\"",
-
-// 		// Test 9: Variable d'environnement non définie
-// 		"echo \"$UNDEFINED_VAR\"",
-
-// 		// Test 10: Mélange de guillemets simples et doubles avec des variables
-// 		"echo \"$USER and '$HOME'\"",
-
-// 		// Test 11: Chaîne vide avec guillemets doubles
-// 		"echo \"\"",
-
-// 		// Test 12: Chaîne vide avec guillemets simples
-// 		"echo ''",
-
-// 		// Test 13: Chaîne avec des guillemets imbriqués
-// 		"echo \"hello 'world'\"",
-
-// 		// Test 14: Chaîne avec guillemets imbriqués et variables
-// 		"echo \"hello '$USER'\"",
-
-// 		// Test 15: Variables dans des chaînes vides avec des guillemets
-// 		"echo \"'$USER'\"",
-
-// 		// Test 16: Variable d'environnement à l'intérieur de guillemets simples et doubles
-// 		"echo \"'$USER\"",
-
-// 		// Test 17: Chaîne avec guillemets imbriqués et variables
-// 		"echo \"'hello $USER'\"",
-
-// 		// Test 18: Chaîne avec des guillemets et des variables d'environnement
-// 		"echo \"'$USER'\"",
-
-// 		// Test 19: Variations de guillemets simples dans la chaîne
-// 		"echo 'hello'\"$USER\"",
-
-// 		// Test 20: Chaîne avec guillemets doubles et variables d'environnement
-// 		"echo \"$USER\"",
-
-// 		// Test 21: Cas complexe avec guillemets imbriqués et variables d'environnement
-// 		"echo \"'$USER \"'\"",
-
-// 		// Test 22: Variable d'environnement concaténée avec d'autres caractères
-// 		"echo \"$USER's path is $HOME/path\"",
-
-// 		// Test 23: Chaîne vide avec variable d'environnement non définie
-// 		"echo \"$UNDEFINED_VAR\"",
-
-// 		// Test 24: Variations de guillemets imbriqués avec variables
-// 		"echo \"$USER\"'world'",
-
-// 		// Terminaison du tableau
-// 		NULL};
 
 // 	env = NULL;
 // 	init_vars(&env, envp);
-
-// 	while (tests[i])
-// 	{
-// 		printf("%d %s\n",i ,tests[i]);
-// 		parser(tests[i++] ,&env);
-// 		printf("\n");
-// 	}
+// 	parser("| coucou" ,&env);
 // }

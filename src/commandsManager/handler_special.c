@@ -6,80 +6,102 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/07 21:39:01 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/08 08:22:12 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 
+typedef struct s_output
+{
+	int					fd;
+	char				*file;
+	struct s_output		*next;
+}						t_output;
+
 typedef struct s_special
 {
 	char				*command;
 	char				*input;
-	char				*output;
+	t_output			*output;
 	bool				param;
-	int					fd;
 	char				type;
 	struct s_special	*next;
 }						t_special;
 
-void	create_node_special(char *command, char *input, char *output,
-		t_special **result, char type)
+void	create_node_special(t_special **result, t_special *copy)
 {
-	t_special	*res;
 	t_special	*tmp;
 
-	res = (t_special *)malloc(sizeof(t_special));
-	if (!res)
-		return ;
-	res->command = command;
-	res->input = input;
-	res->output = output;
-	res->type = type;
-	res->next = NULL;
 	if (*result)
 	{
 		tmp = *result;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
-		tmp->next = res;
+		tmp->next = copy;
 	}
 	else
-		*result = res;
+		*result = copy;
+}
+
+void	create_output(t_output **output, char *value)
+{
+	t_output	*new;
+	t_output	*tmp;
+	
+	new = (t_output *)malloc(sizeof(t_output));
+	new->file = ft_strdup(value);
+	new->next = NULL;
+	if (!new)
+		return ;
+	if (*output)
+	{
+		tmp = *output;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new;	
+	}
+	else
+		*output = new;
 }
 
 t_tokens	*create_special(t_special **result, t_tokens *command)
 {
-	char			*input;
-	char			*output;
-	char			*cmd;
-	char			type;
+	t_special		*copy;
 
-	input = NULL;
-	output = NULL;
-	cmd = NULL;
+	copy = (t_special *)malloc(sizeof(t_special));
+	copy->input = NULL;
+	copy->command = NULL;
+	copy->next = NULL;
+	copy->output = NULL;
 	while (command)
 	{
 		if (command->type == TYPE_COMMAND)
-			cmd = ft_strdup(command->value);
+			copy->command = ft_strdup(command->value);
 		if (command->type == TYPE_ARGUMENT && !command->redirection)
 		{
-			if (input)
-				input = ft_strcat(input, command->value);
+			if (copy->input)
+				copy->input = ft_strcat(copy->input, command->value);
 			else
-				input = ft_strdup(command->value);
+				copy->input = ft_strdup(command->value);
 			if (command->next && !command->next->redirection)
-				input = ft_strcat(input, " ");
+				copy->input = ft_strcat(copy->input, " ");
 		}
 		if (command->redirection)
 		{
-			input = ft_strcat(input, "\n");
-			output = ft_strdup(command->value);
 			if (command->redirection == '>')
-				type = '>';
-			create_node_special(cmd, input, output, result, type);
-			return (command->next);
+				copy->type = '>';
+			if (command->next && command->next->redirection)
+			{
+				create_output(&copy->output, command->value);
+			}
+			else
+			{
+				create_output(&copy->output, command->value);
+				create_node_special(result, copy);
+				return (command->next);
+			}
 		}
 		command = command->next;
 	}
@@ -105,12 +127,20 @@ int	handler_special(t_tokens *command, t_vars **env, char **cpy_path)
 	special = prepare_tokens(command);
 	while (special)
 	{
+		printf("%s\n", special->command);
+		printf("%c\n", special->type);
 		if (ft_strcmp(special->command, "echo")
 			&& special->type == '>')
 		{
-			special->fd = open(special->output, O_WRONLY | O_CREAT, 0644);
-			write(special->fd, special->input, ft_strlen(special->input));
-			close(special->fd);
+			write(1, "ok", 2);
+			while (special->output)
+			{
+				printf("%s", special->output->file);
+				special->output->fd = open(special->output->file, O_WRONLY | O_CREAT, 0644);
+				write(special->output->fd, special->input, ft_strlen(special->input));
+				close(special->output->fd);
+				special->output = special->output->next;
+			}
 		}
 		special = special->next;
 	}

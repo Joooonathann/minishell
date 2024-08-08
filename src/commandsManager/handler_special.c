@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/08 08:22:12 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:01:55 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,11 @@ t_tokens	*create_special(t_special **result, t_tokens *command)
 	copy->command = NULL;
 	copy->next = NULL;
 	copy->output = NULL;
+	copy->param = false;
 	while (command)
 	{
+		if (command->type == TYPE_OPTION && ft_strcmp(command->value, "-n"))
+			copy->param = true;
 		if (command->type == TYPE_COMMAND)
 			copy->command = ft_strdup(command->value);
 		if (command->type == TYPE_ARGUMENT && !command->redirection)
@@ -98,6 +101,8 @@ t_tokens	*create_special(t_special **result, t_tokens *command)
 			}
 			else
 			{
+				if (copy->param == false)
+					copy->input = ft_strcat(copy->input, "\n");
 				create_output(&copy->output, command->value);
 				create_node_special(result, copy);
 				return (command->next);
@@ -132,7 +137,6 @@ int	handler_special(t_tokens *command, t_vars **env, char **cpy_path)
 		if (ft_strcmp(special->command, "echo")
 			&& special->type == '>')
 		{
-			write(1, "ok", 2);
 			while (special->output)
 			{
 				printf("%s", special->output->file);

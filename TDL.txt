@@ -1,5 +1,4 @@
-[1] echo ${USER} = echo ekrause
-[2] : [2] !
-[3] echo $$
-[4] echo $?
-[5] echo $:
+[1] echo ${USER} = echo ekrause #idk if it should be implemented
+[2] : [2] ! #idk if it should be implemented
+[3] echo $$ #idk if it should be implemented
+[4] echo $? #done

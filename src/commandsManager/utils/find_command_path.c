@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_command_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 17:30:46 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/29 10:16:19 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:07:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char    *find_command_path(const char *command, t_vars **env)
 		ft_strcat(full_path, command);
         if (access(full_path, X_OK) == 0)
 		{
-			free(path);
+            free(path);
             free_tokens(tokens);
 			return (full_path);
 		}

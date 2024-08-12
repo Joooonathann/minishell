@@ -1,0 +1,5 @@
+[1] echo ${USER} = echo ekrause
+[2] : [2] !
+[3] echo $$
+[4] echo $?
+[5] echo $:

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/08 13:58:39 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/08 14:56:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_error(char *str, char *token)
 	if (token)
 		printf("`%s'", token);
 	printf("\n");
-	//exit(EXIT_FAILURE);
 }
 
 int	check_meta_characters(t_tokens *tokens)

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/21 18:23:50 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:26:43 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ int	handler_special(t_tokens *command, t_vars **env, char **cpy_path)
 
 	while (current)
 	{
-		if (current->type == TYPE_REDIRECTION)
+		if (current->redirection)
 			handle_redirection(current);
 
-		if (current->type == TYPE_PIPE)
+		if (current->pipe)
 		{
 			handle_pipe(current, env, cpy_path);
 			return 1; // Indique qu'un pipe a été traité

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/08 11:57:22 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:35:24 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,15 +132,14 @@ int	handler_special(t_tokens *command, t_vars **env, char **cpy_path)
 	special = prepare_tokens(command);
 	while (special)
 	{
-		printf("%s\n", special->command);
-		printf("%c\n", special->type);
 		if (ft_strcmp(special->command, "echo")
 			&& special->type == '>')
 		{
 			while (special->output)
 			{
 				special->output->fd = open(special->output->file, O_WRONLY | O_CREAT, 0644);
-				write(special->output->fd, special->input, ft_strlen(special->input));
+				if (special->output->next == NULL)
+					write(special->output->fd, special->input, ft_strlen(special->input));
 				close(special->output->fd);
 				special->output = special->output->next;
 			}

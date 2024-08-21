@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/08 14:56:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/21 18:28:15 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokenizer(&str, &tokens);
 	env_var_expansion(&tokens, env);
 	add_token_type(&tokens);
-	if (!check_meta_characters(tokens))
-		return (NULL);
+	// if (!check_meta_characters(tokens))
+	// 	return (NULL);
 	parse_meta_characters(&tokens);
 	trime_useless_quotes(&tokens);
 	ft_print_tokens(tokens);

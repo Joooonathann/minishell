@@ -6,145 +6,157 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/21 15:35:24 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:23:50 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
-
-typedef struct s_output
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+char	**args_composee(t_tokens *command)
 {
-	int					fd;
-	char				*file;
-	struct s_output		*next;
-}						t_output;
+	char	**result;
+	int		i;
 
-typedef struct s_special
-{
-	char				*command;
-	char				*input;
-	t_output			*output;
-	bool				param;
-	char				type;
-	struct s_special	*next;
-}						t_special;
-
-void	create_node_special(t_special **result, t_special *copy)
-{
-	t_special	*tmp;
-
-	if (*result)
-	{
-		tmp = *result;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = copy;
-	}
-	else
-		*result = copy;
-}
-
-void	create_output(t_output **output, char *value)
-{
-	t_output	*new;
-	t_output	*tmp;
-	
-	new = (t_output *)malloc(sizeof(t_output));
-	new->file = ft_strdup(value);
-	new->next = NULL;
-	if (!new)
-		return ;
-	if (*output)
-	{
-		tmp = *output;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;	
-	}
-	else
-		*output = new;
-}
-
-t_tokens	*create_special(t_special **result, t_tokens *command)
-{
-	t_special		*copy;
-
-	copy = (t_special *)malloc(sizeof(t_special));
-	copy->input = NULL;
-	copy->command = NULL;
-	copy->next = NULL;
-	copy->output = NULL;
-	copy->param = false;
+	result = malloc(sizeof(char *) * (ft_count_tokens(command) + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
 	while (command)
 	{
-		if (command->type == TYPE_OPTION && ft_strcmp(command->value, "-n"))
-			copy->param = true;
-		if (command->type == TYPE_COMMAND)
-			copy->command = ft_strdup(command->value);
-		if (command->type == TYPE_ARGUMENT && !command->redirection)
-		{
-			if (copy->input)
-				copy->input = ft_strcat(copy->input, command->value);
-			else
-				copy->input = ft_strdup(command->value);
-			if (command->next && !command->next->redirection)
-				copy->input = ft_strcat(copy->input, " ");
-		}
-		if (command->redirection)
-		{
-			if (command->redirection == '>')
-				copy->type = '>';
-			if (command->next && command->next->redirection)
-			{
-				create_output(&copy->output, command->value);
-			}
-			else
-			{
-				if (copy->param == false)
-					copy->input = ft_strcat(copy->input, "\n");
-				create_output(&copy->output, command->value);
-				create_node_special(result, copy);
-				return (command->next);
-			}
-		}
+		result[i++] = command->value;
 		command = command->next;
 	}
-	return (NULL);
+	result[i] = NULL;
+	return (result);
+}
+void	free_env_tabe(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		free(envp[i++]);
+	free(envp);
+}
+void	execve_command(t_tokens *command, t_vars **env, char **cpy_path)
+{
+	char	**args;
+	char	**envp;
+	char	*cmd_path;
+	(void)cpy_path;
+	// Convertir les tokens en arguments pour execve
+	args = args_composee(command);
+	envp = env_tab(*env);
+
+	cmd_path = find_command_path(command->value, env);
+	if (!cmd_path)
+	{
+		perror("command not found");
+		exit(EXIT_FAILURE);
+	}
+
+	if (execve(cmd_path, args, envp) == -1)
+	{
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
+	free(cmd_path);
+	free_env_tabe(envp);
 }
 
-t_special	*prepare_tokens(t_tokens *command)
+void	handle_redirection(t_tokens *command)
 {
-	t_special	*result;
+	int fd;
 
-	result = NULL;
-	while (command)
-		command = create_special(&result, command);
-	return (result);
+	if (ft_strcmp(command->value, ">") == 0)
+	{
+		fd = open(command->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+		{
+			perror("open");
+			exit(EXIT_FAILURE);
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (ft_strcmp(command->value, ">>") == 0)
+	{
+		fd = open(command->next->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd == -1)
+		{
+			perror("open");
+			exit(EXIT_FAILURE);
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (ft_strcmp(command->value, "<") == 0)
+	{
+		fd = open(command->next->value, O_RDONLY);
+		if (fd == -1)
+		{
+			perror("open");
+			exit(EXIT_FAILURE);
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+}
+
+void	handle_pipe(t_tokens *command, t_vars **env, char **cpy_path)
+{
+	int		pipefd[2];
+	pid_t	pid;
+
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0) // Processus enfant
+	{
+		dup2(pipefd[1], STDOUT_FILENO); // Redirige la sortie standard vers le pipe
+		close(pipefd[0]);
+		close(pipefd[1]);
+		handler_command(command, env, cpy_path); // Exécute la commande
+		exit(EXIT_SUCCESS);
+	}
+	else // Processus parent
+	{
+		dup2(pipefd[0], STDIN_FILENO); // Redirige l'entrée standard depuis le pipe
+		close(pipefd[1]);
+		close(pipefd[0]);
+		handler_command(command->next, env, cpy_path); // Exécute la commande suivante
+		waitpid(pid, NULL, 0);
+	}
 }
 
 int	handler_special(t_tokens *command, t_vars **env, char **cpy_path)
 {
-	(void)env;
-	(void)cpy_path;
-	t_special *special;
+	t_tokens *current = command;
 
-	special = prepare_tokens(command);
-	while (special)
+	while (current)
 	{
-		if (ft_strcmp(special->command, "echo")
-			&& special->type == '>')
+		if (current->type == TYPE_REDIRECTION)
+			handle_redirection(current);
+
+		if (current->type == TYPE_PIPE)
 		{
-			while (special->output)
-			{
-				special->output->fd = open(special->output->file, O_WRONLY | O_CREAT, 0644);
-				if (special->output->next == NULL)
-					write(special->output->fd, special->input, ft_strlen(special->input));
-				close(special->output->fd);
-				special->output = special->output->next;
-			}
+			handle_pipe(current, env, cpy_path);
+			return 1; // Indique qu'un pipe a été traité
 		}
-		special = special->next;
+		
+		current = current->next;
 	}
-	return (0);
+
+	return 0; // Aucune commande spéciale n'a été traitée
 }

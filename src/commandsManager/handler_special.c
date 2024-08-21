@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:45:02 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/21 18:26:43 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:33:52 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,61 +15,16 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-char	**args_composee(t_tokens *command)
-{
-	char	**result;
-	int		i;
-
-	result = malloc(sizeof(char *) * (ft_count_tokens(command) + 1));
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (command)
-	{
-		result[i++] = command->value;
-		command = command->next;
-	}
-	result[i] = NULL;
-	return (result);
-}
-void	free_env_tabe(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		free(envp[i++]);
-	free(envp);
-}
-void	execve_command(t_tokens *command, t_vars **env, char **cpy_path)
-{
-	char	**args;
-	char	**envp;
-	char	*cmd_path;
-	(void)cpy_path;
-	// Convertir les tokens en arguments pour execve
-	args = args_composee(command);
-	envp = env_tab(*env);
-
-	cmd_path = find_command_path(command->value, env);
-	if (!cmd_path)
-	{
-		perror("command not found");
-		exit(EXIT_FAILURE);
-	}
-
-	if (execve(cmd_path, args, envp) == -1)
-	{
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
-	free(cmd_path);
-	free_env_tabe(envp);
-}
 
 void	handle_redirection(t_tokens *command)
 {
 	int fd;
+
+	if (command->next == NULL)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
+		exit(EXIT_FAILURE);
+	}
 
 	if (ft_strcmp(command->value, ">") == 0)
 	{
@@ -110,6 +65,12 @@ void	handle_pipe(t_tokens *command, t_vars **env, char **cpy_path)
 {
 	int		pipefd[2];
 	pid_t	pid;
+
+	if (command == NULL || command->next == NULL)
+	{
+		ft_putstr_fd("minishell: invalid pipe command\n", 2);
+		exit(EXIT_FAILURE);
+	}
 
 	if (pipe(pipefd) == -1)
 	{

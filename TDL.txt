@@ -1,4 +1,7 @@
 [1] echo ${USER} = echo ekrause #idk if it should be implemented
 [2] : [2] ! #idk if it should be implemented
 [3] echo $$ #idk if it should be implemented
-[4] echo $? #done
+
+[4] echo $?
+[5] eco coucou | echo coucou
+[6] exit code

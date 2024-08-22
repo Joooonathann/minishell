@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/22 14:48:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:29:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,33 +42,10 @@ void	ft_print_tokens(t_tokens *tokens)
 	while (tokens)
 	{
 		if (tokens->value)
-			printf("TOKEN: %s *> redirection; %c", tokens->value, tokens->redirection);
+			printf("TOKEN: %s", tokens->value);
 		if (tokens->type)
 			printf(" TYPE: %s", tab[tokens->type]);
-		// if (tokens->redirection)
-		// 	printf(" REDIRECTION: %c", tokens->redirection);
-		// if (tokens->pipe)
-		// 	printf(" PIPE: %c", tokens->pipe);
 		printf("\n");
-		// if (tokens->redirection)
-		// {
-		// 	printf("REDIRECTION: ");
-		// 	if (tokens->redirection->output && tokens->redirection->append)
-		// 		printf("input: %s, append = \"yes\"", tokens->redirection->output);
-		// 	else if (tokens->redirection->output)
-		// 		printf("output: %s", tokens->redirection->output);
-		// 	else if (tokens->redirection->input)
-		// 		printf("input: %s", tokens->redirection->input);
-		// 	else if (tokens->redirection->here_doc && tokens->redirection->delimiter)
-		// 		printf("delimiter: %s, here_doc = \"yes\"", tokens->redirection->delimiter);
-		// 	printf("\n");
-		// }
-		// else if (tokens->pipe)
-		// {
-		// 	printf("PIPE: ");
-		// 	printf("command: %s", tokens->pipe->command);
-		// 	//printf("command: %s", tokens->pipe->command);
-		// }
 		tokens = tokens->next;
 	}
 }

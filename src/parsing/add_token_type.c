@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 15:30:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/07 16:27:41 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/22 14:06:09 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_token_type(t_tokens **tokens)
 			current_token->type = TYPE_REDIRECTION;
 		else if (ft_strlen(current_token->value) == 1 && current_token->value[0] == '|')
 			current_token->type = TYPE_PIPE;
-		else if (!current_token->prev)
+		else if (!current_token->prev || (current_token->prev && current_token->prev->type == TYPE_PIPE))
 			current_token->type = TYPE_COMMAND;
 		else if (current_token->value[0] && current_token->value[0] == '-' && current_token->prev && (current_token->prev->type == TYPE_COMMAND || current_token->prev->type == TYPE_OPTION))
 			current_token->type = TYPE_OPTION;

@@ -45,7 +45,9 @@ void handle_pipe(char **commands, t_vars **env, char **cpy_path)
     while (commands[i])
     {
         int redirect_fd = -1;  // Descripteur pour redirection
+        int input_fd = -1;      // Descripteur pour redirection d'entrée
         char *output_file = NULL;
+        char *input_file = NULL;
         char *cmd = commands[i];
         int j = 0;
 
@@ -54,14 +56,43 @@ void handle_pipe(char **commands, t_vars **env, char **cpy_path)
         {
             if (cmd[j] == '>')
             {
-                cmd[j] = '\0';  // Terminer la chaîne de commande à la redirection
-                output_file = &cmd[j + 1];  // Obtenir le nom du fichier de sortie
+                if (cmd[j + 1] == '>') // Gestion de '>>'
+                {
+                    cmd[j] = '\0';
+                    output_file = &cmd[j + 2];  // Obtenir le nom du fichier de sortie en mode ajout
+                    break;
+                }
+                else // Gestion de '>'
+                {
+                    cmd[j] = '\0';
+                    output_file = &cmd[j + 1];  // Obtenir le nom du fichier de sortie
+                    break;
+                }
+            }
+            else if (cmd[j] == '<')
+            {
+                if (cmd[j + 1] == '<') // Gestion de '<<'
+                {
+                    cmd[j] = '\0';
+                    input_file = &cmd[j + 2];  // Obtenir le mot clé pour le heredoc
+                    break;
+                }
+                else // Gestion de '<'
+                {
+                    cmd[j] = '\0';
+                    input_file = &cmd[j + 1];  // Obtenir le nom du fichier d'entrée
+                    break;
+                }
             }
             j++;
         }
 
         if (output_file) {
             trim_whitespace(&output_file);  // Supprimer les espaces autour du nom du fichier
+        }
+
+        if (input_file) {
+            trim_whitespace(&input_file);  // Supprimer les espaces autour du nom du fichier
         }
 
         if (pipe(pipefd) == -1)
@@ -85,9 +116,55 @@ void handle_pipe(char **commands, t_vars **env, char **cpy_path)
                 close(prev_fd);
             }
 
+            if (input_file) // Si redirection d'entrée
+            {
+                if (cmd[j + 1] == '<')  // Gestion de heredoc
+                {
+                    // Heredoc : Lecture depuis la console jusqu'à un mot clé
+                    char buffer[1024];
+                    int heredoc_fd[2];
+                    pipe(heredoc_fd);
+
+                    while (1)
+                    {
+                        write(STDOUT_FILENO, "> ", 2);
+                        int n = read(STDIN_FILENO, buffer, 1024);
+                        buffer[n] = '\0';
+
+                        if (strncmp(buffer, input_file, strlen(input_file)) == 0)
+                            break;
+
+                        write(heredoc_fd[1], buffer, n);
+                    }
+
+                    close(heredoc_fd[1]);
+                    dup2(heredoc_fd[0], STDIN_FILENO);
+                    close(heredoc_fd[0]);
+                }
+                else  // Gestion de '<'
+                {
+                    input_fd = open(input_file, O_RDONLY);
+                    if (input_fd < 0)
+                    {
+                        perror("open");
+                        exit(EXIT_FAILURE);
+                    }
+                    dup2(input_fd, STDIN_FILENO);
+                    close(input_fd);
+                }
+            }
+
             if (output_file) // Si redirection vers un fichier
             {
-                redirect_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                if (cmd[j] == '>') // Gestion de '>>'
+                {
+                    redirect_fd = open(output_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+                }
+                else // Gestion de '>'
+                {
+                    redirect_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                }
+
                 if (redirect_fd < 0)
                 {
                     perror("open");

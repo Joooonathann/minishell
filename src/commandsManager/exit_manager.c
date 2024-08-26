@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/26 18:09:37 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:12:59 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,8 @@ int exit_manager(t_tokens *command, t_vars **env, char **cpy_path)
             exit_command(2); // Code de sortie pour erreur de nombre
         }
 
-        // Conversion de l'argument en entier
-        long int_code = strtol(arg, NULL, 10);
-        if (int_code < 0 || int_code > 255) // Les codes de sortie doivent être entre 0 et 255
-        {
-            printf("bash: exit: %s: numeric argument required\n", arg);
-            exit_command(2);
-        }
-
-        exit_command((int)int_code);
+        printf("exit\n");
+        exit_command(ft_atoi(arg));
     }
     return (1);
 }

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 09:55:55 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/29 18:17:33 by ekrause          ###   ########.fr       */
+/*   Created: 2024/08/26 17:49:35 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/08/26 17:50:05 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
+#include <string.h>
 
 int	cd_command(char *path, t_vars **env, char **copy_path)
 {
@@ -27,14 +29,14 @@ int	cd_command(char *path, t_vars **env, char **copy_path)
 	}
 	if (chdir(path) != 0)
 	{
-		printf("bash: cd: %s: No such file or directory\n", path);
+		printf("bash: cd: %s: %s\n", path, strerror(errno));
 		free(path);
 		return (0);
 	}
 	else
 	{
 		if (!getcwd(cwd, sizeof(cwd)))
-			printf("bash: cd: Not found path access\n");
+			printf("bash: cd: error retrieving current directory: %s\n", strerror(errno));
 		if (exist_vars(*env, "OLDPWD"))
 			update_vars(env, "OLDPWD", *copy_path);
 		free(*copy_path);

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/26 18:12:59 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:21:57 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,16 @@ int exit_manager(t_tokens *command, t_vars **env, char **cpy_path)
     
     if (argc == 1)
     {
-        exit_command(0); // Pas d'argument, sortir avec code 0
+        exit_command(0);
     }
     else
     {
         const char *arg = command->next->value;
 
-        // Validation de l'argument
         if (!is_numeric_argument(arg))
         {
             printf("bash: exit: %s: numeric argument required\n", arg);
-            exit_command(2); // Code de sortie pour erreur de nombre
+            exit_command(2);
         }
 
         printf("exit\n");

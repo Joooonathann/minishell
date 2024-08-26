@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/22 15:00:03 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:33:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_meta_characters(t_tokens *tokens)
 				ft_error("syntax error near unexpected token ", "newline");
 			return (0);
 		}
-		else if (tokens->type == TYPE_PIPE && (!tokens->next || tokens->next->type != TYPE_COMMAND || !tokens->prev || tokens->prev->type != TYPE_COMMAND))
+		else if (tokens->type == TYPE_PIPE && (!tokens->next || tokens->next->type != TYPE_COMMAND || !tokens->prev))
 		{
 			ft_error("syntax error near unexpected token ", tokens->value);
 			return (0);	
@@ -52,8 +52,8 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokenizer(&str, &tokens);
 	env_var_expansion(&tokens, env);
 	add_token_type(&tokens);
-	// if (!check_meta_characters(tokens))
-	// 	return (NULL);
+	if (!check_meta_characters(tokens))
+		return (NULL);
 	//parse_meta_characters(&tokens);
 	trime_useless_quotes(&tokens);
 	//ft_print_tokens(tokens);

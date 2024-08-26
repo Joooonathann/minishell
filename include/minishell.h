@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/07 21:38:47 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:58:02 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <errno.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
 # define bool unsigned int
@@ -33,7 +35,7 @@
 # define RED "\033[31m"
 # define GREEN "\033[32m"
 
-	typedef struct s_vars
+typedef struct s_vars
 {
 	char				*key;
 	char				*value;
@@ -54,7 +56,7 @@ typedef enum s_token_type
 
 typedef struct s_redirection
 {
-	char	type;
+	char				type;
 }						t_redirection;
 
 typedef struct s_pipe
@@ -147,7 +149,8 @@ int						extern_command(t_tokens *command, t_vars **env,
 							char **cpy_path);
 char					*find_command_path(const char *command, t_vars **env);
 int						check_is_special(t_tokens *command);
-int						handler_special(t_tokens *command, t_vars **env, char **cpy_path);
+int						handler_special(t_tokens *command, t_vars **env,
+							char **cpy_path);
 
 // Env vars
 int						add_vars(char *key, char *value, t_vars **env);

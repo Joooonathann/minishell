@@ -6,13 +6,11 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:49:35 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/26 17:50:05 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:57:56 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <errno.h>
-#include <string.h>
 
 int	cd_command(char *path, t_vars **env, char **copy_path)
 {

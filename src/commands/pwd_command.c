@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:34:11 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:41:50 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:40:01 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int pwd_command(t_vars **env)
 
     if (!getcwd(cwd, sizeof(cwd)))
     {
-        printf("pwd: error retrieving current directory: %s\n", strerror(errno));
+        fprintf(stderr, "pwd: error retrieving current directory: %s\n", strerror(errno));
         exit_code("1", env);
         return (0);
     }

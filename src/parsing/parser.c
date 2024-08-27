@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/27 15:30:42 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:40:36 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_error(char *str, char *token)
 {
-	printf("myfuckingbash: ");
+	fprintf(stderr, "myfuckingbash: ");
 	if (str)
-		printf("%s", str);
+		fprintf(stderr, "%s", str);
 	if (token)
-		printf("`%s'", token);
-	printf("\n");
+		fprintf(stderr, "`%s'", token);
+	fprintf(stderr, "\n");
 }
 
 int	check_meta_characters(t_tokens *tokens)

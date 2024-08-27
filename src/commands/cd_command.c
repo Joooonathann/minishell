@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:49:35 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 17:00:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:15:22 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	cd_command(char *path, t_vars **env, char **copy_path)
 	if (chdir(path) != 0)
 	{
 		fprintf(stderr, "bash: cd: %s: %s\n", path, strerror(errno));
-		free(path);
 		exit_code("1", env);
 		return (0);
 	}
@@ -44,7 +43,6 @@ int	cd_command(char *path, t_vars **env, char **copy_path)
 		if (exist_vars(*env, "PWD"))
 			update_vars(env, "PWD", cwd);
 	}
-	free(path);
 	exit_code("0", env);
 	return (1);
 }

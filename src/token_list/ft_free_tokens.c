@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:50:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 17:05:21 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/27 17:08:24 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_free_tokens(t_tokens **tokens)
 	{
 		previous_token = *tokens;
 		*tokens = (*tokens)->next;
-		free(previous_token->value);
-		free(previous_token);
+		if (previous_token->value)
+			free(previous_token->value);
+		if (previous_token)
+			free(previous_token);
 	}
 }

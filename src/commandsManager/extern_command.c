@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 12:55:00 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:44:12 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:18:48 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,15 @@ int extern_command(t_tokens *command, t_vars **env, char **cpy_path)
         command_path = find_command_path(command->value, env);
         if (!command_path)
         {
-            printf("%s: command not found\n", command->value);
-            free_env_tab(envp);
-            exit_code("127", env); // Code de sortie 127 pour commande non trouvée
-            exit(EXIT_FAILURE);
+            if (access(command->value, X_OK) == 0)
+                command_path = strdup(command->value);
+            else
+            {
+                printf("%s: command not found\n", command->value);
+                free_env_tab(envp);
+                exit_code("127", env); // Code de sortie 127 pour commande non trouvée
+                exit(EXIT_FAILURE);
+            }
         }
 
         args = args_compose(command);

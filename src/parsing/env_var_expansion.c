@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:29:56 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/12 15:04:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/27 15:45:32 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	env_var_expansion(t_tokens **tokens, t_vars **env)
 			else if ((!in_quote || quote_type == DOUBLE) && current_token->value[i] == '$' && current_token->value[i + 1] && current_token->value[i + 1] == '?')
 			{
 				i+=2;
-				expanded_value = ft_strcat_dynamic(expanded_value, "last return value");
+				expanded_value = ft_strcat_dynamic(expanded_value, get_vars(env, "?"));
 			}
 			else if ((!in_quote || quote_type == DOUBLE) && current_token->value[i] == '$' && current_token->value[i + 1] && ft_isalnum(current_token->value[i + 1]))
 			{

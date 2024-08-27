@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/08/07 15:55:59 by ekrause          ###   ########.fr        #
+#    Updated: 2024/08/27 13:20:30 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ SRC			=	./src/minishell.c\
 				./src/vars/exist_vars.c\
 				./src/vars/delete_vars.c\
 				./src/vars/delete_all_vars.c\
-				./src/vars/get_vars.c
+				./src/vars/get_vars.c\
+				./src/vars/exit_code.c
 
 OBJ			=	${SRC:.c=.o}
 

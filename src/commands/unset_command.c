@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:36:24 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:43:16 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:53:21 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int unset_command(t_vars **env, char *key_env)
         tmp = tmp->next;
     }
 
-    exit_code("1", env);
+    exit_code("0", env);
     return (0);
 }

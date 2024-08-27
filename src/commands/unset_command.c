@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:36:24 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/25 12:00:45 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:41:47 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	unset_command(t_vars **env, char *key_env)
 	if (!env || !*env || !key_env)
 		return (0);
 	tmp = *env;
+	if (ft_strcmp(key_env, "?"))
+		return (0);
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->key, key_env))

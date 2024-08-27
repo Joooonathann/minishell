@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:59:07 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/29 11:07:37 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:40:23 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	print_vars(t_vars *env)
 		return (0);
 	while (env)
 	{
-		printf("%s=", env->key);
-		printf("%s\n", env->value);
+		if (!ft_strcmp(env->key, "?"))
+			printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
 	return (1);

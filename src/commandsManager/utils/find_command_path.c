@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 17:30:46 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/26 18:30:17 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 12:09:12 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ void    free_tokens(char **tokens)
         free(tokens[i++]);
     free(tokens);
 }
-static int is_absolute_path(const char *path)
-{
-    return path[0] == '/';
-}
 
 char *find_command_path(const char *command, t_vars **env)
 {
@@ -34,7 +30,7 @@ char *find_command_path(const char *command, t_vars **env)
     i = 0;
     full_path = NULL;
 
-    if (is_absolute_path(command))
+    if (command[0] == '/')
     {
         if (access(command, X_OK) == 0)
         {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:42:23 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/05/31 18:04:28 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:37:15 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 int	env_command(t_vars *env)
 {
 	if (!print_vars(env))
+	{
+		exit_code("1", &env);
 		return (0);
+	}
+	exit_code("0", &env);
 	return (1);
 }

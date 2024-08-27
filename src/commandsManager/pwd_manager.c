@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:23:31 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/28 18:14:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:42:25 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 int pwd_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
     (void) command;
-    (void) env;
     (void) cpy_path;
-    if (!pwd_command())
+    if (!pwd_command(env))
         return (0);
     return (1);
 }

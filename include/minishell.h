@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/27 13:24:49 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:43:53 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 # define bool unsigned int
@@ -121,8 +123,8 @@ int						handler_command(t_tokens *command, t_vars **env,
 							char **cpy_path);
 char					*ft_strcpy(char *dst, const char *src);
 int						cd_command(char *path, t_vars **env, char **copy_path);
-int						pwd_command(void);
-int						echo_command(bool options, char *str);
+int						pwd_command(t_vars **env);
+int						echo_command(bool options, char *str, t_vars **env);
 int						update_vars(t_vars **env, char *key, char *value);
 int						exist_vars(t_vars *env, char *key);
 int						env_command(t_vars *env);

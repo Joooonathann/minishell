@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:44:45 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:04:58 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int exit_manager(t_tokens *command, t_vars **env, char **cpy_path)
     if (argc > 2)
     {
         exit_code("1", env);
-        printf("bash: exit: too many arguments\n");
+        fprintf(stderr, "bash: exit: too many arguments\n");
         return (0);
     }
     
@@ -58,7 +58,7 @@ int exit_manager(t_tokens *command, t_vars **env, char **cpy_path)
 
         if (!is_numeric_argument(arg))
         {
-            printf("bash: exit: %s: numeric argument required\n", arg);
+            fprintf(stderr, "bash: exit: %s: numeric argument required\n", arg);
             exit_command(2);
         }
         exit_code(arg, env);

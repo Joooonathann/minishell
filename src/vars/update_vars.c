@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:56 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/25 23:14:23 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:04:26 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	update_vars(t_vars **env, char *key, char *value)
 	{
 		if (ft_strcmp(tmp->key, key))
 		{
-			free(tmp->value);
+			if (tmp->value)
+				free(tmp->value);
 			tmp->value = ft_strdup(value);
 			return (1);
 		}

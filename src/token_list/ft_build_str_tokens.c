@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 11:14:10 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 15:29:58 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 21:19:38 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_calculate_size(t_tokens *command)
 	i = 0;
 	while (command)
 	{
-		if (command->type == TYPE_ARGUMENT)
+		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !ft_strcmp(command->value, "-n")))
 		{
 			j = 0;
 			while (command->value[j])
@@ -47,7 +47,7 @@ int	ft_build_str_tokens(char **str, t_tokens *command)
 	j = 0;
 	while (command)
 	{
-		if (command->type == TYPE_ARGUMENT)
+		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !ft_strcmp(command->value, "-n")))
 		{
 			i = 0;
 			while (command->value[i])

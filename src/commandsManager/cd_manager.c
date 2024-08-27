@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 11:33:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/27 13:04:46 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:01:59 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int cd_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
     if (ft_count_tokens(command) > 2)
     {
-        printf("bash: cd: too many arguments\n");
+        fprintf(stderr, "bash: cd: too many arguments\n");
+        exit_code("1", env);
         return (0);
     }
     if (ft_count_tokens(command) == 2)

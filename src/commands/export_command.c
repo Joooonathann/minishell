@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 17:57:04 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 15:49:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:12:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,6 @@ int export_command(t_vars **env, char *str)
     if (!key)
     {
         exit_code("0", env);
-        return (0);
-    }
-
-    if (ft_strcmp(key, "?"))
-    {
-        printf("myfuckingbash: export: `%s': not a valid identifier\n", str);
-        free(key);
-        exit_code("1", env);
         return (0);
     }
 

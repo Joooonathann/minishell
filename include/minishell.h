@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/27 13:43:53 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:18:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 # define bool unsigned int
 # define true 1
@@ -37,7 +38,7 @@
 # define RED "\033[31m"
 # define GREEN "\033[32m"
 
-typedef struct s_vars
+	typedef struct s_vars
 {
 	char				*key;
 	char				*value;

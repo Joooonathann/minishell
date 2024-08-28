@@ -9,7 +9,8 @@
 		"wait.h": "c",
 		"unistd.h": "c",
 		"fcntl.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"compare": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/28 14:18:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/28 18:09:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,6 @@ typedef struct s_tokens
 	char				redirection;
 	char				pipe;
 }						t_tokens;
-//
-
-typedef struct s_command
-{
-	struct s_command	*next;
-	struct s_command	*prev;
-	struct s_pipe		*pipe;
-	char				type;
-	char				quote;
-	char				*value;
-
-}						t_command;
 
 typedef struct s_lst_cmd
 {
@@ -120,7 +108,7 @@ void					add_token_type(t_tokens **tokens);
 void					trime_useless_quotes(t_tokens **tokens);
 
 // Commands
-int						handler_command(t_tokens *command, t_vars **env,
+int						handler_command(t_tokens *tokens, t_vars **env,
 							char **cpy_path);
 char					*ft_strcpy(char *dst, const char *src);
 int						cd_command(char *path, t_vars **env, char **copy_path);

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 17:13:15 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:25:48 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	using_history();
 	while (1)
 	{
-		prompt = readline("▶ \033[1;32mmyfuckingbash\033[0m@\033[1;34m42\033[0m$ ");
+		//prompt = readline("▶ \033[1;32mmyfuckingbash\033[0m@\033[1;34m42\033[0m$ ");
+		prompt = readline("Test$ ");
 		if (!prompt)
 		{
 			delete_all_vars(&env);

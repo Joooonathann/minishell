@@ -1,255 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handler_special.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/08/28 18:36:27 by jalbiser         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
 
-int calculate_size(t_tokens *command)
+void	dup_tokens(char *value, t_tokens **buffer)
 {
-    int count = 0;
+	t_tokens	*new;
+	t_tokens	*tmp;
 
-    while (command)
-    {
-        if (command->type == TYPE_PIPE)
-            count++;
-        command = command->next;
-    }
-    return (count + 2);  // Nombre de commandes = nombre de pipes + 1, +1 pour le NULL final
+	new = ft_tokennew(value);
+	if (!new)
+		return ;
+	if (!*buffer)
+		*buffer = new;
+	else
+	{
+		tmp = *buffer;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
 }
 
-void trim_whitespace(char **str)
+int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
 {
-    char *end;
+	t_tokens *buffer;
+	int pipefd[2];
+	pid_t pid;
+	int prev_fd = -1;
 
-    // Trim leading space
-    while(isspace((unsigned char)**str)) (*str)++;
-
-    if(*str == 0) return;
-
-    // Trim trailing space
-    end = *str + strlen(*str) - 1;
-    while(end > *str && isspace((unsigned char)*end)) end--;
-
-    // Write new null terminator
-    *(end+1) = 0;
-}
-
-void handle_pipe(char **commands, t_vars **env, char **cpy_path)
-{
-    int pipefd[2];
-    pid_t pid;
-    int i = 0;
-    int prev_fd = -1;  // Fichier descriptif précédent pour la redirection
-
-    while (commands[i])
-    {
-        int redirect_fd = -1;  // Descripteur pour redirection
-        int input_fd = -1;      // Descripteur pour redirection d'entrée
-        char *output_file = NULL;
-        char *input_file = NULL;
-        char *cmd = commands[i];
-        int j = 0;
-
-        // Chercher la dernière redirection dans la commande
-        while (cmd[j])
-        {
-            if (cmd[j] == '>')
-            {
-                if (cmd[j + 1] == '>') // Gestion de '>>'
-                {
-                    cmd[j] = '\0';
-                    output_file = &cmd[j + 2];  // Obtenir le nom du fichier de sortie en mode ajout
-                    break;
-                }
-                else // Gestion de '>'
-                {
-                    cmd[j] = '\0';
-                    output_file = &cmd[j + 1];  // Obtenir le nom du fichier de sortie
-                    break;
-                }
-            }
-            else if (cmd[j] == '<')
-            {
-                if (cmd[j + 1] == '<') // Gestion de '<<'
-                {
-                    cmd[j] = '\0';
-                    input_file = &cmd[j + 2];  // Obtenir le mot clé pour le heredoc
-                    break;
-                }
-                else // Gestion de '<'
-                {
-                    cmd[j] = '\0';
-                    input_file = &cmd[j + 1];  // Obtenir le nom du fichier d'entrée
-                    break;
-                }
-            }
-            j++;
-        }
-
-        if (output_file) {
-            trim_whitespace(&output_file);  // Supprimer les espaces autour du nom du fichier
-        }
-
-        if (input_file) {
-            trim_whitespace(&input_file);  // Supprimer les espaces autour du nom du fichier
-        }
-
-        if (pipe(pipefd) == -1)
-        {
-            perror("pipe");
-            exit(EXIT_FAILURE);
-        }
-
-        pid = fork();
-        if (pid == -1)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0) // Processus enfant
-        {
-            if (prev_fd != -1) // Rediriger l'entrée si commande précédente
-            {
-                dup2(prev_fd, STDIN_FILENO);
-                close(prev_fd);
-            }
-
-            if (input_file) // Si redirection d'entrée
-            {
-                if (cmd[j + 1] == '<')  // Gestion de heredoc
-                {
-                    // Heredoc : Lecture depuis la console jusqu'à un mot clé
-                    char buffer[1024];
-                    int heredoc_fd[2];
-                    pipe(heredoc_fd);
-
-                    while (1)
-                    {
-                        write(STDOUT_FILENO, "> ", 2);
-                        int n = read(STDIN_FILENO, buffer, 1024);
-                        buffer[n] = '\0';
-
-                        if (strncmp(buffer, input_file, strlen(input_file)) == 0)
-                            break;
-
-                        write(heredoc_fd[1], buffer, n);
-                    }
-
-                    close(heredoc_fd[1]);
-                    dup2(heredoc_fd[0], STDIN_FILENO);
-                    close(heredoc_fd[0]);
-                }
-                else  // Gestion de '<'
-                {
-                    input_fd = open(input_file, O_RDONLY);
-                    if (input_fd < 0)
-                    {
-                        perror("open");
-                        exit(EXIT_FAILURE);
-                    }
-                    dup2(input_fd, STDIN_FILENO);
-                    close(input_fd);
-                }
-            }
-
-            if (output_file) // Si redirection vers un fichier
-            {
-                if (cmd[j] == '>') // Gestion de '>>'
-                {
-                    redirect_fd = open(output_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-                }
-                else // Gestion de '>'
-                {
-                    redirect_fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-                }
-
-                if (redirect_fd < 0)
-                {
-                    perror("open");
-                    exit(EXIT_FAILURE);
-                }
-                dup2(redirect_fd, STDOUT_FILENO);
-                close(redirect_fd);
-            }
-            else if (commands[i + 1]) // Si pas de redirection, rediriger vers le pipe
-            {
-                dup2(pipefd[1], STDOUT_FILENO);
-            }
-
-            close(pipefd[0]); // Fermer les descripteurs inutilisés
-            close(pipefd[1]);
-
-            handler_command(parser(cmd, env), env, cpy_path);
-            exit(EXIT_SUCCESS);
-        }
-        else // Processus parent
-        {
-            close(pipefd[1]); // Fermer le côté écriture du pipe
-            if (prev_fd != -1)
-                close(prev_fd); // Fermer l'entrée de la commande précédente
-            prev_fd = pipefd[0]; // Garder l'entrée pour la prochaine commande
-        }
-        i++;
-    }
-
-    // Attendre tous les processus enfants
-    for (int j = 0; j < i; j++)
-        wait(NULL);
-
-    if (prev_fd != -1)
-        close(prev_fd); // Fermer le dernier fd après toutes les commandes
-}
-
-int handler_special(t_tokens *command, t_vars **env, char **cpy_path)
-{
-    char **test;
-    int i;
-    char *current_command;
-
-    test = malloc(sizeof(char *) * calculate_size(command));
-    if (!test)
-        return (1);
-    i = 0;
-    current_command = NULL;
-
-    while (command)
-    {
-        if (command->type == TYPE_PIPE)
-        {
-            if (current_command)
-                test[i++] = current_command;
-            current_command = NULL;
-        }
-        else
-        {
-            char *temp = current_command;
-            if (!temp)
-                current_command = ft_strdup(command->value);
-            else
-            {
-                char *new_command = ft_strjoin(temp, " ");
-                char *joined_command = ft_strjoin(new_command, command->value);
-                free(new_command);
-                free(temp);
-                current_command = joined_command;
-            }
-        }
-        command = command->next;
-    }
-
-    if (current_command)
-        test[i++] = current_command;
-    test[i] = NULL;
-
-    handle_pipe(test, env, cpy_path);
-
-    // Libération de la mémoire
-    i = 0;
-    while (test[i])
-        free(test[i++]);
-    free(test);
-
-    return (0);
+	buffer = NULL;
+	while (tokens)
+	{
+		if (ft_strcmp(tokens->value, "|") || tokens->next == NULL)
+		{
+			if (tokens->next == NULL)
+				dup_tokens(tokens->value, &buffer);
+			t_tokens *tmp = buffer;
+			while (tmp)
+			{
+				printf("BUFFER = > %s\n", tmp->value);
+				tmp = tmp->next;
+			}
+			if (pipe(pipefd) == -1)
+			{
+				perror("pipe");
+				exit(EXIT_FAILURE);
+			}
+			pid = fork();
+			if (pid == -1)
+			{
+				perror("fork");
+				exit(EXIT_FAILURE);
+			}
+			if (pid == 0)
+			{
+				if (prev_fd != -1)
+				{
+					dup2(prev_fd, STDIN_FILENO);
+					close(prev_fd);
+				}
+				if (tokens->next)
+					dup2(pipefd[1], STDOUT_FILENO);
+				close(pipefd[0]);
+				close(pipefd[1]);
+				handler_command(buffer, env, cpy_path);
+				exit(EXIT_SUCCESS);
+				ft_free_tokens(&buffer);
+				buffer = NULL;
+			}
+			else
+			{
+				close(pipefd[1]);
+				if (prev_fd != -1)
+					close(prev_fd);
+				prev_fd = pipefd[0];
+				buffer = NULL;
+			}
+		}
+		else
+		{
+			dup_tokens(tokens->value, &buffer);
+		}
+		tokens = tokens->next;
+	}
+	while (wait(NULL) > 0);
+	if (prev_fd != -1)
+        close(prev_fd);
+	return (0);
 }

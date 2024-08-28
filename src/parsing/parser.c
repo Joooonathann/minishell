@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/28 14:43:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/08/28 16:24:49 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ t_tokens	*parser(char *str, t_vars **env)
 		return (NULL);
 	//parse_meta_characters(&tokens);
 	trime_useless_quotes(&tokens);
-	ft_print_tokens(tokens);
+	//ft_print_tokens(tokens);
 	return (tokens);
 }

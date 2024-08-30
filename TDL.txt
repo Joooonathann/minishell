@@ -5,3 +5,16 @@
 [4] echo $?
 [5] eco coucou | echo coucou
 [6] exit code
+
+
+Fix wait null for wait pid list
+
+
+-nnnnnnnnnnnnn
+
+
+signaux verif, ctrl c pipe
+
+sans env prog doit fonctionner in bash
+
+env -i bash --norc --noprofile

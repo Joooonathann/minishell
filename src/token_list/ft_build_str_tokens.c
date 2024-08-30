@@ -6,11 +6,25 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 11:14:10 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 21:19:38 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/30 13:49:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_n(char *str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static int	ft_calculate_size(t_tokens *command)
 {
@@ -20,7 +34,7 @@ static int	ft_calculate_size(t_tokens *command)
 	i = 0;
 	while (command)
 	{
-		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !ft_strcmp(command->value, "-n")))
+		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !is_n(command->value)))
 		{
 			j = 0;
 			while (command->value[j])
@@ -47,7 +61,7 @@ int	ft_build_str_tokens(char **str, t_tokens *command)
 	j = 0;
 	while (command)
 	{
-		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !ft_strcmp(command->value, "-n")))
+		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !is_n(command->value)))
 		{
 			i = 0;
 			while (command->value[i])

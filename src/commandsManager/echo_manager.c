@@ -6,11 +6,25 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:36:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/30 13:51:11 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_option(char *str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
@@ -21,7 +35,7 @@ int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
     str = NULL;
     if (ft_count_tokens(command) > 1)
     {
-        if (ft_strcmp(command->next->value, "-n"))
+        if (is_option(command->next->value))
         {
             if (!ft_build_str_tokens(&str, command->next->next))
                 return (0);

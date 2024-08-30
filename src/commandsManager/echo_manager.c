@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/30 17:08:06 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:09:59 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
     str = NULL;
     if (ft_count_tokens(command) > 1)
     {
-        if (is_option(command->next->value))
+        if (ft_strcmp(command->value, "-n"))
         {
             if (!ft_build_str_tokens(&str, command->next->next))
                 return (0);

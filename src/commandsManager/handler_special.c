@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/30 16:08:59 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/30 18:09:06 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,68 +79,94 @@ void	create_tokens_split(t_tokens **tokens_split, t_tokens *tokens)
 	tokens_split[size] = NULL;
 }
 
-void	tokens_redirection(t_tokens **tokens)
+void	new_tokens_create(t_tokens **tokens, t_tokens *command)
+{
+	while (command)
+	{
+		if (command->type == TYPE_REDIRECTION)
+		{
+			command = command->next;
+			if (command)
+				command = command->next;
+		}
+		else
+		{
+			dup_tokens(command->value, command->type, tokens);
+			command = command->next;
+		}
+	}
+}
+
+void	create_file(t_tokens **tokens, t_tokens *command)
+{
+	while (command)
+	{
+		if (command->type == TYPE_REDIRECTION)
+		{
+			command = command->next;
+			dup_tokens(command->value, command->type, tokens);
+		}
+		command = command->next;
+	}
+}
+
+t_tokens	*tokens_redirection(t_tokens **tokens)
 {
 	t_tokens	*current;
+	t_tokens	*new_tokens;
+	t_tokens	*file;
 	int			fd;
-	int			sw;
 	int			heredoc_pipe[2];
 	
+	new_tokens = NULL;
+	file = NULL;
 	current = *tokens;
-	sw = 0;
 	while (current)
 	{
 		if (ft_strcmp(current->value, ">"))
 		{
-			if (!sw)
-				current->prev->next = NULL;
-			sw = 1;
-			fd = open(current->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd == -1)
+			if (!new_tokens)
+				new_tokens_create(&new_tokens, *tokens);
+			create_file(&file, *tokens);
+			while (file)
 			{
-				perror("open");
-				exit(EXIT_FAILURE);
+				fd = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (!file->next)
+					dup2(fd, STDOUT_FILENO);
+				close (fd);
+				file = file->next;
 			}
-			if (!current->next->next)
-				dup2(fd, STDOUT_FILENO);
-			close(fd);
 		}
 		else if (ft_strcmp(current->value, ">>"))
 		{
-			if (!sw)
-				current->prev->next = NULL;
-			sw = 1;
-			fd = open(current->next->value, O_WRONLY | O_CREAT | O_APPEND,
-					0644);
-			if (fd == -1)
+			if (!new_tokens)
+				new_tokens_create(&new_tokens, *tokens);
+			create_file(&file, *tokens);
+			while (file)
 			{
-				perror("open");
-				exit(EXIT_FAILURE);
+				fd = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+				if (!file->next)
+					dup2(fd, STDOUT_FILENO);
+				close (fd);
+				file = file->next;
 			}
-			if (!current->next->next)
-				dup2(fd, STDOUT_FILENO);
-			close(fd);
 		}
 		else if (ft_strcmp(current->value, "<"))
 		{
-			if (!sw)
-				current->prev->next = NULL;
-			sw = 1;
-			fd = open(current->next->value, O_RDONLY);
-			if (fd == -1)
+			if (!new_tokens)
+				new_tokens_create(&new_tokens, *tokens);
+			create_file(&file, *tokens);
+			while (file)
 			{
-				perror("open");
-				exit(EXIT_FAILURE);
+				fd = open(file->value, O_RDONLY);
+				if (!file->next)
+					dup2(fd, STDIN_FILENO);
+				close (fd);
+				file = file->next;
 			}
-			if (!current->next->next)
-				dup2(fd, STDIN_FILENO);
-			close(fd);
 		}
 		else if (ft_strcmp(current->value, "<<"))
 		{
-			if (!sw)
-				current->prev->next = NULL;
-			sw = 1;
 			if (pipe(heredoc_pipe) == -1)
 			{
 				perror("pipe");
@@ -164,6 +190,7 @@ void	tokens_redirection(t_tokens **tokens)
 		}
 		current = current->next;
 	}
+	return (new_tokens);
 }
 
 int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
@@ -204,8 +231,12 @@ int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
 				dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[0]);
 			close(pipefd[1]);
-			tokens_redirection(&tokens_split[i]);
-			handler_command(tokens_split[i], env, cpy_path);
+			t_tokens *new_tokens = tokens_redirection(&tokens_split[i]);
+			if (new_tokens)
+				handler_command(new_tokens, env, cpy_path);
+			else
+				handler_command(tokens_split[i], env, cpy_path);
+			new_tokens = NULL;
 			exit(EXIT_SUCCESS);
 		}
 		else // Processus père

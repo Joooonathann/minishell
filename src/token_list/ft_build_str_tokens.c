@@ -6,35 +6,22 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 11:14:10 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/30 13:49:29 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:06:05 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_n(char *str)
-{
-	int	i;
-
-	i = 1;
-	while (str[i])
-	{
-		if (str[i] != 'n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static int	ft_calculate_size(t_tokens *command)
 {
 	int	i;
 	int	j;
-	
+
 	i = 0;
 	while (command)
 	{
-		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !is_n(command->value)))
+		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION
+				&& !ft_strcmp(command->value, "-n")))
 		{
 			j = 0;
 			while (command->value[j])
@@ -52,30 +39,27 @@ static int	ft_calculate_size(t_tokens *command)
 
 int	ft_build_str_tokens(char **str, t_tokens *command)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
-	*str = malloc(sizeof(char) * ft_calculate_size(command));
+	*str = malloc(sizeof(char) * (ft_calculate_size(command) + 1));
 	if (!*str)
 		return (0);
 	j = 0;
 	while (command)
 	{
-		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION && !is_n(command->value)))
+		if (command->type == TYPE_ARGUMENT || (command->type == TYPE_OPTION
+				&& !ft_strcmp(command->value, "-n")))
 		{
 			i = 0;
 			while (command->value[i])
 			{
-				(*str)[j] = command->value[i];
-				i++;
-				j++;
+				(*str)[j++] = command->value[i++];
 			}
-			command = command->next;
-			if (command)
+			if (command->next && command->next->type == TYPE_ARGUMENT)
 				(*str)[j++] = ' ';
 		}
-		else
-			command = command->next;
+		command = command->next;
 	}
 	(*str)[j] = '\0';
 	return (1);

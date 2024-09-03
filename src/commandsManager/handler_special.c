@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/03 20:23:21 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/03 21:38:42 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	new_tokens_create(t_tokens **tokens, t_tokens *command)
 {
 	while (command)
 	{
-		if (command->type == TYPE_REDIRECTION || command->type == TYPE_S_REDIRECTION)
+		if (command->type == TYPE_REDIRECTION
+			|| command->type == TYPE_S_REDIRECTION)
 		{
 			command = command->next;
 			if (command)
@@ -101,18 +102,21 @@ void	create_file(t_tokens **file_input, t_tokens **file_output,
 		t_tokens *command)
 {
 	char	*line;
-	int			heredoc_pipe[2];
+	int		heredoc_pipe[2];
 
 	while (command)
 	{
-		if (command->type == TYPE_REDIRECTION && (ft_strcmp(command->value, ">") || ft_strcmp(command->value,
-				">>")))
+		if (command->type == TYPE_REDIRECTION && (ft_strcmp(command->value, ">")
+				|| ft_strcmp(command->value, ">>")))
 		{
-			if ((!command->next->next ||command->next->next->type != TYPE_REDIRECTION) && ft_strcmp(command->value,
-				">>"))
-				dup_tokens(command->next->value, TYPE_S_REDIRECTION, file_output);
+			if ((!command->next->next
+					|| command->next->next->type != TYPE_REDIRECTION)
+				&& ft_strcmp(command->value, ">>"))
+				dup_tokens(command->next->value, TYPE_S_REDIRECTION,
+					file_output);
 			else
-				dup_tokens(command->next->value, command->next->type, file_output);
+				dup_tokens(command->next->value, command->next->type,
+					file_output);
 		}
 		else if (command->type == TYPE_REDIRECTION && ft_strcmp(command->value,
 				"<"))
@@ -155,7 +159,8 @@ t_tokens	*tokens_redirection(t_tokens **tokens, t_vars **env)
 	t_tokens	*file_input;
 	t_tokens	*file_output;
 	int			fd;
-	(void) env;
+
+	(void)env;
 	new_tokens = NULL;
 	file_input = NULL;
 	file_output = NULL;
@@ -166,6 +171,12 @@ t_tokens	*tokens_redirection(t_tokens **tokens, t_vars **env)
 		while (file_input)
 		{
 			fd = open(file_input->value, O_RDONLY);
+			if (fd == -1)
+			{
+				fprintf(stderr, " %s\n", strerror(errno));
+                exit(EXIT_FAILURE);
+				return (NULL);
+			}
 			if (!file_input->next)
 				dup2(fd, STDIN_FILENO);
 			close(fd);
@@ -177,9 +188,17 @@ t_tokens	*tokens_redirection(t_tokens **tokens, t_vars **env)
 		while (file_output)
 		{
 			if (file_output->type == TYPE_S_REDIRECTION)
-				fd = open(file_output->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+				fd = open(file_output->value, O_WRONLY | O_CREAT | O_APPEND,
+						0644);
 			else
-				fd = open(file_output->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				fd = open(file_output->value, O_WRONLY | O_CREAT | O_TRUNC,
+						0644);
+			if (fd == -1)
+			{
+				fprintf(stderr, " %s\n", strerror(errno));
+                exit(EXIT_FAILURE);
+				return (NULL);
+			}
 			if (!file_output->next)
 				dup2(fd, STDOUT_FILENO);
 			close(fd);

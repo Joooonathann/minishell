@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 12:55:00 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/03 20:56:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/03 23:10:06 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int extern_command(t_tokens *command, t_vars **env, char **cpy_path)
         command_path = find_command_path(command->value, env);
         if (!command_path)
         {
-            // Vérifiez si le chemin commence par "./" pour les fichiers locaux
             if (strncmp(command->value, "./", 2) == 0)
             {
                 if (access(command->value, F_OK) == 0)

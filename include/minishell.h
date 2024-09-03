@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/03 20:04:55 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/03 22:37:19 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef enum s_token_type
 	TYPE_OPTION,
 	TYPE_REDIRECTION,
 	TYPE_S_REDIRECTION,
+	TYPE_REDIRECTION_IN,
+	TYPE_REDIRECTION_OUT,
 	TYPE_PIPE,
 }						t_token_type;
 

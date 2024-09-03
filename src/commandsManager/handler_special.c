@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/03 21:38:42 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/03 23:15:06 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	new_tokens_create(t_tokens **tokens, t_tokens *command)
 	while (command)
 	{
 		if (command->type == TYPE_REDIRECTION
-			|| command->type == TYPE_S_REDIRECTION)
+			|| command->type == TYPE_S_REDIRECTION || command->type == TYPE_REDIRECTION_IN || command->type == TYPE_REDIRECTION_OUT)
 		{
 			command = command->next;
 			if (command)
@@ -98,8 +98,7 @@ void	new_tokens_create(t_tokens **tokens, t_tokens *command)
 	}
 }
 
-void	create_file(t_tokens **file_input, t_tokens **file_output,
-		t_tokens *command)
+void	create_file(t_tokens **file, t_tokens *command)
 {
 	char	*line;
 	int		heredoc_pipe[2];
@@ -113,16 +112,16 @@ void	create_file(t_tokens **file_input, t_tokens **file_output,
 					|| command->next->next->type != TYPE_REDIRECTION)
 				&& ft_strcmp(command->value, ">>"))
 				dup_tokens(command->next->value, TYPE_S_REDIRECTION,
-					file_output);
+					file);
 			else
-				dup_tokens(command->next->value, command->next->type,
-					file_output);
+				dup_tokens(command->next->value, TYPE_REDIRECTION_OUT,
+					file);
 		}
 		else if (command->type == TYPE_REDIRECTION && ft_strcmp(command->value,
 				"<"))
 		{
 			command = command->next;
-			dup_tokens(command->value, command->type, file_input);
+			dup_tokens(command->value, TYPE_REDIRECTION_IN, file);
 		}
 		else if (command->type == TYPE_REDIRECTION && ft_strcmp(command->value,
 				"<<"))
@@ -156,42 +155,31 @@ void	create_file(t_tokens **file_input, t_tokens **file_output,
 t_tokens	*tokens_redirection(t_tokens **tokens, t_vars **env)
 {
 	t_tokens	*new_tokens;
-	t_tokens	*file_input;
-	t_tokens	*file_output;
+	t_tokens	*file;
 	int			fd;
 
 	(void)env;
 	new_tokens = NULL;
-	file_input = NULL;
-	file_output = NULL;
+	file = NULL;
 	new_tokens_create(&new_tokens, *tokens);
-	create_file(&file_input, &file_output, *tokens);
-	if (file_input)
+	create_file(&file, *tokens);
+	while (file)
 	{
-		while (file_input)
+		if (file->type == TYPE_REDIRECTION_IN)
 		{
-			fd = open(file_input->value, O_RDONLY);
+			fd = open(file->value, O_RDONLY);
 			if (fd == -1)
 			{
 				fprintf(stderr, " %s\n", strerror(errno));
                 exit(EXIT_FAILURE);
 				return (NULL);
 			}
-			if (!file_input->next)
-				dup2(fd, STDIN_FILENO);
+			dup2(fd, STDIN_FILENO);
 			close(fd);
-			file_input = file_input->next;
 		}
-	}
-	if (file_output)
-	{
-		while (file_output)
+		else if (file->type == TYPE_REDIRECTION_OUT)
 		{
-			if (file_output->type == TYPE_S_REDIRECTION)
-				fd = open(file_output->value, O_WRONLY | O_CREAT | O_APPEND,
-						0644);
-			else
-				fd = open(file_output->value, O_WRONLY | O_CREAT | O_TRUNC,
+			fd = open(file->value, O_WRONLY | O_CREAT | O_TRUNC,
 						0644);
 			if (fd == -1)
 			{
@@ -199,14 +187,27 @@ t_tokens	*tokens_redirection(t_tokens **tokens, t_vars **env)
                 exit(EXIT_FAILURE);
 				return (NULL);
 			}
-			if (!file_output->next)
+			if (!file->next)
 				dup2(fd, STDOUT_FILENO);
 			close(fd);
-			file_output = file_output->next;
 		}
+		else if (file->type == TYPE_S_REDIRECTION)
+		{
+			fd = open(file->value, O_WRONLY | O_CREAT | O_APPEND,
+						0644);
+			if (fd == -1)
+			{
+				fprintf(stderr, " %s\n", strerror(errno));
+                exit(EXIT_FAILURE);
+				return (NULL);
+			}
+			if (!file->next)
+				dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		file = file->next;
 	}
-	ft_free_tokens(&file_input);
-	ft_free_tokens(&file_output);
+	ft_free_tokens(&file);
 	return (new_tokens);
 }
 void	handle_pipes(t_tokens **tokens_split, int i, int pipefd[2], int prev_fd)

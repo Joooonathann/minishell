@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/30 13:34:54 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/03 23:07:02 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,37 @@ int	check_meta_characters(t_tokens *tokens)
 	return (1);
 }
 
+void	trime_tokens(t_tokens **tokens)
+{
+	t_tokens 	*tmp;
+	t_tokens	*del;
+
+	tmp = *tokens;
+	while (tmp)
+	{
+		if (tmp->value[0] == '\0')
+		{
+			del = tmp;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			else
+				*tokens = tmp->next;
+
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
+
+			tmp = tmp->next;
+			free(del->value);
+			free(del);
+		}
+		else
+		{
+			tmp = tmp->next;
+		}
+	}
+}
+
+
 t_tokens	*parser(char *str, t_vars **env)
 {
 	t_tokens	*tokens;
@@ -60,9 +91,10 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokens = NULL;
 	tokenizer(&str, &tokens);
 	env_var_expansion(&tokens, env);
+	trime_tokens(&tokens);
 	add_token_type(&tokens);
-	if (!check_meta_characters(tokens))
-		return (NULL);
+	//if (!check_meta_characters(tokens))
+	//	return (NULL);
 	//parse_meta_characters(&tokens);
 	trime_useless_quotes(&tokens);
 	//ft_print_tokens(tokens);

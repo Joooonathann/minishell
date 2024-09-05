@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/30 13:32:14 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/06 01:11:37 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char **argv, char **envp)
 	char *prompt;
 	t_vars *env;
 	t_tokens *tokens;
-	(void)envp;
 	char	*cpy_pwd;
 	
 	env = NULL;

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 22:25:39 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/06/25 11:56:37 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/06 01:25:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	delete_all_vars(t_vars **vars)
 {
-	t_vars *vars_tmp;
+	t_vars	*vars_tmp;
 
 	if (!*vars)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:35:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/30 13:50:23 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/05 00:39:52 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,3 @@ int	echo_command(bool options, char *str, t_vars **env)
 	exit_code("0", env);
 	return (1);
 }
-

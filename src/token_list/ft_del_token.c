@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_del_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 14:08:07 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/06 18:13:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/06 01:26:18 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_token(t_tokens *token)
+static void	ft_free_token(t_tokens *token)
 {
 	if (token)
 	{
 		if (token->value)
-			free (token->value);
-		free (token);
+			free(token->value);
+		free(token);
 	}
 }
 

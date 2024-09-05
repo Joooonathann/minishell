@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:50:34 by ekrause           #+#    #+#             */
-/*   Updated: 2024/08/07 15:21:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/06 01:29:15 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ char	*init_ms_token(char *str, char *delim)
 	}
 	while (*str && (!ft_strchr((const char *)delim, *str) || in_quote))
 	{
-		if (((*str == SIMPLE && count_quote(str, SIMPLE) > 1)
-				|| (*str == DOUBLE && count_quote(str, DOUBLE) > 1))
-			&& !in_quote)
+		if (((*str == SIMPLE && count_quote(str, SIMPLE) > 1) || (*str == DOUBLE
+					&& count_quote(str, DOUBLE) > 1)) && !in_quote)
 		{
 			in_quote = true;
-			quote_type = (QUOTE) * str;
+			quote_type = (QUOTE)*str;
 		}
 		else if (*str == (char)quote_type && in_quote)
 		{

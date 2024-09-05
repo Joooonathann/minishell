@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:17:29 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/06 01:19:09 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	size_key(char *envp)
 	return (i);
 }
 
-void	up_level(t_vars **env)
+static void	up_level(t_vars **env)
 {
 	int		value_int;
 	char	*value_char;
@@ -46,13 +46,29 @@ void	up_level(t_vars **env)
 	return ;
 }
 
-void	create_exit_code(t_vars **env)
+static void	create_exit_code(t_vars **env)
 {
 	if (exist_vars(*env, "?"))
 		update_vars(env, "?", "0");
 	else
 		add_vars("?", "0", env);
 	return ;
+}
+
+static int	process_add(char *value, char *key, t_vars **env)
+{
+	if (!value)
+	{
+		free(key);
+		return (0);
+	}
+	if (!add_vars(key, value, env))
+	{
+		free(key);
+		free(value);
+		return (0);
+	}
+	return (1);
 }
 
 int	init_vars(t_vars **env, char **envp)
@@ -70,17 +86,8 @@ int	init_vars(t_vars **env, char **envp)
 		if (!key)
 			return (0);
 		value = ft_substr(envp[i], len_key + 1, ft_strlen(envp[i]));
-		if (!value)
-		{
-			free(key);
+		if (!process_add(value, key, env))
 			return (0);
-		}
-		if (!add_vars(key, value, env))
-		{
-			free(key);
-			free(value);
-			return (0);
-		}
 		free(key);
 		free(value);
 		i++;

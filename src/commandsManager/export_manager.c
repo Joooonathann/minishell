@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 16:48:24 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/06 01:38:02 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ int export_manager(t_tokens *command, t_vars **env, char **cpy_path)
         }
         else
         {
-            write(2, "myfuckingbash: export: `", 24);
-            write(2, command->value, ft_strlen(command->value));
-            write(2, "': not a valid identifier\n", 26);
+            fprintf(stderr, "myfuckingbash: export: '%s': not a valid identifier\n", command->value);
             exit_code("1", env);
             return (0);
         }

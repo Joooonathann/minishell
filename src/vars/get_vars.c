@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:58:47 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/07/01 16:36:46 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/06 01:25:37 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 char	*get_vars(t_vars **env, char *key_env)
 {
 	t_vars	*tmp;
-	
+
 	if (!env || !key_env)
 	{
-		return(NULL);
+		return (NULL);
 	}
 	tmp = *env;
 	while (tmp)

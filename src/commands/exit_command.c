@@ -6,13 +6,13 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 10:33:05 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 13:37:51 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/05 00:39:56 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void exit_command(int code)
+void	exit_command(int code)
 {
-    exit(code);
+	exit(code);
 }

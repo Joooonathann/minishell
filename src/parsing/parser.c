@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/03 23:07:02 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/06 01:29:08 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_error(int count, ...)
 		write(2, str, ft_strlen(str));
 		i++;
 	}
-	write (2, "\n", 1);
+	write(2, "\n", 1);
 	va_end(args);
 }
 
@@ -35,18 +35,25 @@ int	check_meta_characters(t_tokens *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == TYPE_REDIRECTION && (!tokens->next || tokens->next->type != TYPE_ARGUMENT))
+		if (tokens->type == TYPE_REDIRECTION && (!tokens->next
+				|| tokens->next->type != TYPE_ARGUMENT))
 		{
 			if (tokens->next)
-				ft_error(5, "myfuckingbash: ", "syntax error near unexpected token ", "`", tokens->next->value, "\'");
+				ft_error(5, "myfuckingbash: ",
+					"syntax error near unexpected token ", "`",
+					tokens->next->value, "\'");
 			else
-				ft_error(3, "myfuckingbash: ", "syntax error near unexpected token ", "newline");
+				ft_error(3, "myfuckingbash: ",
+					"syntax error near unexpected token ", "newline");
 			return (0);
 		}
-		else if (tokens->type == TYPE_PIPE && (!tokens->next || tokens->next->type != TYPE_COMMAND || !tokens->prev))
+		else if (tokens->type == TYPE_PIPE && (!tokens->next
+				|| tokens->next->type != TYPE_COMMAND || !tokens->prev))
 		{
-			ft_error(5, "myfuckingbash: ", "syntax error near unexpected token ", "`", tokens->value, "\'");
-			return (0);	
+			ft_error(5, "myfuckingbash: ",
+				"syntax error near unexpected token ", "`", tokens->value,
+				"\'");
+			return (0);
 		}
 		tokens = tokens->next;
 	}
@@ -55,7 +62,7 @@ int	check_meta_characters(t_tokens *tokens)
 
 void	trime_tokens(t_tokens **tokens)
 {
-	t_tokens 	*tmp;
+	t_tokens	*tmp;
 	t_tokens	*del;
 
 	tmp = *tokens;
@@ -68,10 +75,8 @@ void	trime_tokens(t_tokens **tokens)
 				tmp->prev->next = tmp->next;
 			else
 				*tokens = tmp->next;
-
 			if (tmp->next)
 				tmp->next->prev = tmp->prev;
-
 			tmp = tmp->next;
 			free(del->value);
 			free(del);
@@ -83,7 +88,6 @@ void	trime_tokens(t_tokens **tokens)
 	}
 }
 
-
 t_tokens	*parser(char *str, t_vars **env)
 {
 	t_tokens	*tokens;
@@ -93,10 +97,10 @@ t_tokens	*parser(char *str, t_vars **env)
 	env_var_expansion(&tokens, env);
 	trime_tokens(&tokens);
 	add_token_type(&tokens);
-	//if (!check_meta_characters(tokens))
+	// if (!check_meta_characters(tokens))
 	//	return (NULL);
-	//parse_meta_characters(&tokens);
+	// parse_meta_characters(&tokens);
 	trime_useless_quotes(&tokens);
-	//ft_print_tokens(tokens);
+	// ft_print_tokens(tokens);
 	return (tokens);
 }

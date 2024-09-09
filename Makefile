@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/08/27 13:20:30 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/09/09 09:25:12 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,10 +51,14 @@ SRC			=	./src/minishell.c\
 				./src/commandsManager/export_manager.c\
 				./src/commandsManager/pwd_manager.c\
 				./src/commandsManager/unset_manager.c\
+				./src/commandsManager/handler_special.c\
 				./src/commandsManager/utils/env_tab.c\
 				./src/commandsManager/utils/find_command_path.c\
 				./src/commandsManager/utils/check_is_special.c\
-				./src/commandsManager/handler_special.c\
+				./src/commandsManager/utils/dup_tokens.c\
+				./src/commandsManager/utils/count_tokens.c\
+				./src/commandsManager/utils/create_tokens_split.c\
+				./src/commandsManager/utils/new_tokens_create.c\
 				./src/vars/add_vars.c\
 				./src/vars/init_vars.c\
 				./src/vars/print_vars.c\

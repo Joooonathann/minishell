@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/06 01:38:47 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/09 09:24:11 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,12 @@ char				*find_command_path(const char *command, t_vars **env);
 int					check_is_special(t_tokens *command);
 int					handler_special(t_tokens *command, t_vars **env,
 						char **cpy_path);
+void				dup_tokens(char *value, t_token_type type,
+						t_tokens **buffer);
+int					count_tokens(t_tokens *tokens);
+void				create_tokens_split(t_tokens **tokens_split,
+						t_tokens *tokens);
+void				new_tokens_create(t_tokens **tokens, t_tokens *command);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env);

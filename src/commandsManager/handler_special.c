@@ -6,97 +6,11 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/03 23:15:06 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/09 09:54:13 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	dup_tokens(char *value, t_token_type type, t_tokens **buffer)
-{
-	t_tokens	*new;
-	t_tokens	*tmp;
-
-	new = malloc(sizeof(t_tokens));
-	if (!new)
-		return ;
-	new->next = NULL;
-	new->prev = NULL;
-	new->redirection = '\0';
-	new->pipe = '\0';
-	new->quote = 0;
-	new->type = type;
-	new->value = value;
-	if (!*buffer)
-		*buffer = new;
-	else
-	{
-		tmp = *buffer;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
-	}
-}
-
-int	count_tokens(t_tokens *tokens)
-{
-	int	count;
-
-	count = 0;
-	while (tokens)
-	{
-		if (tokens->type == TYPE_PIPE)
-			count++;
-		tokens = tokens->next;
-	}
-	return (count + 1);
-}
-
-void	create_tokens_split(t_tokens **tokens_split, t_tokens *tokens)
-{
-	int	size;
-	int	i;
-
-	size = count_tokens(tokens);
-	i = 0;
-	while (i < size)
-		tokens_split[i++] = NULL;
-	i = 0;
-	while (tokens)
-	{
-		if (i >= size)
-			break ;
-		if (tokens->type == TYPE_PIPE)
-		{
-			i++;
-			tokens = tokens->next;
-			continue ;
-		}
-		dup_tokens(tokens->value, tokens->type, &tokens_split[i]);
-		tokens = tokens->next;
-	}
-	tokens_split[size] = NULL;
-}
-
-void	new_tokens_create(t_tokens **tokens, t_tokens *command)
-{
-	while (command)
-	{
-		if (command->type == TYPE_REDIRECTION
-			|| command->type == TYPE_S_REDIRECTION || command->type == TYPE_REDIRECTION_IN || command->type == TYPE_REDIRECTION_OUT)
-		{
-			command = command->next;
-			if (command)
-				command = command->next;
-		}
-		else
-		{
-			dup_tokens(command->value, command->type, tokens);
-			command = command->next;
-		}
-	}
-}
 
 void	create_file(t_tokens **file, t_tokens *command)
 {

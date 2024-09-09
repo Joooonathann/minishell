@@ -1,20 +1,8 @@
-[1] echo ${USER} = echo ekrause #idk if it should be implemented
-[2] : [2] ! #idk if it should be implemented
-[3] echo $$ #idk if it should be implemented
-
-[4] echo $?
-[5] eco coucou | echo coucou
-[6] exit code
-
-
-Fix wait null for wait pid list
-
-
--nnnnnnnnnnnnn
-
-
-signaux verif, ctrl c pipe
-
-sans env prog doit fonctionner in bash
-
-env -i bash --norc --noprofile
+[1] exit code
+[2] Fix wait null for wait pid list
+[3] -nnnnnnnnnnnnn
+[4] signaux verif, ctrl c pipe
+[5] sans env prog doit fonctionner in bash
+[6] env -i bash --norc --noprofile
+[7] garder copie PATH
+[8] echo |

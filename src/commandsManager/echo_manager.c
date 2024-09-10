@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 01:35:59 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 09:26:01 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	process_echo(t_tokens *command, t_vars **env, char **str)
 			echo_command(false, *str, env);
 		}
 	}
-    return (1);
+	return (1);
 }
 
 int	echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
@@ -40,8 +40,8 @@ int	echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
 	str = NULL;
 	if (ft_count_tokens(command) > 1)
 	{
-        if (!process_echo(command, env, &str))
-            return (0);
+		if (!process_echo(command, env, &str))
+			return (0);
 	}
 	else
 		echo_command(false, str, env);

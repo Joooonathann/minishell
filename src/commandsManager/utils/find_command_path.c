@@ -6,77 +6,81 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 17:30:46 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/27 12:09:12 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:36:24 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    free_tokens(char **tokens)
+static void	free_tokens(char **tokens)
 {
-    int i = 0;
-    while (tokens[i])
-        free(tokens[i++]);
-    free(tokens);
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+		free(tokens[i++]);
+	free(tokens);
 }
 
-char *find_command_path(const char *command, t_vars **env)
+static char	*check_absolute_path(const char *command)
 {
-    char **tokens;
-    char *path;
-    char *full_path;
-    int i;
+	if (command[0] == '/' && access(command, X_OK) == 0)
+		return (strdup(command));
+	return (NULL);
+}
 
-    i = 0;
-    full_path = NULL;
+static char	*generate_full_path(const char *directory, const char *command)
+{
+	char	*full_path;
+	size_t	path_len;
 
-    if (command[0] == '/')
-    {
-        if (access(command, X_OK) == 0)
-        {
-            full_path = strdup(command);
-        }
-        return full_path;
-    }
+	path_len = ft_strlen(directory) + ft_strlen(command) + 2;
+	full_path = malloc(path_len);
+	if (!full_path)
+		return (NULL);
+	ft_strcpy(full_path, directory);
+	ft_strcat(full_path, "/");
+	ft_strcat(full_path, command);
+	return (full_path);
+}
 
-    // Sinon, chercher dans le PATH
-    path = get_vars(env, "PATH");
-    if (!path)
-        return NULL;
+static char	*find_path_in_directories(char **tokens, const char *command)
+{
+	char	*full_path;
+	int		i;
 
-    tokens = ft_split(path, ':');
-    if (!tokens)
-    {
-        free(path);
-        return NULL;
-    }
+	i = 0;
+	while (tokens[i])
+	{
+		full_path = generate_full_path(tokens[i], command);
+		if (full_path && access(full_path, X_OK) == 0)
+		{
+			free_tokens(tokens);
+			return (full_path);
+		}
+		free(full_path);
+		i++;
+	}
+	free_tokens(tokens);
+	return (NULL);
+}
 
-    while (tokens[i])
-    {
-        full_path = malloc(ft_strlen(tokens[i]) + ft_strlen(command) + 2);
-        if (!full_path)
-        {
-            free_tokens(tokens);
-            free(path);
-            return NULL;
-        }
+char	*find_command_path(const char *command, t_vars **env)
+{
+	char	*path;
+	char	**tokens;
+	char	*full_path;
 
-        ft_strcpy(full_path, tokens[i]);
-        ft_strcat(full_path, "/");
-        ft_strcat(full_path, command);
-
-        if (access(full_path, X_OK) == 0)
-        {
-            free(path);
-            free_tokens(tokens);
-            return full_path;
-        }
-
-        free(full_path);
-        i++;
-    }
-
-    free(path);
-    free_tokens(tokens);
-    return NULL;
+	full_path = check_absolute_path(command);
+	if (full_path)
+		return (full_path);
+	path = get_vars(env, "PATH");
+	if (!path)
+		return (NULL);
+	tokens = ft_split(path, ':');
+	free(path);
+	if (!tokens)
+		return (NULL);
+	full_path = find_path_in_directories(tokens, command);
+	return (full_path);
 }

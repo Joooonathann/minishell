@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/09 09:24:11 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:37:28 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,23 @@ typedef struct s_lst_cmd
 	int				(*func)(t_tokens *, t_vars **env, char **cpy_path);
 }					t_lstcmd;
 
+typedef struct s_pipe_data
+{
+	int				prev_fd;
+	int				i;
+	t_tokens		**tokens_split;
+	char			**cpy_path;
+	t_vars			**env;
+}					t_pipe_data;
+
+typedef struct s_command_data
+{
+	t_tokens		*command;
+	t_vars			**env;
+	char			**cpy_path;
+	char			**envp;
+}					t_command_data;
+
 // Token list
 void				ft_del_token(t_tokens **token, t_tokens **tokens);
 void				ft_free_tokens(t_tokens **tokens);
@@ -107,7 +124,6 @@ int					ft_build_str_tokens(char **str, t_tokens *command);
 t_tokens			*parser(char *str, t_vars **env);
 void				tokenizer(char **str, t_tokens **tokens);
 void				env_var_expansion(t_tokens **tokens, t_vars **env);
-void				parse_meta_characters(t_tokens **tokens);
 void				add_token_type(t_tokens **tokens);
 void				trime_useless_quotes(t_tokens **tokens);
 
@@ -152,6 +168,17 @@ int					count_tokens(t_tokens *tokens);
 void				create_tokens_split(t_tokens **tokens_split,
 						t_tokens *tokens);
 void				new_tokens_create(t_tokens **tokens, t_tokens *command);
+void				create_file(t_tokens **file, t_tokens *command);
+t_tokens			*tokens_redirection(t_tokens **tokens);
+void				free_env_tab_handler(char **envp);
+int					check_file_or_directory(t_command_data *data);
+int					handle_command_errors(char *cmd, char **envp, int err,
+						t_vars **env);
+int					run_execve(t_command_data *data, char *cmd_path,
+						char **args);
+int					execute_command(t_command_data *data);
+int					handle_special_commands(t_command_data *data);
+char				**args_compose(t_tokens *command);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env);

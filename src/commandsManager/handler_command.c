@@ -6,13 +6,13 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/09 09:19:56 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 09:28:16 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lstcmd	*init_commands()
+t_lstcmd	*init_commands(void)
 {
 	t_lstcmd	*commands;
 
@@ -43,12 +43,9 @@ int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 	int			i;
 	t_lstcmd	*commands;
 
-	if (!command)
-		return (0);
 	if (check_is_special(command))
 	{
-		if (handler_special(command, env, cpy_path))
-			return (1);
+		handler_special(command, env, cpy_path);
 		return (0);
 	}
 	i = 0;

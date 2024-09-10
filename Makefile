@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/09/09 09:25:12 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/09/10 11:28:20 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SRC			=	./src/minishell.c\
 				./src/parsing/tokenizer.c\
 				./src/parsing/env_var_expansion.c\
 				./src/parsing/add_token_type.c\
-				./src/parsing/parse_meta_characters.c\
 				./src/parsing/trime_useless_quotes.c\
 				./src/commands/cd_command.c\
 				./src/commands/exit_command.c\
@@ -59,6 +58,10 @@ SRC			=	./src/minishell.c\
 				./src/commandsManager/utils/count_tokens.c\
 				./src/commandsManager/utils/create_tokens_split.c\
 				./src/commandsManager/utils/new_tokens_create.c\
+				./src/commandsManager/utils/create_file.c\
+				./src/commandsManager/utils/tokens_redirection.c\
+				./src/commandsManager/utils/free_env_tab.c\
+				./src/commandsManager/utils/extern_utils.c\
 				./src/vars/add_vars.c\
 				./src/vars/init_vars.c\
 				./src/vars/print_vars.c\

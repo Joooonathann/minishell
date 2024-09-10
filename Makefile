@@ -6,7 +6,7 @@
 #    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/09/10 11:28:20 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/09/10 12:00:23 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRC			=	./src/minishell.c\
 				./src/vars/exist_vars.c\
 				./src/vars/delete_vars.c\
 				./src/vars/delete_all_vars.c\
+				./src/vars/get_mask.c\
 				./src/vars/get_vars.c\
 				./src/vars/exit_code.c
 

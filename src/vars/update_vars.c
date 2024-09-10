@@ -6,13 +6,13 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:56 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 01:16:14 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:53:16 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	update_vars(t_vars **env, char *key, char *value)
+int	update_vars(t_vars **env, char *key, char *value, int mask)
 {
 	t_vars	*tmp;
 
@@ -24,6 +24,7 @@ int	update_vars(t_vars **env, char *key, char *value)
 			if (tmp->value)
 				free(tmp->value);
 			tmp->value = ft_strdup(value);
+			tmp->mask = mask;
 			return (1);
 		}
 		tmp = tmp->next;

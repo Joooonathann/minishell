@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 17:30:46 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 11:36:24 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:02:51 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*find_command_path(const char *command, t_vars **env)
 		return (full_path);
 	path = get_vars(env, "PATH");
 	if (!path)
-		return (NULL);
+		path = get_mask(env, "PATH");
 	tokens = ft_split(path, ':');
 	free(path);
 	if (!tokens)

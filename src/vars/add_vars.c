@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:50:53 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 01:24:54 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:54:41 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	process_add(t_vars **env, t_vars **new)
 	}
 }
 
-int	add_vars(char *key, char *value, t_vars **env)
+int	add_vars(char *key, char *value, t_vars **env, int mask)
 {
 	t_vars	*new;
 
@@ -43,6 +43,7 @@ int	add_vars(char *key, char *value, t_vars **env)
 		free(new->key);
 		return (0);
 	}
+	new->mask = mask;
 	new->next = NULL;
 	process_add(env, &new);
 	return (1);

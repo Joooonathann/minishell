@@ -6,3 +6,6 @@
 [6] env -i bash --norc --noprofile
 [7] garder copie PATH
 [8] echo |
+
+
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

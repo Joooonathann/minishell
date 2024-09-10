@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:49:35 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 00:50:52 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:53:53 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	cd_command(char *path, t_vars **env, char **copy_path)
 			fprintf(stderr, "bash: cd: error retrieving current directory:%s\n",
 				strerror(errno));
 		if (exist_vars(*env, "OLDPWD"))
-			update_vars(env, "OLDPWD", *copy_path);
+			update_vars(env, "OLDPWD", *copy_path, 0);
 		free(*copy_path);
 		*copy_path = ft_strdup(cwd);
 		if (exist_vars(*env, "PWD"))
-			update_vars(env, "PWD", cwd);
+			update_vars(env, "PWD", cwd, 0);
 	}
 	exit_code("0", env);
 	return (1);

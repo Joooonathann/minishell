@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/10 11:37:28 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:59:55 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_vars
 {
 	char			*key;
 	char			*value;
+	int				mask;
 	struct s_vars	*next;
 }					t_vars;
 
@@ -134,7 +135,7 @@ char				*ft_strcpy(char *dst, const char *src);
 int					cd_command(char *path, t_vars **env, char **copy_path);
 int					pwd_command(t_vars **env);
 int					echo_command(bool options, char *str, t_vars **env);
-int					update_vars(t_vars **env, char *key, char *value);
+int					update_vars(t_vars **env, char *key, char *value, int mask);
 int					exist_vars(t_vars *env, char *key);
 int					env_command(t_vars *env);
 int					unset_command(t_vars **env, char *key_env);
@@ -181,7 +182,7 @@ int					handle_special_commands(t_command_data *data);
 char				**args_compose(t_tokens *command);
 
 // Env vars
-int					add_vars(char *key, char *value, t_vars **env);
+int					add_vars(char *key, char *value, t_vars **env, int mask);
 int					init_vars(t_vars **env, char **envp);
 int					print_vars(t_vars *env);
 int					export_command(t_vars **env, char *str);
@@ -189,5 +190,6 @@ int					delete_vars(t_vars **env, t_vars *delete);
 char				*get_vars(t_vars **env, char *key_env);
 void				delete_all_vars(t_vars **vars);
 void				exit_code(char *code, t_vars **env);
+char				*get_mask(t_vars **env, char *key_env);
 
 #endif

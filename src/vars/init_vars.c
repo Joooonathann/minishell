@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 01:19:09 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:03:08 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,21 @@ static void	up_level(t_vars **env)
 		free(value_char);
 		value_int++;
 		value_char = ft_itoa(value_int);
-		update_vars(env, "SHLVL", value_char);
+		update_vars(env, "SHLVL", value_char, 0);
 		free(value_char);
 	}
 	else
-		add_vars("SHLVL", "1", env);
+		add_vars("SHLVL", "1", env, 0);
 	return ;
 }
 
 static void	create_exit_code(t_vars **env)
 {
 	if (exist_vars(*env, "?"))
-		update_vars(env, "?", "0");
+		update_vars(env, "?", "0", 1);
 	else
-		add_vars("?", "0", env);
+		add_vars("?", "0", env, 1);
+	add_vars("PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", env, 1);
 	return ;
 }
 
@@ -62,7 +63,7 @@ static int	process_add(char *value, char *key, t_vars **env)
 		free(key);
 		return (0);
 	}
-	if (!add_vars(key, value, env))
+	if (!add_vars(key, value, env, 0))
 	{
 		free(key);
 		free(value);

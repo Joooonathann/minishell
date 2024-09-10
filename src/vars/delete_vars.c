@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:30:58 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 01:22:49 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:09:53 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	process_delete(t_vars **env, t_vars **delete)
 
 int	delete_vars(t_vars **env, t_vars *delete)
 {
-	if (!env || !*env || !delete)
+	if (!env || !*env || !delete || delete->mask == 1)
 		return (0);
 	if (!process_delete(env, &delete))
 		return (0);

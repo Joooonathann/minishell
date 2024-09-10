@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 17:57:04 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 00:44:14 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:08:58 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	export_command(t_vars **env, char *str)
 			tmp = tmp->next;
 		delete_vars(env, tmp);
 	}
-	add_vars(key, value, env);
+	add_vars(key, value, env, 0);
 	free(key);
 	free(value);
 	exit_code("0", env);

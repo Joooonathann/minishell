@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:29:56 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/10 12:01:05 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:12:18 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ void	env_var_expansion(t_tokens **tokens, t_vars **env)
 				i++;
 				while (current_token->value[i] && (ft_isalnum(current_token->value[i]) || current_token->value[i] == '_'))
 					env_var = add_char_to_str(env_var, current_token->value[i++]);
-				expanded_value = ft_strcat_dynamic(expanded_value, get_vars(env, env_var));
+				if (get_vars(env, env_var))
+					expanded_value = ft_strcat_dynamic(expanded_value, get_vars(env, env_var));
+				else
+					expanded_value = ft_strcat_dynamic(expanded_value, get_mask(env, env_var));
 				free(env_var);
 				env_var = NULL;
 			}

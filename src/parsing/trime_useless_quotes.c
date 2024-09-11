@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/11 15:08:55 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/11 16:30:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ char	*init_new_value(t_tokens *tokens)
 
 void	create_new_token_without_quotes(t_tokens *token, char **new_value)
 {
-	bool in_quote;
-	QUOTE quote_type;
-	int i;
-	int j;
+	bool	in_quote;
+	QUOTE	quote_type;
+	int		i;
+	int		j;
 
 	in_quote = false;
 	quote_type = 0;
@@ -86,7 +86,7 @@ void	trime_useless_quotes(t_tokens **tokens)
 {
 	t_tokens	*current_token;
 	char		*new_value;
-	
+
 	current_token = *tokens;
 	while (current_token)
 	{

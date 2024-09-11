@@ -6,11 +6,7 @@
 #    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/09/11 17:50:39 by jalbiser         ###   ########.fr        #
-=======
-#    Updated: 2024/09/11 17:53:40 by jalbiser         ###   ########.fr        #
->>>>>>> main
+#    Updated: 2024/09/11 17:59:37 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +28,7 @@ SRC			=	./src/minishell.c\
 				./src/token_list/ft_tokennew.c\
 				./src/token_list/ft_count_tokens.c\
 				./src/token_list/ft_count_value_tokens.c\
-<<<<<<< HEAD
-=======
 				./src/parsing/init_ms_token.c\
->>>>>>> main
 				./src/parsing/parser.c\
 				./src/parsing/tokenizer.c\
 				./src/parsing/env_var_expansion.c\

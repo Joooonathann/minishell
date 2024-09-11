@@ -3,48 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   trime_useless_quotes.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/02 16:58:23 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/06 01:29:17 by jalbiser         ###   ########.fr       */
+/*   Created: 2024/09/11 14:33:40 by ekrause           #+#    #+#             */
+/*   Updated: 2024/09/11 16:30:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*init_new_value(t_tokens *tokens)
+int	get_new_len(t_tokens *tokens)
 {
-	char		*new_value;
-	int			len;
-	bool		in_quote;
-	QUOTE		quote_type;
-	int			i;
+	int		len;
+	int		i;
+	bool	in_quote;
+	QUOTE	quote_type;
 
 	len = 0;
+	i = 0;
 	in_quote = false;
 	quote_type = 0;
-	i = 0;
 	while (tokens->value[i])
 	{
-		if (tokens->value[i] == SIMPLE || tokens->value[i] == DOUBLE)
+		if ((tokens->value[i] == SIMPLE || tokens->value[i] == DOUBLE)
+			&& (!in_quote || tokens->value[i] == (char)quote_type))
 		{
-			if (!in_quote)
-			{
-				in_quote = true;
+			in_quote = !in_quote;
+			if (in_quote)
 				quote_type = tokens->value[i];
-			}
-			else if (in_quote && tokens->value[i] == (char)quote_type)
-			{
-				in_quote = false;
-				quote_type = 0;
-			}
 			else
-				len++;
+				quote_type = 0;
 		}
 		else
 			len++;
 		i++;
 	}
+	return (len);
+}
+
+char	*init_new_value(t_tokens *tokens)
+{
+	char	*new_value;
+	int		len;
+
+	len = get_new_len(tokens);
 	new_value = malloc(sizeof(char) * (len + 1));
 	if (!new_value)
 		return (NULL);
@@ -52,14 +54,38 @@ char	*init_new_value(t_tokens *tokens)
 	return (new_value);
 }
 
+void	create_new_token_without_quotes(t_tokens *token, char **new_value)
+{
+	bool	in_quote;
+	QUOTE	quote_type;
+	int		i;
+	int		j;
+
+	in_quote = false;
+	quote_type = 0;
+	j = 0;
+	i = 0;
+	while (token->value[i])
+	{
+		if ((token->value[i] == SIMPLE || token->value[i] == DOUBLE)
+			&& (!in_quote || token->value[i] == (char)quote_type))
+		{
+			in_quote = !in_quote;
+			if (in_quote)
+				quote_type = token->value[i];
+			else
+				quote_type = 0;
+		}
+		else
+			(*new_value)[j++] = token->value[i];
+		i++;
+	}
+}
+
 void	trime_useless_quotes(t_tokens **tokens)
 {
 	t_tokens	*current_token;
 	char		*new_value;
-	bool		in_quote;
-	QUOTE		quote_type;
-	int			i;
-	int			j;
 
 	current_token = *tokens;
 	while (current_token)
@@ -67,31 +93,7 @@ void	trime_useless_quotes(t_tokens **tokens)
 		new_value = init_new_value(current_token);
 		if (!new_value)
 			return ;
-		in_quote = false;
-		quote_type = 0;
-		j = 0;
-		i = 0;
-		while (current_token->value[i])
-		{
-			if (current_token->value[i] == SIMPLE || current_token->value[i] == DOUBLE)
-			{
-				if (!in_quote)
-				{
-					in_quote = true;
-					quote_type = current_token->value[i];
-				}
-				else if (in_quote && current_token->value[i] == (char)quote_type)
-				{
-					in_quote = false;
-					quote_type = 0;
-				}
-				else
-					new_value[j++] = current_token->value[i];
-			}
-			else
-				new_value[j++] = current_token->value[i];
-			i++;
-		}
+		create_new_token_without_quotes(current_token, &new_value);
 		free(current_token->value);
 		current_token->value = new_value;
 		current_token = current_token->next;

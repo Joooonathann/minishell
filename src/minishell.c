@@ -6,7 +6,11 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/11 17:18:48 by jalbiser         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/10 16:58:37 by ekrause          ###   ########.fr       */
+>>>>>>> ekrause
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 			tokens = parser(prompt, &env);
 			if (tokens)
 			{
-				handler_command(tokens, &env, &cpy_pwd);
+				//handler_command(tokens, &env, &cpy_pwd);
 				ft_free_tokens(&tokens);
 			}
 			add_history(prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:51:16 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/06 01:28:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:36:50 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	ft_print_tokens(t_tokens *tokens)
 		"TYPE_ARGUMENT",
 		"TYPE_OPTION",
 		"TYPE_REDIRECTION",
+		"TYPE_S_REDIRECTION",
+		"TYPE_REDIRECTION_IN",
+		"TYPE_REDIRECTION_OUT",
 		"TYPE_PIPE",
 	};
 	while (tokens)

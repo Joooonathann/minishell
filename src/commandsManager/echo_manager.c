@@ -6,46 +6,74 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 09:26:01 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 17:59:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	process_echo(t_tokens *command, t_vars **env, char **str)
+static int	is_valid_option(const char *str)
 {
-	if (ft_strcmp(command->value, "-n"))
+	int	i;
+
+	i = 1;
+	if (str[0] != '-' || str[1] == '\0')
+		return (0);
+	while (str[i])
 	{
-		if (!ft_build_str_tokens(str, command->next->next))
+		if (str[i] != 'n')
 			return (0);
-		echo_command(true, *str, env);
-	}
-	else
-	{
-		if (ft_count_tokens(command) > 1)
-		{
-			if (!ft_build_str_tokens(str, command->next))
-				return (0);
-			echo_command(false, *str, env);
-		}
+		i++;
 	}
 	return (1);
 }
 
+void	process_echo(t_tokens **command, int *first_argument)
+{
+	t_tokens	*tmp;
+
+	tmp = *command;
+	while (tmp)
+	{
+		if (tmp->type == TYPE_ARGUMENT)
+		{
+			if (!*first_argument)
+				printf(" ");
+			printf("%s", tmp->value);
+			*first_argument = 0;
+		}
+		else if (tmp->type == TYPE_OPTION)
+		{
+			if (!*first_argument)
+				printf(" ");
+			printf("%s", tmp->value);
+			*first_argument = 0;
+		}
+		tmp = tmp->next;
+	}
+}
+
 int	echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
-	char	*str;
+	t_tokens	*tmp;
+	int			suppress_newline;
+	int			first_argument;
 
+	suppress_newline = 0;
+	first_argument = 1;
+	(void)env;
 	(void)cpy_path;
-	str = NULL;
-	if (ft_count_tokens(command) > 1)
+	tmp = command->next;
+	while (tmp && tmp->type == TYPE_OPTION)
 	{
-		if (!process_echo(command, env, &str))
-			return (0);
+		if (is_valid_option(tmp->value))
+			suppress_newline = 1;
+		else
+			break ;
+		tmp = tmp->next;
 	}
-	else
-		echo_command(false, str, env);
-	if (str)
-		free(str);
+	process_echo(&tmp, &first_argument);
+	if (!suppress_newline)
+		printf("\n");
 	return (1);
 }

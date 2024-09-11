@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 16:58:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:50:46 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	using_history();
 	while (1)
 	{
-		//prompt = readline("▶ \033[1;32mmyfuckingbash\033[0m@\033[1;34m42\033[0m$ ");
-		prompt = readline("Test$ ");
+		prompt = readline("myfuckingbash@42$ ");
 		if (!prompt)
 		{
 			delete_all_vars(&env);

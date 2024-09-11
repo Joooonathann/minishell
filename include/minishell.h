@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/10 18:15:32 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/11 17:50:54 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ t_tokens			*ft_tokenlast(t_tokens *tokens);
 t_tokens			*ft_tokennew(char *value);
 int					ft_count_tokens(t_tokens *tokens);
 int					ft_count_value_tokens(t_tokens *tokens);
-int					ft_build_str_tokens(char **str, t_tokens *command);
 
 //
 
@@ -136,7 +135,6 @@ int					handler_command(t_tokens *tokens, t_vars **env,
 char				*ft_strcpy(char *dst, const char *src);
 int					cd_command(char *path, t_vars **env, char **copy_path);
 int					pwd_command(t_vars **env);
-int					echo_command(bool options, char *str, t_vars **env);
 int					update_vars(t_vars **env, char *key, char *value, int mask);
 int					exist_vars(t_vars *env, char *key);
 int					env_command(t_vars *env);

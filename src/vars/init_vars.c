@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 12:03:08 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:28:38 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static void	create_exit_code(t_vars **env)
 		update_vars(env, "?", "0", 1);
 	else
 		add_vars("?", "0", env, 1);
-	add_vars("PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", env, 1);
+	add_vars("PATH",
+		"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", env, 1);
 	return ;
 }
 

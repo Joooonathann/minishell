@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 09:27:12 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:20:31 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,36 @@ static int	is_valid_splited(char *str, char **cpy_path)
 	return (1);
 }
 
+static int	have_identifer(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	export_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
 	if (ft_count_tokens(command) < 2)
 	{
-		if (!env_command(*env))
-			return (0);
-		else
-			return (1);
+		env_command(*env)
+		return (1);
 	}
 	command = command->next;
 	while (command)
 	{
-		if (is_valid_splited(command->value, cpy_path))
+		if (is_valid_splited(command->value, cpy_path)
+			&& have_identifer(command->value))
 		{
 			export_command(env, command->value);
 		}
-		else
+		else if (!is_valid_splited(command->value, cpy_path))
 		{
 			fprintf(stderr,
 				"myfuckingbash: export: '%s': not a valid identifier\n",

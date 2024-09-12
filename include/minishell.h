@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/12 12:11:04 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:17:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,12 @@ char				*init_ms_token(char *str, char *delim);
 t_tokens			*parser(char *str, t_vars **env);
 void				tokenizer(char **str, t_tokens **tokens);
 void				env_var_expansion(t_tokens **tokens, t_vars **env);
+char				*add_char_to_str(char *str, char c);
+void				handle_quotes(bool *in_quote, QUOTE *quote_type,
+						char c, char **expanded_value);
+void				handle_env_vars(t_tokens *token, int *i,
+						t_vars **env, char **expanded_value);
+void				handle_special_vars(int	*i, char **expanded_value, t_vars **env);
 void				add_token_type(t_tokens **tokens);
 void				trime_useless_quotes(t_tokens **tokens);
 

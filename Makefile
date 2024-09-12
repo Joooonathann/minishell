@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
+#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/09/11 17:59:37 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/09/12 16:14:58 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC			=	./src/minishell.c\
 				./src/parsing/parser.c\
 				./src/parsing/tokenizer.c\
 				./src/parsing/env_var_expansion.c\
+				./src/parsing/handle_quotes.c\
 				./src/parsing/add_token_type.c\
 				./src/parsing/trime_useless_quotes.c\
 				./src/commands/cd_command.c\

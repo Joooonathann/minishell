@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/12 11:08:52 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:07:34 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,10 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokens = NULL;
 	tokenizer(&str, &tokens);
 	env_var_expansion(&tokens, env);
-	trime_tokens(&tokens);
 	add_token_type(&tokens);
 	if (!check_meta_characters(tokens))
 		return (NULL);
+	trime_tokens(&tokens);
 	trime_useless_quotes(&tokens);
-	//ft_print_tokens(tokens);
 	return (tokens);
 }

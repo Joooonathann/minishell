@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/11 17:57:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/12 12:11:04 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ int					run_execve(t_command_data *data, char *cmd_path,
 int					execute_command(t_command_data *data);
 int					handle_special_commands(t_command_data *data);
 char				**args_compose(t_tokens *command);
+int					tokens_is_valid(t_tokens *tokens, t_pipe_data *data);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env, int mask);

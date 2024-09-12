@@ -6,11 +6,28 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:47:32 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/08/22 13:59:52 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:10:37 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	tokens_is_valid(t_tokens *tokens, t_pipe_data *data)
+{
+	char	*tmp;
+
+	while (tokens)
+	{
+		tmp = find_command_path(tokens->value, data->env);
+		if (tmp)
+		{
+			free(tmp);
+			return (1);
+		}
+		tokens = tokens->next;
+	}
+	return (0);
+}
 
 int	check_is_special(t_tokens *command)
 {

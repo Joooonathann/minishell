@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/12 11:57:41 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:10:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ static void	wait_for_children(int process_count, t_vars **env)
 			exit_code("1", env);
 		j++;
 	}
-}
-
-int	tokens_is_valid(t_tokens *tokens, t_pipe_data *data)
-{
-	char	*tmp;
-
-	while (tokens)
-	{
-		tmp = find_command_path(tokens->value, data->env);
-		if (tmp)
-		{
-			free(tmp);
-			return (1);
-		}
-		tokens = tokens->next;
-	}
-	return (0);
 }
 
 static void	child_process(t_pipe_data *data, int pipefd[2])

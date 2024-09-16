@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 15:14:23 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:17:54 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	up_level(t_vars **env)
 	}
 	else
 		add_vars("SHLVL", "1", env, 0);
-	return ;
 }
 
 static void	create_exit_code(t_vars **env)

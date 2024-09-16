@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 14:42:29 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 16:09:32 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,9 +176,10 @@ int					count_tokens(t_tokens *tokens);
 void				create_tokens_split(t_tokens **tokens_split,
 						t_tokens *tokens);
 void				new_tokens_create(t_tokens **tokens, t_tokens *command);
-void				create_file(t_tokens **file, t_tokens *command, t_vars **env);
-t_tokens 			*tokens_redirection(t_tokens **tokens, t_vars **env);
-void 				free_env_tab_handler(char **envp);
+void				create_file(t_tokens **file, t_tokens *command,
+						t_vars **env);
+t_tokens			*tokens_redirection(t_tokens **tokens, t_vars **env);
+void				free_env_tab_handler(char **envp);
 int					handle_command_errors(char *cmd, char **envp, int err,
 						t_vars **env);
 int					run_execve(t_command_data *data, char *cmd_path,
@@ -193,7 +194,7 @@ void				expand_var_heredoc(char **str, t_vars **env);
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env, int mask);
 int					init_vars(t_vars **env, char **envp);
-int					print_vars(t_vars *env);
+int					print_vars(t_vars *env, int export);
 int					export_command(t_vars **env, char *str);
 int					delete_vars(t_vars **env, t_vars *delete);
 char				*get_vars(t_vars **env, char *key_env);

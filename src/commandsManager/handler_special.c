@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_special.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 14:36:57 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 14:59:02 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static void	child_process(t_pipe_data *data, int pipefd[2])
 	close(pipefd[0]);
 	close(pipefd[1]);
 	new_tokens = tokens_redirection(&data->tokens_split[data->i], data->env);
-	if (tokens_is_valid(new_tokens, data))
-		handler_command(new_tokens, data->env, data->cpy_path);
+	handler_command(new_tokens, data->env, data->cpy_path);
 	ft_free_tokens(&new_tokens);
 	exit(EXIT_SUCCESS);
 }

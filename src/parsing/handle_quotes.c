@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:09:13 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 16:38:31 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 16:49:30 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,29 @@ void	handle_quotes(BOOL *in_quote, QUOTE *quote_type,
 void	handle_env_vars(t_tokens *token, int *i,
 						t_vars **env, char **expanded_value)
 {
-	char	*str;
 	char	*env_var;
+	char	*temp;
 
-	str = NULL;
 	env_var = NULL;
 	(*i)++;
 	if (token->value[*i] == '?')
-		str = add_char_to_str(str, token->value[(*i)++]);
+		env_var = add_char_to_str(env_var, token->value[(*i)++]);
 	else
 	{
 		while (token->value[*i]
 			&& (ft_isalnum(token->value[*i]) || token->value[*i] == '_'))
-			str = add_char_to_str(str, token->value[(*i)++]);
+			env_var = add_char_to_str(env_var, token->value[(*i)++]);
 	}
-	if (exist_vars(*env, str))
+	if (exist_vars(*env, env_var))
 	{
-		*expanded_value = ft_strcat_dynamic(*expanded_value,
-				get_vars(env, env_var));
+		temp = get_vars(env, env_var);
+		*expanded_value = ft_strcat_dynamic(*expanded_value, temp);
 	}
 	else
-		*expanded_value = ft_strcat_dynamic(*expanded_value,
-				get_mask(env, env_var));
-	free(str);
+	{
+		temp = get_mask(env, env_var);
+		*expanded_value = ft_strcat_dynamic(*expanded_value, temp);
+	}
+	free(temp);
 	free(env_var);
 }

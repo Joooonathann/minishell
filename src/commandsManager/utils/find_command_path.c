@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_command_path.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/16 16:19:14 by jalbiser          #+#    #+#             */
+/*   Updated: 2024/09/16 16:19:16 by jalbiser         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	free_tokens(char **tokens)
@@ -77,7 +89,6 @@ char	*find_command_path(const char *command, t_vars **env)
 	free(path);
 	if (!directories)
 		return (NULL);
-
 	full_path = find_path_in_directories(directories, command);
 	return (full_path);
 }

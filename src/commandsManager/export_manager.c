@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/11 17:54:05 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:10:29 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	export_manager(t_tokens *command, t_vars **env, char **cpy_path)
 {
 	if (ft_count_tokens(command) < 2)
 	{
-		env_command(*env);
+		print_vars(*env, 1);
 		return (1);
 	}
 	command = command->next;

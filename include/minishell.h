@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 16:09:32 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:31:54 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ char				**args_compose(t_tokens *command);
 int					tokens_is_valid(t_tokens *tokens, t_pipe_data *data);
 char				*custom_realpath(const char *path);
 void				expand_var_heredoc(char **str, t_vars **env);
+void				free_tokens(char **tokens);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env, int mask);

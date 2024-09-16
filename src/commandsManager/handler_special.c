@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 14:59:02 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:45:41 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
 		return (-1);
 	create_tokens_split(tokens_split, tokens);
 	process_pipe(tokens_split, cpy_path, env);
-	free(tokens_split);
+	ft_free_tokens(&tokens_split);
 	return (0);
 }

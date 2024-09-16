@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:05:49 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 16:08:21 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 16:20:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	cleanup_and_exit(t_vars **env, char *prompt, char *cpy_pwd)
 
 static void	process_prompt(t_vars **env, char *prompt, char **cpy_pwd)
 {
+	(void)cpy_pwd;
 	t_tokens	*tokens;
 
 	if (prompt && *prompt)

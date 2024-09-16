@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trime_useless_quotes.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 13:54:24 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:19:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	trime_useless_quotes(t_tokens **tokens)
 			return ;
 		create_new_token_without_quotes(current_token, &new_value);
 		free(current_token->value);
-		current_token->value = new_value;
+		current_token->value = ft_strdup(new_value);
+		free(new_value);
 		current_token = current_token->next;
 	}
 }

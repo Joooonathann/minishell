@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 16:47:32 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 15:53:17 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:05:38 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*custom_realpath(const char *path)
 		return (NULL);
 	if (path[0] == '/')
 		return (ft_strdup(path));
-	abs_path = malloc(ft_strlen(cwd) + ft_strlen(path) + 2);
+	abs_path = malloc(ft_strlen(cwd) + ft_strlen(path));
 	if (!abs_path)
 		return (NULL);
 	ft_strcpy(abs_path, cwd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 13:54:02 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:42:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ void				handle_special_vars(int *i, char **expanded_value,
 						t_vars **env);
 void				add_token_type(t_tokens **tokens);
 void				trime_useless_quotes(t_tokens **tokens);
+char				*add_char_to_str(char *str, char c);
+char				*ft_strcat_dynamic(char *dest, char *src);
 
 // Commands
 int					handler_command(t_tokens *tokens, t_vars **env,
@@ -174,9 +176,9 @@ int					count_tokens(t_tokens *tokens);
 void				create_tokens_split(t_tokens **tokens_split,
 						t_tokens *tokens);
 void				new_tokens_create(t_tokens **tokens, t_tokens *command);
-void				create_file(t_tokens **file, t_tokens *command);
-t_tokens			*tokens_redirection(t_tokens **tokens);
-void				free_env_tab_handler(char **envp);
+void				create_file(t_tokens **file, t_tokens *command, t_vars **env);
+t_tokens 			*tokens_redirection(t_tokens **tokens, t_vars **env);
+void 				free_env_tab_handler(char **envp);
 int					handle_command_errors(char *cmd, char **envp, int err,
 						t_vars **env);
 int					run_execve(t_command_data *data, char *cmd_path,
@@ -186,6 +188,7 @@ int					handle_special_commands(t_command_data *data);
 char				**args_compose(t_tokens *command);
 int					tokens_is_valid(t_tokens *tokens, t_pipe_data *data);
 char				*custom_realpath(const char *path);
+void				expand_var_heredoc(char **str, t_vars **env);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env, int mask);

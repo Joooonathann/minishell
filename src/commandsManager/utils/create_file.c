@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:04:45 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/12 11:33:13 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:47:44 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	treatment_heredoc(t_tokens *command)
+static void	treatment_heredoc(t_tokens *command, t_vars **env)
 {
 	char	*line;
 	int		heredoc_pipe[2];
@@ -25,6 +25,7 @@ static void	treatment_heredoc(t_tokens *command)
 	while (1)
 	{
 		line = readline("> ");
+		expand_var_heredoc(&line, env);
 		if (!line || ft_strcmp(line, command->next->value))
 		{
 			free(line);
@@ -40,7 +41,7 @@ static void	treatment_heredoc(t_tokens *command)
 	close(heredoc_pipe[0]);
 }
 
-void	create_file(t_tokens **file, t_tokens *command)
+void	create_file(t_tokens **file, t_tokens *command, t_vars **env)
 {
 	while (command)
 	{
@@ -63,7 +64,7 @@ void	create_file(t_tokens **file, t_tokens *command)
 		else if (command->type == TYPE_REDIRECTION && ft_strcmp(command->value,
 				"<<"))
 		{
-			treatment_heredoc(command);
+			treatment_heredoc(command, env);
 		}
 		command = command->next;
 	}

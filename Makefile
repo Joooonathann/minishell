@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
+#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/09/16 13:15:09 by jalbiser         ###   ########.fr        #
+#    Updated: 2024/09/16 14:40:39 by ekrause          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRC			=	./src/minishell.c\
 				./src/commandsManager/utils/tokens_redirection.c\
 				./src/commandsManager/utils/free_env_tab.c\
 				./src/commandsManager/utils/extern_utils.c\
+				./src/commandsManager/utils/expand_var_heredoc.c\
 				./src/vars/add_vars.c\
 				./src/vars/init_vars.c\
 				./src/vars/print_vars.c\

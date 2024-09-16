@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:10:54 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 09:24:28 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:38:00 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	treatment_redirection_s(t_tokens *file)
 	close(fd);
 }
 
-t_tokens	*tokens_redirection(t_tokens **tokens)
+t_tokens	*tokens_redirection(t_tokens **tokens, t_vars **env)
 {
 	t_tokens	*new_tokens;
 	t_tokens	*file;
@@ -67,7 +67,7 @@ t_tokens	*tokens_redirection(t_tokens **tokens)
 	new_tokens = NULL;
 	file = NULL;
 	new_tokens_create(&new_tokens, *tokens);
-	create_file(&file, *tokens);
+	create_file(&file, *tokens, env);
 	while (file)
 	{
 		if (file->type == TYPE_REDIRECTION_IN)

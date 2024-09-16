@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:09:13 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 13:53:55 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:42:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_strcat_dynamic(char *dest, char *src)
+char	*ft_strcat_dynamic(char *dest, char *src)
 {
 	char	*result;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 17:30:46 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 13:52:16 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:49:14 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*find_command_path(const char *command, t_vars **env)
 	char	*absolute_path;
 
 	absolute_path = custom_realpath(command);
+	printf("%s\n", absolute_path);
 	if (ft_strncmp("./", command, 2))
 		full_path = check_absolute_path(absolute_path);
 	else

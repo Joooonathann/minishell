@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:28:42 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/12 11:22:06 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:14:23 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	init_vars(t_vars **env, char **envp)
 	int		len_key;
 	int		i;
 
+	if (!envp)
+		return (0);
 	i = 0;
 	while (envp[i])
 	{

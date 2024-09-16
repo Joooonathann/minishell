@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 16:09:13 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 13:11:21 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:53:55 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*ft_strcat_dynamic(char *dest, char *src)
 	return (result);
 }
 
-void	handle_quotes(bool *in_quote, QUOTE *quote_type,
+void	handle_quotes(BOOL *in_quote, QUOTE *quote_type,
 						char c, char **expanded_value)
 {
 	*in_quote = !(*in_quote);

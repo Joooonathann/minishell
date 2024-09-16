@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:58 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 13:16:43 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:53:49 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*add_char_to_str(char *str, char c)
 }
 
 static int	return_value(t_tokens *token, int i,
-						bool in_quote, QUOTE quote_type)
+						BOOL in_quote, QUOTE quote_type)
 {
 	return ((token->value[i] == SIMPLE || token->value[i] == DOUBLE)
 		&& (!in_quote || (char)quote_type == token->value[i])
@@ -59,12 +59,12 @@ char	*expand_tokens(t_tokens *token, t_vars **env)
 {
 	char	*expanded_value;
 	int		i;
-	bool	in_quote;
+	BOOL	in_quote;
 	QUOTE	quote_type;
 
 	expanded_value = ft_strdup("");
 	i = 0;
-	in_quote = false;
+	in_quote = FALSE;
 	quote_type = 0;
 	while (token->value[i])
 	{

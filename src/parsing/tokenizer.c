@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:50:34 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/10 18:14:52 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 13:54:13 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ char	*create_delim_token(char **str, char **token)
 	}
 }
 
-void	copy_in_token(char **str, bool *in_quote, QUOTE *quote_type)
+void	copy_in_token(char **str, BOOL *in_quote, QUOTE *quote_type)
 {
 	if (((**str == SIMPLE && count_quote(*str, SIMPLE) > 1)
 			|| (**str == DOUBLE && count_quote(*str, DOUBLE) > 1))
 		&& !*in_quote)
 	{
-		*in_quote = true;
+		*in_quote = TRUE;
 		*quote_type = (QUOTE) **str;
 	}
 	else if (**str == (char)*quote_type && *in_quote)
 	{
-		*in_quote = false;
+		*in_quote = FALSE;
 		*quote_type = 0;
 	}
 }
@@ -73,11 +73,11 @@ char	*ms_strtok(char **str, char *delim)
 {
 	char	*token;
 	int		i;
-	bool	in_quote;
+	BOOL	in_quote;
 	QUOTE	quote_type;
 
 	i = 0;
-	in_quote = false;
+	in_quote = FALSE;
 	quote_type = 0;
 	while (**str == ' ')
 		(*str)++;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+         #
+#    By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 11:55:17 by jalbiser          #+#    #+#              #
-#    Updated: 2024/09/12 16:14:58 by ekrause          ###   ########.fr        #
+#    Updated: 2024/09/16 13:15:09 by jalbiser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRC			=	./src/minishell.c\
 				./src/token_list/ft_del_token.c\
 				./src/token_list/ft_free_token.c\
 				./src/token_list/ft_free_tokens.c\
-				./src/token_list/ft_print_tokens.c\
 				./src/token_list/ft_tokenadd_back.c\
 				./src/token_list/ft_tokenlast.c\
 				./src/token_list/ft_tokennew.c\

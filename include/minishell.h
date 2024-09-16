@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 10:29:19 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:54:02 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define bool unsigned int
-# define true 1
-# define false 0
+# define BOOL unsigned int
+# define TRUE 1
+# define FALSE 0
 # define QUOTE unsigned int
 # define SIMPLE 39
 # define DOUBLE 34
@@ -110,8 +110,6 @@ typedef struct s_command_data
 // Token list
 void				ft_del_token(t_tokens **token, t_tokens **tokens);
 void				ft_free_tokens(t_tokens **tokens);
-void				ft_reverse_print_tokens(t_tokens *tokens);
-void				ft_print_tokens(t_tokens *tokens);
 void				ft_tokenadd_back(t_tokens **tokens, t_tokens *new);
 t_tokens			*ft_tokenlast(t_tokens *tokens);
 t_tokens			*ft_tokennew(char *value);
@@ -127,11 +125,12 @@ t_tokens			*parser(char *str, t_vars **env);
 void				tokenizer(char **str, t_tokens **tokens);
 void				env_var_expansion(t_tokens **tokens, t_vars **env);
 char				*add_char_to_str(char *str, char c);
-void				handle_quotes(bool *in_quote, QUOTE *quote_type,
-						char c, char **expanded_value);
-void				handle_env_vars(t_tokens *token, int *i,
-						t_vars **env, char **expanded_value);
-void				handle_special_vars(int	*i, char **expanded_value, t_vars **env);
+void				handle_quotes(BOOL *in_quote, QUOTE *quote_type, char c,
+						char **expanded_value);
+void				handle_env_vars(t_tokens *token, int *i, t_vars **env,
+						char **expanded_value);
+void				handle_special_vars(int *i, char **expanded_value,
+						t_vars **env);
 void				add_token_type(t_tokens **tokens);
 void				trime_useless_quotes(t_tokens **tokens);
 
@@ -186,6 +185,7 @@ int					execute_command(t_command_data *data);
 int					handle_special_commands(t_command_data *data);
 char				**args_compose(t_tokens *command);
 int					tokens_is_valid(t_tokens *tokens, t_pipe_data *data);
+char				*custom_realpath(const char *path);
 
 // Env vars
 int					add_vars(char *key, char *value, t_vars **env, int mask);

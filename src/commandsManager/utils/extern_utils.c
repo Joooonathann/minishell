@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:26:51 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 11:35:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:29:59 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	execute_command(t_command_data *data)
 	char	*command_path;
 	char	**args;
 
-	if (handle_special_commands(data))
-		return (1);
 	command_path = find_command_path(data->command->value, data->env);
 	if (!command_path)
 	{
@@ -63,27 +61,5 @@ int	run_execve(t_command_data *data, char *cmd_path, char **args)
 	if (execve(cmd_path, args, data->envp) == -1)
 		return (handle_command_errors(data->command->value, data->envp, errno,
 				data->env));
-	return (0);
-}
-
-int	check_file_or_directory(t_command_data *data)
-{
-	struct stat	path_stat;
-
-	stat(data->command->value, &path_stat);
-	if (S_ISDIR(path_stat.st_mode))
-	{
-		fprintf(stderr, "%s: Is a directory\n", data->command->value);
-		free_env_tab_handler(data->envp);
-		exit_code("126", data->env);
-		exit(126);
-	}
-	else if (access(data->command->value, X_OK) != 0)
-	{
-		fprintf(stderr, "%s: Permission denied\n", data->command->value);
-		free_env_tab_handler(data->envp);
-		exit_code("126", data->env);
-		exit(126);
-	}
 	return (0);
 }

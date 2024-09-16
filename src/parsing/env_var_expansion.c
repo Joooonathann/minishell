@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:58 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/12 16:40:46 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:20:24 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*expand_tokens(t_tokens *token, t_vars **env)
 	quote_type = 0;
 	while (token->value[i])
 	{
-		if (func(token, i, in_quote, quote_type))
+		if (return_value(token, i, in_quote, quote_type))
 			handle_quotes(&in_quote, &quote_type,
 				token->value[i++], &expanded_value);
 		else if ((!in_quote || quote_type == DOUBLE) && token->value[i] == '$')

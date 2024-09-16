@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 11:37:12 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:29:52 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@ static void	parent_process(pid_t pid, int *status, t_vars **env)
 		exit_code(ft_itoa(WEXITSTATUS(*status)), env);
 	else
 		exit_code("1", env);
-}
-
-int	handle_special_commands(t_command_data *data)
-{
-	if (strncmp(data->command->value, "./", 2) == 0)
-	{
-		if (access(data->command->value, F_OK) == 0)
-			check_file_or_directory(data);
-		else
-		{
-			fprintf(stderr, "%s: No such file or directory\n",
-				data->command->value);
-			free_env_tab_handler(data->envp);
-			exit_code("127", data->env);
-			exit(127);
-		}
-		return (1);
-	}
-	return (0);
 }
 
 char	**args_compose(t_tokens *command)

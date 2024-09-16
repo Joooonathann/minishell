@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:33:58 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 10:20:24 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 13:16:43 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ static int	return_value(t_tokens *token, int i,
 						bool in_quote, QUOTE quote_type)
 {
 	return ((token->value[i] == SIMPLE || token->value[i] == DOUBLE)
-		&& (!in_quote || (char)quote_type == token->value[i]));
+		&& (!in_quote || (char)quote_type == token->value[i])
+		&& count_quote(token->value, SIMPLE) > 1);
+}
+
+static int	return_env_value(t_tokens *token, int i)
+{
+	return (token->value[i + 1] && (ft_isalnum(token->value[i + 1])
+			|| token->value[i + 1] == '?'));
 }
 
 char	*expand_tokens(t_tokens *token, t_vars **env)
@@ -66,10 +73,10 @@ char	*expand_tokens(t_tokens *token, t_vars **env)
 				token->value[i++], &expanded_value);
 		else if ((!in_quote || quote_type == DOUBLE) && token->value[i] == '$')
 		{
-			if (token->value[i + 1] && token->value[i + 1] == '?')
-				handle_special_vars(&i, &expanded_value, env);
-			else if (token->value[i + 1] && ft_isalnum(token->value[i + 1]))
+			if (return_env_value(token, i))
 				handle_env_vars(token, &i, env, &expanded_value);
+			else
+				return (ft_strdup(token->value));
 		}
 		else
 			expanded_value = add_char_to_str(expanded_value, token->value[i++]);

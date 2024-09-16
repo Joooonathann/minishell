@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:26:51 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 10:29:59 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:32:30 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ int	handle_command_errors(char *cmd, char **envp, int err, t_vars **env)
 int	run_execve(t_command_data *data, char *cmd_path, char **args)
 {
 	if (execve(cmd_path, args, data->envp) == -1)
+	{
+		free_tokens(args);
 		return (handle_command_errors(data->command->value, data->envp, errno,
 				data->env));
+	}
+	free_tokens(args);
 	return (0);
 }

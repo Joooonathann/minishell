@@ -6,13 +6,13 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:19:14 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 16:19:16 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:31:38 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_tokens(char **tokens)
+void	free_tokens(char **tokens)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_all_vars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 22:25:39 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/06 01:25:29 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:28:14 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	delete_all_vars(t_vars **vars)
 {
 	t_vars	*vars_tmp;
 
-	if (!*vars)
-		return ;
 	while (*vars)
 	{
 		vars_tmp = (*vars)->next;

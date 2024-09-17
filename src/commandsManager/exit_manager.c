@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 16:20:57 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:39:34 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	exit_manager(t_tokens *command, t_vars **env, char **cpy_path, t_exit exit)
 	(void)cpy_path;
 	free(exit.cpy_pwd);
 	free(exit.prompt);
+	ft_free_tokens(exit.tokens);
 	delete_all_vars(exit.env);
 	process_exit(command, env, ft_count_tokens(command));
 	printf("exit\n");

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/17 16:16:20 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:38:16 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,6 @@ typedef struct s_pipe
 	char			**argument_command;
 }					t_pipe;
 
-typedef struct s_exit
-{
-	t_vars			**env;
-	char			*cpy_pwd;
-	char			*prompt;
-}					t_exit;
-
 typedef struct s_tokens
 {
 	struct s_tokens	*next;
@@ -90,6 +83,14 @@ typedef struct s_tokens
 	char			redirection;
 	char			pipe;
 }					t_tokens;
+
+typedef struct s_exit
+{
+	t_vars			**env;
+	char			*cpy_pwd;
+	char			*prompt;
+	t_tokens		**tokens;
+}					t_exit;
 
 typedef struct s_lst_cmd
 {

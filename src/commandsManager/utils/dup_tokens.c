@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:18:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/09 09:18:56 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 12:27:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	dup_tokens(char *value, t_token_type type, t_tokens **buffer)
 	new->pipe = '\0';
 	new->quote = 0;
 	new->type = type;
-	new->value = value;
+	new->value = ft_strdup(value);
 	if (!*buffer)
 		*buffer = new;
 	else

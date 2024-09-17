@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 16:39:34 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:02:03 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	process_exit(t_tokens *command, t_vars **env, int argc)
 		arg = command->next->value;
 		if (!is_numeric_argument(arg))
 		{
-			fprintf(stderr, "bash: exit: %s: numeric argument required\n", arg);
+			ft_error(3, "bash: exit: ", arg, ": numeric argument required\n");
 			exit_command(2);
 		}
 		exit_code(arg, env);

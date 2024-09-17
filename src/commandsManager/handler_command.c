@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 16:13:21 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:05:36 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ t_lstcmd	*init_commands(void)
 	return (commands);
 }
 
-int	handler_command(t_tokens *command, t_vars **env, char **cpy_path, t_exit exit)
+int	handler_command(t_tokens *command, t_vars **env, char **cpy_path,
+		t_exit exit)
 {
 	int			i;
 	t_lstcmd	*commands;

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/17 16:38:16 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:05:22 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_lst_cmd
 {
 	char			*name;
 	int				(*func)(t_tokens *, t_vars **env, char **cpy_path,
-						t_exit exit);
+			t_exit exit);
 }					t_lstcmd;
 
 typedef struct s_pipe_data
@@ -157,6 +157,7 @@ int					exist_vars(t_vars *env, char *key);
 int					env_command(t_vars *env);
 int					unset_command(t_vars **env, char *key_env);
 void				exit_command(int code);
+void				ft_error(int count, ...);
 
 // Manager Commands
 char				**env_tab(t_vars *env);

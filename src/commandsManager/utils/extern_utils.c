@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:26:51 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 16:32:30 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:03:27 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execute_command(t_command_data *data)
 	command_path = find_command_path(data->command->value, data->env);
 	if (!command_path)
 	{
-		fprintf(stderr, "%s: command not found\n", data->command->value);
+		ft_error(2, data->command->value, ": command not found\n");
 		free_env_tab_handler(data->envp);
 		exit_code("127", data->env);
 		exit(127);
@@ -40,11 +40,11 @@ int	execute_command(t_command_data *data)
 int	handle_command_errors(char *cmd, char **envp, int err, t_vars **env)
 {
 	if (err == EACCES)
-		fprintf(stderr, "%s: Permission denied\n", cmd);
+		ft_error(2, cmd, ": Permission denied\n");
 	else if (err == EISDIR)
-		fprintf(stderr, "%s: Is a directory\n", cmd);
+		ft_error(2, cmd, ": Is a directory\n");
 	else if (err == ENOENT)
-		fprintf(stderr, "%s: No such file or directory\n", cmd);
+		ft_error(2, cmd, ": No such file or directory\n");
 	free_env_tab_handler(envp);
 	if (err == ENOENT)
 		exit_code("127", env);

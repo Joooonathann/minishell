@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 16:55:18 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/17 15:54:35 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 static void	wait_for_children(int process_count, t_vars **env)
 {
-	int	status;
-	int	j;
+	char	*temp;
+	int		status;
+	int		j;
 
 	j = 0;
 	while (j < process_count)
 	{
 		waitpid(-1, &status, 0);
-		if (WIFEXITED(status))
-			exit_code(ft_itoa(WEXITSTATUS(status)), env);
+		temp = ft_itoa(WEXITSTATUS(status));
+		if (temp)
+			exit_code(temp, env);
 		else
 			exit_code("1", env);
+		free(temp);
 		j++;
 	}
 }
@@ -98,12 +101,16 @@ static void	process_pipe(t_tokens **tokens_split, char **cpy_path, t_vars **env)
 int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
 {
 	t_tokens	**tokens_split;
+	int			i;
 
 	tokens_split = malloc(sizeof(t_tokens *) * (count_tokens(tokens) + 1));
+	i = 0;
 	if (!tokens_split)
 		return (-1);
 	create_tokens_split(tokens_split, tokens);
 	process_pipe(tokens_split, cpy_path, env);
-	ft_free_tokens(tokens_split);
+	while(tokens_split[i])
+		ft_free_tokens(&tokens_split[i++]);
+	free(tokens_split);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:34:11 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 17:01:30 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:48:19 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	pwd_command(t_vars **env)
 
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
-		ft_error(3, "pwd: error retrieving current directory: ",
-			strerror(errno), "\n");
+		ft_error(2, "pwd: error retrieving current directory: ",
+			strerror(errno));
 		exit_code("1", env);
 		return (0);
 	}

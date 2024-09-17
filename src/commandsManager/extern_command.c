@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extern_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 16:30:21 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:44:56 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ static void	child_process(t_command_data *data)
 
 static void	parent_process(pid_t pid, int *status, t_vars **env)
 {
+	char	*tmp;
+
 	waitpid(pid, status, 0);
-	if (WIFEXITED(*status))
-		exit_code(ft_itoa(WEXITSTATUS(*status)), env);
+	tmp = ft_itoa(WIFEXITED(*status));
+	if (tmp)
+		exit_code(tmp, env);
 	else
 		exit_code("1", env);
+	free(tmp);
 }
 
 char	**args_compose(t_tokens *command)
@@ -37,7 +41,7 @@ char	**args_compose(t_tokens *command)
 	i = 0;
 	while (command)
 	{
-		result[i] = command->value;
+		result[i] = ft_strdup(command->value);
 		command = command->next;
 		i++;
 	}
@@ -70,5 +74,6 @@ int	extern_command(t_tokens *command, t_vars **env, char **cpy_path)
 		child_process(&data);
 	else
 		parent_process(pid, &status, env);
+	free_tokens(data.envp);
 	return (0);
 }

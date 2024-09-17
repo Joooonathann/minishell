@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/17 17:05:22 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:48:20 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,10 @@ int					cd_command(char *path, t_vars **env, char **copy_path);
 int					pwd_command(t_vars **env);
 int					update_vars(t_vars **env, char *key, char *value, int mask);
 int					exist_vars(t_vars *env, char *key);
-int					env_command(t_vars *env);
+int exist_vars_mask(t_vars *env, char *key);
+int env_command(t_vars *env);
 int					unset_command(t_vars **env, char *key_env);
-void				exit_command(int code);
+void 				exit_command(int code, t_exit exit);
 void				ft_error(int count, ...);
 
 // Manager Commands
@@ -199,12 +200,12 @@ int					execute_command(t_command_data *data);
 int					handle_special_commands(t_command_data *data);
 char				**args_compose(t_tokens *command);
 int					tokens_is_valid(t_tokens *tokens, t_pipe_data *data);
-char				*custom_realpath(const char *path);
 void				expand_var_heredoc(char **str, t_vars **env);
 void				free_tokens(char **tokens);
+void 				clean_exit(t_exit exit);
 
 // Env vars
-int					add_vars(char *key, char *value, t_vars **env, int mask);
+int add_vars(char *key, char *value, t_vars **env, int mask);
 int					init_vars(t_vars **env, char **envp);
 int					print_vars(t_vars *env, int export);
 int					export_command(t_vars **env, char *str);

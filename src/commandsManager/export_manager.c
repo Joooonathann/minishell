@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:11:40 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 17:02:32 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:48:32 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	export_manager(t_tokens *command, t_vars **env, char **cpy_path,
 		else if (!is_valid_splited(command->value, cpy_path))
 		{
 			ft_error(3, "myfuckingbash: export: '", command->value,
-				"': not a valid identifier\n");
+				"': not a valid identifier");
 			exit_code("1", env);
 			return (0);
 		}

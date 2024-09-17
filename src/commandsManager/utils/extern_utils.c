@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extern_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:26:51 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 17:03:27 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:32:19 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execute_command(t_command_data *data)
 	command_path = find_command_path(data->command->value, data->env);
 	if (!command_path)
 	{
-		ft_error(2, data->command->value, ": command not found\n");
+		ft_error(2, data->command->value, ": command not found");
 		free_env_tab_handler(data->envp);
 		exit_code("127", data->env);
 		exit(127);
@@ -40,11 +40,11 @@ int	execute_command(t_command_data *data)
 int	handle_command_errors(char *cmd, char **envp, int err, t_vars **env)
 {
 	if (err == EACCES)
-		ft_error(2, cmd, ": Permission denied\n");
+		ft_error(2, cmd, ": Permission denied");
 	else if (err == EISDIR)
-		ft_error(2, cmd, ": Is a directory\n");
+		ft_error(2, cmd, ": Is a directory");
 	else if (err == ENOENT)
-		ft_error(2, cmd, ": No such file or directory\n");
+		ft_error(2, cmd, ": No such file or directory");
 	free_env_tab_handler(envp);
 	if (err == ENOENT)
 		exit_code("127", env);
@@ -61,9 +61,11 @@ int	run_execve(t_command_data *data, char *cmd_path, char **args)
 	if (execve(cmd_path, args, data->envp) == -1)
 	{
 		free_tokens(args);
+		free(cmd_path);
 		return (handle_command_errors(data->command->value, data->envp, errno,
 				data->env));
 	}
+	free(cmd_path);
 	free_tokens(args);
 	return (0);
 }

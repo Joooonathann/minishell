@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_command_path.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:19:14 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 16:31:38 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:48:00 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,10 @@ char	*find_command_path(const char *command, t_vars **env)
 	char	*path;
 	char	**directories;
 	char	*full_path;
-	char	*absolute_path;
 
 	if (!command || !*command)
 		return (NULL);
 	full_path = check_absolute_path(command);
-	if (full_path)
-		return (full_path);
-	absolute_path = custom_realpath(command);
-	full_path = check_absolute_path(absolute_path);
-	free(absolute_path);
 	if (full_path)
 		return (full_path);
 	path = get_vars(env, "PATH");

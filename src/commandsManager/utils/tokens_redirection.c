@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:10:54 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 17:04:11 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:49:09 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	treatment_redirection_in(t_tokens *file)
 	fd = open(file->value, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_error(2, strerror(errno), " \n");
+		ft_error(1, strerror(errno));
 		exit(EXIT_FAILURE);
 		return ;
 	}
@@ -34,7 +34,7 @@ static void	treatment_redirection_out(t_tokens *file)
 	fd = open(file->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		ft_error(2, strerror(errno), " \n");
+		ft_error(1, strerror(errno));
 		exit(EXIT_FAILURE);
 		return ;
 	}
@@ -50,7 +50,7 @@ static void	treatment_redirection_s(t_tokens *file)
 	fd = open(file->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		ft_error(2, strerror(errno), " \n");
+		ft_error(1, strerror(errno));
 		exit(EXIT_FAILURE);
 		return ;
 	}

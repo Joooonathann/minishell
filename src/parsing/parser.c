@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:52:19 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 15:32:07 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:47:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_meta_characters(t_tokens *tokens)
 			return (0);
 		}
 		else if (tokens->type == TYPE_PIPE && (!tokens->next
-				|| tokens->next->type != TYPE_COMMAND || !tokens->prev))
+				|| !tokens->prev))
 		{
 			ft_error(5, "myfuckingbash: ",
 				"syntax error near unexpected token ", "`", tokens->value,
@@ -96,8 +96,8 @@ t_tokens	*parser(char *str, t_vars **env)
 	tokenizer(&str, &tokens);
 	env_var_expansion(&tokens, env);
 	add_token_type(&tokens);
-	// if (!check_meta_characters(tokens))
-	// 	return (NULL);
+	if (!check_meta_characters(tokens))
+		return (NULL);
 	trime_tokens(&tokens);
 	trime_useless_quotes(&tokens);
 	return (tokens);

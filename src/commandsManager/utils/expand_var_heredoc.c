@@ -6,16 +6,16 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:57:32 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 14:46:58 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/17 17:09:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handle_env_vars_heredoc(char *str, int *i,
-					 t_vars **env, char **expanded_value)
+void	handle_env_vars_heredoc(char *str, int *i,
+		t_vars **env, char **expanded_value)
 {
-	char *env_var;
+	char	*env_var;
 
 	env_var = NULL;
 	(*i)++;
@@ -28,10 +28,10 @@ void handle_env_vars_heredoc(char *str, int *i,
 	}
 	if (get_vars(env, env_var))
 		*expanded_value = ft_strcat_dynamic(*expanded_value,
-											get_vars(env, env_var));
+				get_vars(env, env_var));
 	else
 		*expanded_value = ft_strcat_dynamic(*expanded_value,
-											get_mask(env, env_var));
+				get_mask(env, env_var));
 	free(env_var);
 }
 
@@ -46,7 +46,8 @@ void	expand_var_heredoc(char **str, t_vars **env)
 	{
 		if ((*str)[i] == '$')
 		{
-			if ((*str)[i + 1] && (ft_isalnum((*str)[i + 1]) || (*str)[i + 1] == '?'))
+			if ((*str)[i + 1] && (ft_isalnum((*str)[i + 1])
+					|| (*str)[i + 1] == '?'))
 				handle_env_vars_heredoc(*str, &i, env, &expanded_value);
 			else
 			{

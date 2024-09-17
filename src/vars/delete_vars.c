@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 20:30:58 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 12:09:53 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:36:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	process_delete(t_vars **env, t_vars **delete)
 
 int	delete_vars(t_vars **env, t_vars *delete)
 {
-	if (!env || !*env || !delete || delete->mask == 1)
+	if (!env || !*env || !delete)
 		return (0);
 	if (!process_delete(env, &delete))
 		return (0);

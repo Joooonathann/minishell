@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 13:04:59 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 17:59:04 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:20:46 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ void	process_echo(t_tokens **command, int *first_argument)
 	}
 }
 
-int	echo_manager(t_tokens *command, t_vars **env, char **cpy_path)
+int	echo_manager(t_tokens *command, t_vars **env, char **cpy_path, t_exit exit)
 {
 	t_tokens	*tmp;
 	int			suppress_newline;
 	int			first_argument;
 
+	(void)exit;
 	suppress_newline = 0;
 	first_argument = 1;
 	(void)env;

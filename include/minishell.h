@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:47:09 by ekrause           #+#    #+#             */
-/*   Updated: 2024/09/16 16:31:54 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:16:20 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ typedef struct s_pipe
 	char			**argument_command;
 }					t_pipe;
 
+typedef struct s_exit
+{
+	t_vars			**env;
+	char			*cpy_pwd;
+	char			*prompt;
+}					t_exit;
+
 typedef struct s_tokens
 {
 	struct s_tokens	*next;
@@ -87,7 +94,8 @@ typedef struct s_tokens
 typedef struct s_lst_cmd
 {
 	char			*name;
-	int				(*func)(t_tokens *, t_vars **env, char **cpy_path);
+	int				(*func)(t_tokens *, t_vars **env, char **cpy_path,
+						t_exit exit);
 }					t_lstcmd;
 
 typedef struct s_pipe_data
@@ -97,6 +105,7 @@ typedef struct s_pipe_data
 	t_tokens		**tokens_split;
 	char			**cpy_path;
 	t_vars			**env;
+	t_exit			exit;
 }					t_pipe_data;
 
 typedef struct s_command_data
@@ -137,8 +146,8 @@ char				*add_char_to_str(char *str, char c);
 char				*ft_strcat_dynamic(char *dest, char *src);
 
 // Commands
-int					handler_command(t_tokens *tokens, t_vars **env,
-						char **cpy_path);
+int					handler_command(t_tokens *command, t_vars **env,
+						char **cpy_path, t_exit exit);
 char				*ft_strcpy(char *dst, const char *src);
 int					cd_command(char *path, t_vars **env, char **copy_path);
 int					pwd_command(t_vars **env);
@@ -150,26 +159,26 @@ void				exit_command(int code);
 
 // Manager Commands
 char				**env_tab(t_vars *env);
-int					cd_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+int					cd_manager(t_tokens *command, t_vars **env, char **cpy_path,
+						t_exit exit);
 int					echo_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+						char **cpy_path, t_exit exit);
 int					env_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+						char **cpy_path, t_exit exit);
 int					exit_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+						char **cpy_path, t_exit exit);
 int					export_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+						char **cpy_path, t_exit exit);
 int					pwd_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+						char **cpy_path, t_exit exit);
 int					unset_manager(t_tokens *command, t_vars **env,
-						char **cpy_path);
+						char **cpy_path, t_exit exit);
 int					extern_command(t_tokens *command, t_vars **env,
 						char **cpy_path);
 char				*find_command_path(const char *command, t_vars **env);
 int					check_is_special(t_tokens *command);
-int					handler_special(t_tokens *command, t_vars **env,
-						char **cpy_path);
+int					handler_special(t_tokens *tokens, t_vars **env,
+						char **cpy_path, t_exit exit);
 void				dup_tokens(char *value, t_token_type type,
 						t_tokens **buffer);
 int					count_tokens(t_tokens *tokens);

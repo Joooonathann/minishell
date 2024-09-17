@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:41 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/10 09:26:10 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:20:57 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,13 @@ static void	process_exit(t_tokens *command, t_vars **env, int argc)
 	}
 }
 
-int	exit_manager(t_tokens *command, t_vars **env, char **cpy_path)
+int	exit_manager(t_tokens *command, t_vars **env, char **cpy_path, t_exit exit)
 {
-	int	argc;
-
 	(void)cpy_path;
-	argc = ft_count_tokens(command);
-	if (argc > 2)
-	{
-		exit_code("1", env);
-		fprintf(stderr, "bash: exit: too many arguments\n");
-		return (0);
-	}
-	process_exit(command, env, argc);
+	free(exit.cpy_pwd);
+	free(exit.prompt);
+	delete_all_vars(exit.env);
+	process_exit(command, env, ft_count_tokens(command));
 	printf("exit\n");
 	return (1);
 }

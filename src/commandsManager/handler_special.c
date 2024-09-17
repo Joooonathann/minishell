@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler_special.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 15:54:35 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/17 16:22:36 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	wait_for_children(int process_count, t_vars **env)
 	}
 }
 
-static void	child_process(t_pipe_data *data, int pipefd[2])
+static void	child_process(t_pipe_data *data, int pipefd[2], t_exit exit_s)
 {
 	t_tokens	*new_tokens;
 
@@ -46,12 +46,12 @@ static void	child_process(t_pipe_data *data, int pipefd[2])
 	close(pipefd[0]);
 	close(pipefd[1]);
 	new_tokens = tokens_redirection(&data->tokens_split[data->i], data->env);
-	handler_command(new_tokens, data->env, data->cpy_path);
+	handler_command(new_tokens, data->env, data->cpy_path, exit_s);
 	ft_free_tokens(&new_tokens);
 	exit(EXIT_SUCCESS);
 }
 
-static int	handle_pipe(t_pipe_data *data)
+static int	handle_pipe(t_pipe_data *data, t_exit exit)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -69,7 +69,7 @@ static int	handle_pipe(t_pipe_data *data)
 		return (-1);
 	}
 	if (pid == 0)
-		child_process(data, pipefd);
+		child_process(data, pipefd, exit);
 	else
 	{
 		close(pipefd[1]);
@@ -79,7 +79,8 @@ static int	handle_pipe(t_pipe_data *data)
 	return (pipefd[0]);
 }
 
-static void	process_pipe(t_tokens **tokens_split, char **cpy_path, t_vars **env)
+static void	process_pipe(t_tokens **tokens_split, char **cpy_path, t_vars **env,
+		t_exit exit)
 {
 	t_pipe_data	data;
 
@@ -88,9 +89,10 @@ static void	process_pipe(t_tokens **tokens_split, char **cpy_path, t_vars **env)
 	data.tokens_split = tokens_split;
 	data.cpy_path = cpy_path;
 	data.env = env;
+	data.exit = exit;
 	while (tokens_split[data.i])
 	{
-		data.prev_fd = handle_pipe(&data);
+		data.prev_fd = handle_pipe(&data, exit);
 		data.i++;
 	}
 	wait_for_children(data.i, env);
@@ -98,7 +100,8 @@ static void	process_pipe(t_tokens **tokens_split, char **cpy_path, t_vars **env)
 		close(data.prev_fd);
 }
 
-int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
+int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path,
+		t_exit exit)
 {
 	t_tokens	**tokens_split;
 	int			i;
@@ -108,8 +111,8 @@ int	handler_special(t_tokens *tokens, t_vars **env, char **cpy_path)
 	if (!tokens_split)
 		return (-1);
 	create_tokens_split(tokens_split, tokens);
-	process_pipe(tokens_split, cpy_path, env);
-	while(tokens_split[i])
+	process_pipe(tokens_split, cpy_path, env, exit);
+	while (tokens_split[i])
 		ft_free_tokens(&tokens_split[i++]);
 	free(tokens_split);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:45:18 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/16 15:12:12 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:13:21 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ t_lstcmd	*init_commands(void)
 	return (commands);
 }
 
-int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
+int	handler_command(t_tokens *command, t_vars **env, char **cpy_path, t_exit exit)
 {
 	int			i;
 	t_lstcmd	*commands;
 
 	if (check_is_special(command))
 	{
-		handler_special(command, env, cpy_path);
+		handler_special(command, env, cpy_path, exit);
 		return (0);
 	}
 	i = 0;
@@ -56,7 +56,7 @@ int	handler_command(t_tokens *command, t_vars **env, char **cpy_path)
 	{
 		if (ft_strcmp(commands[i].name, command->value))
 		{
-			commands[i].func(command, env, cpy_path);
+			commands[i].func(command, env, cpy_path, exit);
 			free(commands);
 			return (1);
 		}

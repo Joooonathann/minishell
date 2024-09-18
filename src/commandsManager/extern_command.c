@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extern_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 18:44:56 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/09/18 14:19:03 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ static void	child_process(t_command_data *data)
 static void	parent_process(pid_t pid, int *status, t_vars **env)
 {
 	char	*tmp;
-
+	
 	waitpid(pid, status, 0);
-	tmp = ft_itoa(WIFEXITED(*status));
-	if (tmp)
+	if (WIFEXITED(*status))
+	{
+		tmp = ft_itoa(WEXITSTATUS(*status));
 		exit_code(tmp, env);
+		free(tmp);
+	}
 	else
 		exit_code("1", env);
-	free(tmp);
 }
 
 char	**args_compose(t_tokens *command)

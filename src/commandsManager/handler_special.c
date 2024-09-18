@@ -6,7 +6,7 @@
 /*   By: jalbiser <jalbiser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:40:37 by jalbiser          #+#    #+#             */
-/*   Updated: 2024/09/17 16:22:36 by jalbiser         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:18:52 by jalbiser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 static void	wait_for_children(int process_count, t_vars **env)
 {
-	char	*temp;
 	int		status;
 	int		j;
+	char	*tmp;
 
 	j = 0;
 	while (j < process_count)
 	{
 		waitpid(-1, &status, 0);
-		temp = ft_itoa(WEXITSTATUS(status));
-		if (temp)
-			exit_code(temp, env);
+		if (WIFEXITED(status))
+		{
+			tmp = ft_itoa(WEXITSTATUS(status));
+			exit_code(tmp, env);
+			free(tmp);
+		}
 		else
 			exit_code("1", env);
-		free(temp);
 		j++;
 	}
 }
